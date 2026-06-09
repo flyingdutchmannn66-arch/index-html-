@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GRABBOOKING PRO</title>
+    <title>CRUIZEMATE - Jasa Booking Grab Car</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -21,7 +21,7 @@
         }
 
         body{
-            background:#050b1e;
+            background:#0f0f0f;
             color:white;
         }
 
@@ -150,6 +150,8 @@
             text-decoration:none;
             font-weight:600;
             transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary:hover{
@@ -183,10 +185,18 @@
             filter:drop-shadow(0 0 40px rgba(0,177,79,.5));
         }
 
-        /* SERVICES */
-        .services{
+        /* SERVICES, BOOKING & PAYMENTS */
+        .services, .booking-section, .payments{
             padding:100px 0;
             background: rgba(255, 255, 255, 0.01);
+        }
+
+        .booking-section {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .payments {
+            background: rgba(0, 177, 79, 0.01);
         }
 
         .section-title{
@@ -227,13 +237,63 @@
             margin-bottom:15px;
             color:#00B14F;
             font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .card p {
             color: #c9d2e3;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-size: 15px;
             line-height: 1.6;
+        }
+
+        /* Bank Account Info Layout */
+        .bank-info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bank-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .bank-item i {
+            color: #FFD700;
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        .bank-details {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .bank-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .bank-account {
+            font-family: monospace;
+            font-size: 15px;
+            color: #00B14F;
+            letter-spacing: 0.5px;
+        }
+
+        .bank-holder {
+            color: #a3b1cc;
+            font-size: 12px;
         }
 
         .card-btn {
@@ -254,6 +314,79 @@
         .card-btn:hover {
             background: #00B14F;
             color: white;
+        }
+
+        /* FORM FIELD STYLE */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #a3b1cc;
+        }
+
+        .form-group input {
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #00B14F;
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* Live Route Tracker Info Style */
+        .live-tracker-box {
+            background: rgba(0, 177, 79, 0.05);
+            border: 1px solid rgba(0, 177, 79, 0.3);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 5px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tracker-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tracker-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .tracker-item:first-child {
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tracker-label {
+            font-size: 11px;
+            color: #a3b1cc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .tracker-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00B14F;
+        }
+
+        .tracker-value.price {
+            color: #FFD700;
         }
 
         /* STEPS */
@@ -467,38 +600,59 @@
             filter: brightness(1.1);
         }
 
-        /* RESPONSIVE LAYOUT */
+        /* Gaya Khusus untuk Dropdown Autocomplete Google */
+        .pac-container {
+            background-color: #0c1329;
+            border: 1px solid rgba(0, 177, 79, 0.4);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            z-index: 10000 !important;
+        }
+        .pac-item {
+            padding: 10px;
+            color: #c9d2e3;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+        }
+        .pac-item:hover {
+            background-color: rgba(0, 177, 79, 0.1);
+        }
+        .pac-item-query {
+            color: #fff;
+        }
+        .pac-matched {
+            color: #00B14F;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media(max-width:991px){
             .hero{
                 flex-direction:column-reverse;
                 text-align:center;
                 padding: 20px 0;
             }
-
-            .hero-left,
-            .hero-right{
+            .hero-left, .hero-right{
                 width:100%;
             }
-
             .hero h1{
                 font-size:40px;
             }
-
             .menu{
                 display:none;
             }
-
             .stats-grid{
                 grid-template-columns:1fr;
                 gap: 15px;
             }
-
             .buttons{
                 justify-content:center;
                 flex-direction: column;
                 gap: 10px;
             }
-            
             .section-title{
                 font-size: 36px;
                 margin-bottom: 40px;
@@ -509,87 +663,172 @@
 <body>
 
 <div class="container">
-
     <nav>
-        <div class="logo">
-            CRUIZE<span>MATE</span>
-        </div>
-
+        <div class="logo">CRUIZE<span>MATE</span></div>
         <div class="menu">
             <a href="#">Home</a>
             <a href="#layanan">Layanan</a>
+            <a href="#form-pemesanan">Pesan</a>
+            <a href="#fitur-pembayaran">Fitur Pembayaran</a>
             <a href="#cara-pesan">Cara Pesan</a>
             <a href="#testimoni">Testimoni</a>
             <a onclick="openContactModal()">Kontak</a>
         </div>
-
-        <a href="https://wa.me/6281260636666" class="whatsapp-btn">
-            WhatsApp
-        </a>
+        <a href="https://wa.me/6281260636666" class="whatsapp-btn">WhatsApp</a>
     </nav>
 
     <section class="hero">
         <div class="hero-left">
-            <div class="badge">
-                🚖 JASA BOOKING GRAB CAR ONLINE TERPERCAYA
-            </div>
-
-            <h1>
-                <span>GRAB BOOKING ALIONG</span><br>
-                Melayani Pemesanan Grab Car
-            </h1>
-
-            <p>
-                Solusi cepat dan aman untuk pemesanan Grab Online.
-                Melayani GrabCar antar jemput bandara, perjalanan dalam kota, luar kota,
-                dan kebutuhan transportasi harian.
-            </p>
-
+            <div class="badge">🚖 JASA BOOKING GRAB CAR ONLINE TERPERCAYA</div>
+            <h1><span>GRAB BOOKING ALIONG</span><br>Melayani Pemesanan Grab Car</h1>
+            <p>Solusi cepat dan aman untuk pemesanan Grab Online. Melayani GrabCar antar jemput bandara, perjalanan dalam kota, luar kota, dan kebutuhan transportasi harian.</p>
             <div class="features">
                 <div class="feature">⚡ Respon Cepat</div>
                 <div class="feature">🚗 Driver Terpercaya</div>
                 <div class="feature">📱 Booking Mudah</div>
                 <div class="feature">💰 Harga Transparan</div>
             </div>
-
             <div class="buttons">
-                <a href="https://wa.me/6281260636666?text=Halo%20GrabBooking%20Pro,%20saya%20ingin%20memesan%20layanan%20Grab." class="btn-primary">
-                    Pesan via WhatsApp
-                </a>
-                <a href="#layanan" class="btn-secondary">
-                    Lihat Layanan
-                </a>
+                <a href="#form-pemesanan" class="btn-primary">Pesan via Formulir</a>
+                <a href="#layanan" class="btn-secondary">Look at Layanan</a>
             </div>
         </div>
-
         <div class="hero-right">
-            <img src="https://github.com/flyingdutchmannn66-arch/npl/blob/main/image-removebg-preview%20(1).jpg?raw=true" alt="Mobil Grab">
+            <img src="https://raw.githubusercontent.com/flyingdutchmannn66-arch/npll-gambar/41ba9b20fdf555b87ce552af03edba1ed984ad3c/2064239295656514560%20(1).png">
         </div>
     </section>
-
 </div>
 
 <section id="layanan" class="services">
     <div class="container">
-        <h2 class="section-title">
-            Layanan <span>Kami</span>
-        </h2>
-
+        <h2 class="section-title">Layanan <span>Kami</span></h2>
         <div class="cards">
             <div class="card">
                 <div>
                     <h3>🚗 GrabCar</h3>
                     <p>Perjalanan nyaman untuk individu dan keluarga dengan armada mobil terbaik.</p>
                 </div>
-                <a href="https://wa.me/6281260636666?text=Halo%20Admin,%20saya%20mau%20booking%20GrabCar" class="card-btn">Pesan Sekarang</a>
+                <a href="#form-pemesanan" class="card-btn">Pesan Sekarang</a>
             </div>
-
             <div class="card">
                 <div>
                     <h3>🚗 Grab Private</h3>
                     <p>Layanan perjalanan privat eksklusif dengan kenyamanan ekstra untuk kebutuhan bisnis maupun pribadi Anda.</p>
                 </div>
-                <a href="https://wa.me/6281260636666?text=Halo%20Admin,%20saya%20mau%20booking%20GrabPrivate" class="card-btn">Pesan Sekarang</a>
+                <a href="#form-pemesanan" class="card-btn">Pesan Sekarang</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="form-pemesanan" class="booking-section">
+    <div class="container">
+        <h2 class="section-title">Formulir <span>Pemesanan</span></h2>
+        
+        <div style="max-width: 600px; margin: 0 auto; background: #0c1329; padding: 40px; border-radius: 20px; border: 1px solid rgba(0, 177, 79, 0.3); display: flex; flex-direction: column; gap: 30px;">
+            <form id="bookingForm" style="display: flex; flex-direction: column; gap: 20px;">
+                
+                <div class="form-group">
+                    <label>Nama Penumpang</label>
+                    <input type="text" id="nama" required placeholder="Masukkan nama lengkap">
+                </div>
+
+                <div class="form-group">
+                    <label>Lokasi Penjemputan</label>
+                    <input type="text" id="jemput" required placeholder="Ketik lokasi penjemputan...">
+                </div>
+
+                <div class="form-group">
+                    <label>Lokasi Tujuan</label>
+                    <input type="text" id="tujuan" required placeholder="Ketik lokasi tujuan...">
+                    
+                    <div id="liveTracker" class="live-tracker-box">
+                        <div class="tracker-flex">
+                            <div class="tracker-item">
+                                <div class="tracker-label">📍 Jarak Rute (Google Maps)</div>
+                                <div id="liveJarakText" class="tracker-value">0 KM</div>
+                            </div>
+                            <div class="tracker-item">
+                                <div class="tracker-label">💰 Estimasi Tarif</div>
+                                <div id="liveTarifText" class="tracker-value price">Rp 0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Tanggal Jemput</label>
+                        <input type="date" id="tanggalJemput" required style="color-scheme: dark;">
+                    </div>
+                    <div class="form-group">
+                        <label>Jam Jemput</label>
+                        <input type="time" id="jamJemput" required style="color-scheme: dark;">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" style="padding: 14px; font-weight: 600;">Kirim Pesanan</button>
+            </form>
+
+            <hr style="border: 0; border-top: 1px dashed rgba(255, 255, 255, 0.15);">
+
+            <div id="calculator-box" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+                <h4 style="margin-bottom: 15px; font-size: 16px; color: #FFD700; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-calculator"></i> Kalkulator Cek Tarif Perjalanan (Manual)
+                </h4>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="font-size: 12px;">Perkiraan Jarak Perjalanan (Kilometer)</label>
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <input type="number" id="inputJarak" min="1" step="0.1" placeholder="Contoh: 12" style="width: 100%; padding-right: 50px;">
+                        <span style="position: absolute; right: 15px; color: #a3b1cc; font-size: 14px; font-weight: 600;">KM</span>
+                    </div>
+                </div>
+                <button type="button" onclick="hitungTarifManual()" class="btn-secondary" style="width: 100%; padding: 12px; font-size: 14px; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-tags"></i> Hitung Tarif Argo
+                </button>
+
+                <div id="hasilTarifBox" style="margin-top: 20px; padding: 15px; background: rgba(0, 177, 79, 0.1); border: 1px solid #00B14F; border-radius: 10px; text-align: center; display: none;">
+                    <p style="font-size: 13px; color: #c9d2e3; margin-bottom: 5px;">Estimasi Total Tarif Perjalanan:</p>
+                    <h3 id="textTotalTarif" style="font-size: 26px; color: #00B14F; font-weight: 800; letter-spacing: 0.5px;">Rp 0</h3>
+                    <p style="font-size: 11px; color: #a3b1cc; margin-top: 5px;">*Tarif dasar Rp 3.300 / km</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="waitingListContainer" style="margin-top: 60px; display: none;">
+            <h3 style="text-align: center; margin-bottom: 30px; font-size: 24px;">Antrean <span>Pemesanan</span></h3>
+            <div id="waitingList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;"></div>
+        </div>
+    </div>
+</section>
+
+<section id="fitur-pembayaran" class="payments">
+    <div class="container">
+        <h2 class="section-title">Fitur <span>Pembayaran</span></h2>
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h3><i class="fa-solid fa-money-bill-wave"></i> Tunai (Cash)</h3>
+                    <p>Bayar langsung dengan uang tunai kepada driver setelah Anda sampai di lokasi tujuan dengan aman.</p>
+                </div>
+                <a href="https://wa.me/6281260636666?text=Halo%20Admin" class="card-btn">Info Lebih Lanjut</a>
+            </div>
+            <div class="card">
+                <div>
+                    <h3><i class="fa-solid fa-credit-card"></i> Transfer Bank </h3>
+                    <p>Mendukung pembayaran non-tunai yang praktis via Transfer Bank .</p>
+                    <div class="bank-info-container">
+                        <div class="bank-item">
+                            <i class="fa-solid fa-university"></i>
+                            <div class="bank-details">
+                                <div class="bank-name">BANK BCA</div>
+                                <div class="bank-account">699 517 4255</div>
+                                <div class="bank-holder">a/n NAUFAL RAMADHAN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://wa.me/6281260636666" class="card-btn">Konfirmasi Transfer</a>
             </div>
         </div>
     </div>
@@ -597,73 +836,13 @@
 
 <section id="cara-pesan" class="steps">
     <div class="container">
-        <h2 class="section-title">
-            Cara <span>Pemesanan</span>
-        </h2>
-
+        <h2 class="section-title">Cara <span>Pemesanan</span></h2>
         <div class="step-grid">
-            <div class="step">
-                <div class="step-number">1</div>
-                Hubungi WhatsApp
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                Kirim Lokasi Jemput
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                Kirim Tujuan
-            </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                Konfirmasi Biaya
-            </div>
-            <div class="step">
-                <div class="step-number">5</div>
-                Driver Berangkat
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="stats">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat">
-                <h2>378+</h2>
-                <p>Booking Berhasil</p>
-            </div>
-            <div class="stat">
-                <h2>24 Jam</h2>
-                <p>Layanan Aktif</p>
-            </div>
-            <div class="stat">
-                <h2>98%</h2>
-                <p>Pelanggan Puas</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="testimoni" class="testimonials">
-    <div class="container">
-        <h2 class="section-title">
-            Testimoni <span>Pelanggan</span>
-        </h2>
-
-        <div class="testi-grid">
-            <div class="testi">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                "Booking sangat cepat dan admin responsif."
-            </div>
-            <div class="testi">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                "Sangat membantu saat tidak bisa pesan Grab sendiri."
-            </div>
-            <div class="testi">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                "Harga jelas dan driver cepat datang."
-            </div>
+            <div class="step"><div class="step-number">1</div>Hubungi WhatsApp</div>
+            <div class="step"><div class="step-number">2</div>Kirim Lokasi Jemput</div>
+            <div class="step"><div class="step-number">3</div>Kirim Tujuan</div>
+            <div class="step"><div class="step-number">4</div>Konfirmasi Biaya</div>
+            <div class="step"><div class="step-number">5</div>Driver Berangkat</div>
         </div>
     </div>
 </section>
@@ -677,47 +856,202 @@
     <p>© 2026 GRABBOOKING PRO</p>
 </footer>
 
-
 <div class="contact-modal" id="contactModal">
     <div class="modal-content">
         <button class="close-modal" onclick="closeContactModal()"><i class="fa-solid fa-xmark"></i></button>
         <h3>Hubungi Kami</h3>
         <p>Silakan pilih platform di bawah ini untuk tersambung dengan admin kami</p>
-        
         <div class="social-links-grid">
-            <a href="https://www.instagram.com/nopallrmdd/" target="_blank" class="social-btn btn-instagram">
-                <i class="fa-brands fa-instagram"></i> Instagram
-            </a>
-            
-            <a href="https://line.me/ti/p/~nopallrmdd_" target="_blank" class="social-btn btn-line">
-                <i class="fa-brands fa-line"></i> Line Official
-            </a>
-           
-            <a href="https://wa.me/6281260636666" target="_blank" class="social-btn btn-whatsapp-modal">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp Chat
-            </a>
+            <a href="https://www.instagram.com/nopallrmdd/" target="_blank" class="social-btn btn-instagram"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            <a href="https://wa.me/6281260636666" target="_blank" class="social-btn btn-whatsapp-modal"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
         </div>
     </div>
 </div>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=GANTI_DENGAN_API_KEY_GOOGLE_ANDA&libraries=places&callback=initGoogleMapsServices" async defer></script>
+
 <script>
     const modal = document.getElementById('contactModal');
+    const bookingForm = document.getElementById('bookingForm');
+    const waitingListContainer = document.getElementById('waitingListContainer');
+    const waitingList = document.getElementById('waitingList');
 
-    function openContactModal() {
-        modal.classList.add('active');
+    const PASSWORD_ADMIN = "admin123"; 
+    const TARIF_PER_KM = 3300; 
+    let currentJarakAkurat = 0; 
+
+    // Objek Google API global
+    let autocompleteJemput, autocompleteTujuan, directionsService;
+
+    function openContactModal() { modal.classList.add('active'); }
+    function closeContactModal() { modal.classList.remove('active'); }
+    window.onclick = function(event) { if (event.target == modal) { closeContactModal(); } }
+
+    // Inisialisasi Google Autocomplete & Directions Service setelah script eksternal termuat
+    function initGoogleMapsServices() {
+        directionsService = new google.maps.DirectionsService();
+
+        // Autocomplete untuk input Jemput
+        autocompleteJemput = new google.maps.places.Autocomplete(document.getElementById('jemput'), {
+            types: ['geocode', 'establishment'],
+            componentRestrictions: { country: 'id' } // Dibatasi rute di Indonesia
+        });
+
+        // Autocomplete untuk input Tujuan
+        autocompleteTujuan = new google.maps.places.Autocomplete(document.getElementById('tujuan'), {
+            types: ['geocode', 'establishment'],
+            componentRestrictions: { country: 'id' }
+        });
+
+        // Trigger perhitungan ketika pengguna memilih lokasi dari dropdown Google Maps
+        autocompleteJemput.addListener('place_changed', hitungRuteGoogleMaps);
+        autocompleteTujuan.addListener('place_changed', hitungRuteGoogleMaps);
     }
 
-    function closeContactModal() {
-        modal.classList.remove('active');
+    // Fungsi Utama: Mengukur rute jalan raya asli menggunakan Google Directions API
+    function hitungRuteGoogleMaps() {
+        const asalText = document.getElementById('jemput').value;
+        const tujuanText = document.getElementById('tujuan').value;
+        const trackerBox = document.getElementById('liveTracker');
+        const jarakText = document.getElementById('liveJarakText');
+        const tarifText = document.getElementById('liveTarifText');
+
+        if (asalText.trim() === "" || tujuanText.trim() === "") {
+            trackerBox.style.display = "none";
+            return;
+        }
+
+        // Request data rute berkendara (DRIVING) ke server Google Maps
+        const request = {
+            origin: asalText,
+            destination: tujuanText,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        directionsService.route(request, function (response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                // Mendapatkan jarak dalam satuan meter dari rute jalan raya tercepat
+                const jarakMeter = response.routes[0].legs[0].distance.value;
+                currentJarakAkurat = parseFloat((jarakMeter / 1000).toFixed(1)); // Ubah ke Kilometer (contoh: 12.4 KM)
+
+                const totalTarif = currentJarakAkurat * TARIF_PER_KM;
+
+                // Format ke Rupiah Indonesia
+                const formatRupiah = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(totalTarif);
+
+                // Update text di box live tracker
+                jarakText.innerText = currentJarakAkurat + " KM";
+                tarifText.innerText = formatRupiah;
+                trackerBox.style.display = "block";
+            } else {
+                console.log("Gagal melacak rute Google Maps karena: " + status);
+                trackerBox.style.display = "none";
+            }
+        });
     }
 
-    // Menutup pop-up otomatis jika mengklik area luar kotak dialog
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            closeContactModal();
+    // Fungsi Kalkulator Manual
+    function hitungTarifManual() {
+        const jarakInput = document.getElementById('inputJarak').value;
+        const hasilBox = document.getElementById('hasilTarifBox');
+        const textTotal = document.getElementById('textTotalTarif');
+
+        if(jarakInput === "" || jarakInput <= 0) {
+            alert("Silakan masukkan kilometer dengan benar!");
+            hasilBox.style.display = "none";
+            return;
+        }
+
+        const totalTarif = parseFloat(jarakInput) * TARIF_PER_KM;
+        const formatRupiah = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(totalTarif);
+
+        textTotal.innerText = formatRupiah;
+        hasilBox.style.display = "block";
+    }
+
+    // Fungsi Hapus Antrean (Admin)
+    function hapusPesanan(button) {
+        const passwordInput = prompt("Masukkan Password Admin:");
+        if (passwordInput === PASSWORD_ADMIN) {
+            const cardElement = button.closest('.antrean-card');
+            cardElement.remove();
+            if (waitingList.children.length === 0) {
+                waitingListContainer.style.display = 'none';
+            }
+        } else if (passwordInput !== null) {
+            alert("Password Salah!");
         }
     }
-</script>
 
+    // Event kirim formulir & rekam ke list antrean bawah
+    bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const nama = document.getElementById('nama').value;
+        const jemput = document.getElementById('jemput').value;
+        const tujuan = document.getElementById('tujuan').value;
+        const inputTanggal = document.getElementById('tanggalJemput').value;
+        const jam = document.getElementById('jamJemput').value;
+
+        const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const tanggalDiformat = new Date(inputTanggal).toLocaleDateString('id-ID', opsiTanggal); 
+        const waktuSubmit = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+        let cetakTarifAntrean = "Menghitung...";
+        if(currentJarakAkurat > 0) {
+            cetakTarifAntrean = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(currentJarakAkurat * TARIF_PER_KM) + ` (${currentJarakAkurat} KM)`;
+        }
+
+        waitingListContainer.style.display = 'block';
+
+        const card = document.createElement('div');
+        card.className = 'antrean-card'; 
+        card.style.cssText = `
+            background: rgba(0, 177, 79, 0.04);
+            border: 1px solid rgba(0, 177, 79, 0.2);
+            padding: 22px;
+            border-radius: 15px;
+            position: relative;
+            animation: fadeIn 0.5s ease;
+        `;
+
+        card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                <span style="color: #00B14F; font-weight: 700; font-size: 13px;">#AntreanAktif</span>
+                <span style="font-size: 11px; color: #a3b1cc;">Dibuat: ${waktuSubmit} WIB</span>
+            </div>
+            <p style="margin-bottom: 8px;"><strong style="color: white; font-size: 16px;">${nama}</strong></p>
+            <div style="background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.15); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px;">
+                <p style="color: #FFD700; margin-bottom: 2px;">📅 <strong>Jadwal:</strong> ${tanggalDiformat}</p>
+                <p style="color: #FFD700; margin-bottom: 2px;">⏰ <strong>Jam Jemput:</strong> ${jam} WIB</p>
+                <p style="color: #00B14F;">💵 <strong>Estimasi Argo:</strong> ${cetakTarifAntrean}</p>
+            </div>
+            <p style="font-size: 13px; color: #c9d2e3; margin-bottom: 4px;">📍 <span style="color: #a3b1cc;">Dari:</span> ${jemput}</p>
+            <p style="font-size: 13px; color: #c9d2e3; margin-bottom: 15px;">🏁 <span style="color: #00B14F;">Ke:</span> ${tujuan}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="font-size: 11px; background: rgba(0, 177, 79, 0.2); display: inline-block; padding: 5px 12px; border-radius: 50px; color: #00B14F; font-weight: 500;">
+                    <i class="fa-solid fa-spinner fa-spin" style="margin-right: 5px;"></i> Menunggu Konfirmasi Driver
+                </div>
+                <button onclick="hapusPesanan(this)" style="background: rgba(220, 38, 38, 0.2); border: 1px solid rgba(220, 38, 38, 0.4); color: #ef4444; font-size: 11px; font-weight:600; padding: 5px 12px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <i class="fa-solid fa-trash-can"></i> Hapus Pesanan
+                </button>
+            </div>
+        `;
+
+        waitingList.prepend(card);
+        bookingForm.reset();
+        document.getElementById('liveTracker').style.display = "none";
+        currentJarakAkurat = 0;
+        waitingListContainer.scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
 </body>
 </html>
