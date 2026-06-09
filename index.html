@@ -23,6 +23,7 @@
         body{
             background:#0f0f0f;
             color:white;
+            overflow-x: hidden; /* Mencegah overflow horizontal di mobile */
         }
 
         .container{
@@ -36,13 +37,16 @@
             display:flex;
             justify-content:space-between;
             align-items:center;
-            padding:25px 0;
+            padding:20px 0;
+            position: relative;
+            z-index: 100;
         }
 
         .logo{
-            font-size:32px;
+            font-size:26px;
             font-weight:800;
             color:#00B14F;
+            letter-spacing: 0.5px;
         }
 
         .logo span{
@@ -51,7 +55,7 @@
 
         .menu{
             display:flex;
-            gap:35px;
+            gap:30px;
             align-items: center;
         }
 
@@ -60,6 +64,7 @@
             text-decoration:none;
             transition:.3s;
             cursor: pointer;
+            font-size: 15px;
         }
 
         .menu a:hover{
@@ -69,24 +74,45 @@
         .whatsapp-btn{
             background:#00B14F;
             color:white;
-            padding:12px 25px;
+            padding:10px 20px;
             border-radius:50px;
             text-decoration:none;
             font-weight:600;
             transition: 0.3s;
+            font-size: 14px;
         }
 
         .whatsapp-btn:hover {
             background: #008f3e;
         }
 
-        /* HERO */
+        /* Hamburger Menu (Mobile Only) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* HERO SECTION */
         .hero{
-            min-height:85vh;
+            min-height:80vh;
             display:flex;
             align-items:center;
             justify-content:space-between;
-            gap:50px;
+            gap:40px;
             padding: 40px 0;
         }
 
@@ -96,16 +122,18 @@
 
         .badge{
             display:inline-block;
-            padding:12px 22px;
-            border:1px solid rgba(255,255,255,.2);
+            padding:10px 18px;
+            border:1px solid rgba(255,255,255,.15);
             border-radius:50px;
-            margin-bottom:25px;
+            margin-bottom:20px;
             color:#FFD700;
             background: rgba(255, 215, 0, 0.05);
+            font-size: 12px;
+            font-weight: 600;
         }
 
         .hero h1{
-            font-size:56px;
+            font-size:46px;
             line-height:1.2;
             margin-bottom:20px;
             font-weight: 800;
@@ -117,39 +145,45 @@
 
         .hero p{
             color:#c9d2e3;
-            font-size:18px;
-            line-height:1.8;
+            font-size:16px;
+            line-height:1.7;
             margin-bottom:30px;
         }
 
         .features{
             display:flex;
             flex-wrap:wrap;
-            gap:15px;
-            margin-bottom:40px;
+            gap:10px;
+            margin-bottom:35px;
         }
 
         .feature{
-            border:1px solid rgba(255,255,255,.15);
-            padding:12px 18px;
+            border:1px solid rgba(255,255,255,.12);
+            padding:10px 16px;
             border-radius:40px;
             color:#ddd;
             background: rgba(255, 255, 255, 0.02);
+            font-size: 13px;
         }
 
         .buttons{
             display:flex;
-            gap:20px;
+            gap:15px;
+        }
+
+        .btn-primary, .btn-secondary{
+            padding:14px 28px;
+            border-radius:50px;
+            text-decoration:none;
+            font-weight:600;
+            font-size: 15px;
+            transition: 0.3s;
+            text-align: center;
         }
 
         .btn-primary{
             background:#00B14F;
             color:white;
-            padding:16px 30px;
-            border-radius:50px;
-            text-decoration:none;
-            font-weight:600;
-            transition: 0.3s;
             border: none;
             cursor: pointer;
         }
@@ -162,10 +196,6 @@
         .btn-secondary{
             border:1px solid #00B14F;
             color:white;
-            padding:16px 30px;
-            border-radius:50px;
-            text-decoration:none;
-            transition: 0.3s;
         }
 
         .btn-secondary:hover{
@@ -173,7 +203,6 @@
             transform: translateY(-2px);
         }
 
-        /* RIGHT */
         .hero-right{
             width:45%;
             text-align:center;
@@ -181,28 +210,23 @@
 
         .hero-right img{
             width:100%;
-            max-width:600px;
-            filter:drop-shadow(0 0 40px rgba(0,177,79,.5));
+            max-width:500px;
+            filter:drop-shadow(0 0 30px rgba(0,177,79,.4));
         }
 
-        /* SERVICES, BOOKING & PAYMENTS */
-        .services, .booking-section, .payments{
-            padding:100px 0;
-            background: rgba(255, 255, 255, 0.01);
+        /* SECTIONS GENERAL */
+        .services, .booking-section, .payments, .steps, .testimonials{
+            padding:70px 0;
         }
 
-        .booking-section {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .payments {
-            background: rgba(0, 177, 79, 0.01);
-        }
+        .services { background: rgba(255, 255, 255, 0.01); }
+        .booking-section { background: rgba(255, 255, 255, 0.02); }
+        .payments { background: rgba(0, 177, 79, 0.01); }
 
         .section-title{
             text-align:center;
-            font-size:48px;
-            margin-bottom:60px;
+            font-size:36px;
+            margin-bottom:45px;
             font-weight: 700;
         }
 
@@ -212,15 +236,15 @@
 
         .cards{
             display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-            gap:25px;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:20px;
         }
 
         .card{
             background:#0c1329;
-            border:1px solid rgba(255,255,255,.1);
+            border:1px solid rgba(255,255,255,.08);
             border-radius:20px;
-            padding:30px;
+            padding:25px;
             transition:.3s;
             display: flex;
             flex-direction: column;
@@ -228,15 +252,15 @@
         }
 
         .card:hover{
-            transform:translateY(-8px);
+            transform:translateY(-5px);
             border-color:#00B14F;
-            box-shadow: 0 10px 30px rgba(0, 177, 79, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 177, 79, 0.15);
         }
 
         .card h3{
-            margin-bottom:15px;
+            margin-bottom:12px;
             color:#00B14F;
-            font-size: 22px;
+            font-size: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -245,16 +269,16 @@
         .card p {
             color: #c9d2e3;
             margin-bottom: 20px;
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.6;
         }
 
-        /* Bank Account Info Layout */
+        /* BANK INFO */
         .bank-info-container {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             background: rgba(255, 255, 255, 0.03);
             padding: 15px;
             border-radius: 12px;
@@ -265,7 +289,6 @@
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            text-align: left;
         }
 
         .bank-item i {
@@ -276,25 +299,11 @@
 
         .bank-details {
             font-size: 14px;
-            line-height: 1.4;
         }
 
-        .bank-name {
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .bank-account {
-            font-family: monospace;
-            font-size: 15px;
-            color: #00B14F;
-            letter-spacing: 0.5px;
-        }
-
-        .bank-holder {
-            color: #a3b1cc;
-            font-size: 12px;
-        }
+        .bank-name { font-weight: 700; color: #fff; }
+        .bank-account { font-family: monospace; font-size: 15px; color: #00B14F; }
+        .bank-holder { color: #a3b1cc; font-size: 12px; }
 
         .card-btn {
             display: block;
@@ -316,16 +325,15 @@
             color: white;
         }
 
-        /* FORM FIELD STYLE */
+        /* FORM */
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            position: relative;
         }
 
         .form-group label {
-            font-size: 14px;
+            font-size: 13px;
             color: #a3b1cc;
         }
 
@@ -338,6 +346,7 @@
             outline: none;
             font-size: 15px;
             transition: 0.3s;
+            width: 100%;
         }
 
         .form-group input:focus {
@@ -345,21 +354,21 @@
             background: rgba(255,255,255,0.08);
         }
 
-        /* Live Route Tracker Info Style */
+        /* LIVE TRACKER */
         .live-tracker-box {
             background: rgba(0, 177, 79, 0.05);
             border: 1px solid rgba(0, 177, 79, 0.3);
             padding: 15px;
             border-radius: 12px;
-            margin-top: 5px;
+            margin-top: 10px;
             display: none;
-            animation: fadeIn 0.4s ease;
         }
 
         .tracker-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
         }
 
         .tracker-item {
@@ -375,12 +384,11 @@
             font-size: 11px;
             color: #a3b1cc;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .tracker-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: #00B14F;
         }
@@ -390,118 +398,80 @@
         }
 
         /* STEPS */
-        .steps{
-            padding:100px 0;
-        }
-
         .step-grid{
             display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-            gap:25px;
+            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+            gap:20px;
         }
 
         .step{
             background:#0c1329;
-            padding:40px 30px;
+            padding:30px 20px;
             border-radius:20px;
             text-align:center;
             border: 1px solid rgba(255,255,255,.05);
             font-weight: 500;
+            font-size: 14px;
         }
 
         .step-number{
-            width:60px;
-            height:60px;
+            width:50px;
+            height:50px;
             background:#00B14F;
             border-radius:50%;
             display:flex;
             justify-content:center;
             align-items:center;
-            margin:auto;
-            margin-bottom:20px;
-            font-size:24px;
+            margin:0 auto 15px auto;
+            font-size:20px;
             font-weight:bold;
-            box-shadow: 0 0 20px rgba(0, 177, 79, 0.4);
+            box-shadow: 0 0 15px rgba(0, 177, 79, 0.3);
         }
 
-        /* STATS */
-        .stats{
-            padding:80px 0;
-            background: rgba(0, 177, 79, 0.03);
-        }
-
-        .stats-grid{
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:25px;
-        }
-
-        .stat{
-            background:#0c1329;
-            padding:40px;
-            border-radius:20px;
-            text-align:center;
-            border: 1px solid rgba(255,255,255,.05);
-        }
-
-        .stat h2{
-            color:#00B14F;
-            font-size:54px;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .stat p {
-            color: #c9d2e3;
-            font-size: 16px;
-        }
-
-        /* TESTI */
-        .testimonials{
-            padding:100px 0;
-        }
-
+        /* TESTIMONI */
         .testi-grid{
             display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-            gap:25px;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:20px;
         }
 
         .testi{
             background:#0c1329;
-            padding:35px;
+            padding:25px;
             border-radius:20px;
             border: 1px solid rgba(255,255,255,.05);
-            line-height: 1.7;
+            line-height: 1.6;
             color: #c9d2e3;
+            font-size: 14px;
         }
 
         .stars{
             color:gold;
-            margin-bottom:15px;
-            font-size: 18px;
+            margin-bottom:12px;
+            font-size: 16px;
         }
 
         /* FOOTER */
         footer{
             text-align:center;
-            padding:60px 20px;
+            padding:50px 20px;
             border-top:1px solid rgba(255,255,255,.1);
-            margin-top:80px;
             background: #030714;
         }
 
         footer h2{
             color:#00B14F;
-            margin-bottom:15px;
+            margin-bottom:10px;
             font-weight: 700;
+            font-size: 24px;
         }
 
         footer p {
             color: #a3b1cc;
+            font-size: 14px;
         }
 
-        /* STYLE POP-UP MODAL KONTAK */
+        /* MODAL */
         .contact-modal {
             position: fixed;
             top: 0;
@@ -517,6 +487,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease;
+            padding: 20px;
         }
 
         .contact-modal.active {
@@ -527,15 +498,14 @@
         .modal-content {
             background: #0c1329;
             border: 1px solid rgba(0, 177, 79, 0.3);
-            padding: 40px;
+            padding: 30px 20px;
             border-radius: 24px;
-            width: 90%;
-            max-width: 450px;
+            width: 100%;
+            max-width: 400px;
             text-align: center;
             position: relative;
-            transform: scale(0.7);
+            transform: scale(0.8);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
         .contact-modal.active .modal-content {
@@ -544,119 +514,142 @@
 
         .close-modal {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: none;
             border: none;
             color: #c9d2e3;
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .close-modal:hover {
-            color: #ff4d4d;
-        }
-
-        .modal-content h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .modal-content p {
-            color: #c9d2e3;
-            font-size: 14px;
-            margin-bottom: 30px;
         }
 
         .social-links-grid {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .social-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            padding: 14px;
+            gap: 12px;
+            padding: 12px;
             border-radius: 50px;
             text-decoration: none;
             color: white;
             font-weight: 600;
-            font-size: 16px;
-            transition: 0.3s;
+            font-size: 15px;
         }
 
         .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-        .btn-line { background: #06C755; }
         .btn-whatsapp-modal { background: #25D366; }
 
-        .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            filter: brightness(1.1);
-        }
-
-        /* Gaya Khusus untuk Dropdown Autocomplete Google */
+        /* GOOGLE AUTOCOMPLETE DROPDOWN */
         .pac-container {
-            background-color: #0c1329;
-            border: 1px solid rgba(0, 177, 79, 0.4);
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
+            background-color: #0c1329 !important;
+            border: 1px solid rgba(0, 177, 79, 0.4) !important;
+            border-radius: 8px !important;
             z-index: 10000 !important;
         }
         .pac-item {
-            padding: 10px;
-            color: #c9d2e3;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            cursor: pointer;
+            padding: 8px 10px !important;
+            color: #c9d2e3 !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
         }
-        .pac-item:hover {
-            background-color: rgba(0, 177, 79, 0.1);
+        .pac-item-query { color: #fff !important; }
+
+        /* =============================================
+           RESPONSIVE MEDIA QUERIES (FLEKSIBEL HP/TABLET)
+           ============================================= */
+        @media(max-width: 991px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 30px 0;
+                gap: 30px;
+            }
+            .hero-left, .hero-right {
+                width: 100%;
+            }
+            .hero h1 {
+                font-size: 34px;
+            }
+            .hero p {
+                font-size: 15px;
+            }
+            .features {
+                justify-content: center;
+            }
+            .buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+
+            /* Mobile Menu Toggle Logic */
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: auto;
+                background: #0c1329;
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 20px;
+                border-radius: 15px;
+                border: 1px solid rgba(255,255,255,0.1);
+                transition: 0.4s ease-in-out;
+                box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            }
+
+            .menu.active {
+                left: 0;
+            }
+
+            /* Animasi Hamburger ke silang (X) */
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+            
+            .whatsapp-btn {
+                display: none; /* Disembunyikan di navbar mobile untuk menghemat ruang */
+            }
         }
-        .pac-item-query {
-            color: #fff;
-        }
-        .pac-matched {
-            color: #00B14F;
+
+        @media(max-width: 576px) {
+            .section-title {
+                font-size: 28px;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .card {
+                padding: 20px;
+            }
+            /* Form Grid tanggal & jam menjadi satu kolom vertikal di HP Kecil */
+            .dateTime-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px;
+            }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media(max-width:991px){
-            .hero{
-                flex-direction:column-reverse;
-                text-align:center;
-                padding: 20px 0;
-            }
-            .hero-left, .hero-right{
-                width:100%;
-            }
-            .hero h1{
-                font-size:40px;
-            }
-            .menu{
-                display:none;
-            }
-            .stats-grid{
-                grid-template-columns:1fr;
-                gap: 15px;
-            }
-            .buttons{
-                justify-content:center;
-                flex-direction: column;
-                gap: 10px;
-            }
-            .section-title{
-                font-size: 36px;
-                margin-bottom: 40px;
-            }
         }
     </style>
 </head>
@@ -665,7 +658,15 @@
 <div class="container">
     <nav>
         <div class="logo">CRUIZE<span>MATE</span></div>
-        <div class="menu">
+        
+        <!-- Tambahan Tombol Hamburger -->
+        <button class="menu-toggle" id="mobileMenuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="menu" id="navMenu">
             <a href="#">Home</a>
             <a href="#layanan">Layanan</a>
             <a href="#form-pemesanan">Pesan</a>
@@ -673,15 +674,18 @@
             <a href="#cara-pesan">Cara Pesan</a>
             <a href="#testimoni">Testimoni</a>
             <a onclick="openContactModal()">Kontak</a>
+            <!-- Muncul di dalam menu saat mode mobile -->
+            <a href="https://wa.me/6281260636666" style="background:#00B14F; padding: 10px 25px; border-radius: 50px; text-align: center; font-weight: 600; width: 100%;" class="mobile-only-wa">WhatsApp</a>
         </div>
+        
         <a href="https://wa.me/6281260636666" class="whatsapp-btn">WhatsApp</a>
     </nav>
 
     <section class="hero">
         <div class="hero-left">
-            <div class="badge">🚖 JASA BOOKING GRAB CAR ONLINE TERPERCAYA</div>
+            <div class="badge">🚖 JASA BOOKING GRAB CAR ONLINE</div>
             <h1><span>GRAB BOOKING ALIONG</span><br>Melayani Pemesanan Grab Car</h1>
-            <p>Solusi cepat dan aman untuk pemesanan Grab Online. Melayani GrabCar antar jemput bandara, perjalanan dalam kota, luar kota, dan kebutuhan transportasi harian.</p>
+            <p>Solusi cepat dan aman untuk pemesanan Grab Online. Melayani GrabCar antar jemput bandara, perjalanan dalam kota, luar kota, dan kebutuhan harian.</p>
             <div class="features">
                 <div class="feature">⚡ Respon Cepat</div>
                 <div class="feature">🚗 Driver Terpercaya</div>
@@ -690,11 +694,11 @@
             </div>
             <div class="buttons">
                 <a href="#form-pemesanan" class="btn-primary">Pesan via Formulir</a>
-                <a href="#layanan" class="btn-secondary">Look at Layanan</a>
+                <a href="#layanan" class="btn-secondary">Lihat Layanan</a>
             </div>
         </div>
         <div class="hero-right">
-            <img src="https://raw.githubusercontent.com/flyingdutchmannn66-arch/npll-gambar/41ba9b20fdf555b87ce552af03edba1ed984ad3c/2064239295656514560%20(1).png">
+            <img src="https://raw.githubusercontent.com/flyingdutchmannn66-arch/npll-gambar/41ba9b20fdf555b87ce552af03edba1ed984ad3c/2064239295656514560%20(1).png" alt="Grab Car">
         </div>
     </section>
 </div>
@@ -725,7 +729,7 @@
     <div class="container">
         <h2 class="section-title">Formulir <span>Pemesanan</span></h2>
         
-        <div style="max-width: 600px; margin: 0 auto; background: #0c1329; padding: 40px; border-radius: 20px; border: 1px solid rgba(0, 177, 79, 0.3); display: flex; flex-direction: column; gap: 30px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #0c1329; padding: 25px; border-radius: 20px; border: 1px solid rgba(0, 177, 79, 0.3); display: flex; flex-direction: column; gap: 25px;">
             <form id="bookingForm" style="display: flex; flex-direction: column; gap: 20px;">
                 
                 <div class="form-group">
@@ -745,7 +749,7 @@
                     <div id="liveTracker" class="live-tracker-box">
                         <div class="tracker-flex">
                             <div class="tracker-item">
-                                <div class="tracker-label">📍 Jarak Rute (Google Maps)</div>
+                                <div class="tracker-label">📍 Jarak Rute</div>
                                 <div id="liveJarakText" class="tracker-value">0 KM</div>
                             </div>
                             <div class="tracker-item">
@@ -756,7 +760,7 @@
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="dateTime-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="form-group">
                         <label>Tanggal Jemput</label>
                         <input type="date" id="tanggalJemput" required style="color-scheme: dark;">
@@ -767,14 +771,14 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary" style="padding: 14px; font-weight: 600;">Kirim Pesanan</button>
+                <button type="submit" class="btn-primary" style="padding: 14px; font-weight: 600; width:100%;">Kirim Pesanan</button>
             </form>
 
             <hr style="border: 0; border-top: 1px dashed rgba(255, 255, 255, 0.15);">
 
-            <div id="calculator-box" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
-                <h4 style="margin-bottom: 15px; font-size: 16px; color: #FFD700; display: flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-calculator"></i> Kalkulator Cek Tarif Perjalanan (Manual)
+            <div id="calculator-box" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;">
+                <h4 style="margin-bottom: 15px; font-size: 15px; color: #FFD700; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-calculator"></i> Kalkulator Tarif (Manual)
                 </h4>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label style="font-size: 12px;">Perkiraan Jarak Perjalanan (Kilometer)</label>
@@ -783,21 +787,21 @@
                         <span style="position: absolute; right: 15px; color: #a3b1cc; font-size: 14px; font-weight: 600;">KM</span>
                     </div>
                 </div>
-                <button type="button" onclick="hitungTarifManual()" class="btn-secondary" style="width: 100%; padding: 12px; font-size: 14px; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                <button type="button" onclick="hitungTarifManual()" class="btn-secondary" style="width: 100%; padding: 12px; font-size: 14px; font-weight: 600;">
                     <i class="fa-solid fa-tags"></i> Hitung Tarif Argo
                 </button>
 
                 <div id="hasilTarifBox" style="margin-top: 20px; padding: 15px; background: rgba(0, 177, 79, 0.1); border: 1px solid #00B14F; border-radius: 10px; text-align: center; display: none;">
                     <p style="font-size: 13px; color: #c9d2e3; margin-bottom: 5px;">Estimasi Total Tarif Perjalanan:</p>
-                    <h3 id="textTotalTarif" style="font-size: 26px; color: #00B14F; font-weight: 800; letter-spacing: 0.5px;">Rp 0</h3>
+                    <h3 id="textTotalTarif" style="font-size: 24px; color: #00B14F; font-weight: 800;">Rp 0</h3>
                     <p style="font-size: 11px; color: #a3b1cc; margin-top: 5px;">*Tarif dasar Rp 3.300 / km</p>
                 </div>
             </div>
         </div>
 
-        <div id="waitingListContainer" style="margin-top: 60px; display: none;">
+        <div id="waitingListContainer" style="margin-top: 50px; display: none;">
             <h3 style="text-align: center; margin-bottom: 30px; font-size: 24px;">Antrean <span>Pemesanan</span></h3>
-            <div id="waitingList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;"></div>
+            <div id="waitingList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;"></div>
         </div>
     </div>
 </section>
@@ -860,7 +864,7 @@
     <div class="modal-content">
         <button class="close-modal" onclick="closeContactModal()"><i class="fa-solid fa-xmark"></i></button>
         <h3>Hubungi Kami</h3>
-        <p>Silakan pilih platform di bawah ini untuk tersambung dengan admin kami</p>
+        <p style="color:#c9d2e3; font-size:14px; margin-bottom:20px;">Silakan pilih platform di bawah ini untuk tersambung dengan admin kami</p>
         <div class="social-links-grid">
             <a href="https://www.instagram.com/nopallrmdd/" target="_blank" class="social-btn btn-instagram"><i class="fa-brands fa-instagram"></i> Instagram</a>
             <a href="https://wa.me/6281260636666" target="_blank" class="social-btn btn-whatsapp-modal"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
@@ -871,6 +875,23 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=GANTI_DENGAN_API_KEY_GOOGLE_ANDA&libraries=places&callback=initGoogleMapsServices" async defer></script>
 
 <script>
+    // Logic Navigasi Hamburger Mobile
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+
+    // Menutup menu otomatis jika salah satu link di klik (khusus mobile)
+    document.querySelectorAll('.menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenuBtn.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+
     const modal = document.getElementById('contactModal');
     const bookingForm = document.getElementById('bookingForm');
     const waitingListContainer = document.getElementById('waitingListContainer');
@@ -880,35 +901,29 @@
     const TARIF_PER_KM = 3300; 
     let currentJarakAkurat = 0; 
 
-    // Objek Google API global
     let autocompleteJemput, autocompleteTujuan, directionsService;
 
     function openContactModal() { modal.classList.add('active'); }
     function closeContactModal() { modal.classList.remove('active'); }
     window.onclick = function(event) { if (event.target == modal) { closeContactModal(); } }
 
-    // Inisialisasi Google Autocomplete & Directions Service setelah script eksternal termuat
     function initGoogleMapsServices() {
         directionsService = new google.maps.DirectionsService();
 
-        // Autocomplete untuk input Jemput
         autocompleteJemput = new google.maps.places.Autocomplete(document.getElementById('jemput'), {
             types: ['geocode', 'establishment'],
-            componentRestrictions: { country: 'id' } // Dibatasi rute di Indonesia
+            componentRestrictions: { country: 'id' }
         });
 
-        // Autocomplete untuk input Tujuan
         autocompleteTujuan = new google.maps.places.Autocomplete(document.getElementById('tujuan'), {
             types: ['geocode', 'establishment'],
             componentRestrictions: { country: 'id' }
         });
 
-        // Trigger perhitungan ketika pengguna memilih lokasi dari dropdown Google Maps
         autocompleteJemput.addListener('place_changed', hitungRuteGoogleMaps);
         autocompleteTujuan.addListener('place_changed', hitungRuteGoogleMaps);
     }
 
-    // Fungsi Utama: Mengukur rute jalan raya asli menggunakan Google Directions API
     function hitungRuteGoogleMaps() {
         const asalText = document.getElementById('jemput').value;
         const tujuanText = document.getElementById('tujuan').value;
@@ -921,7 +936,6 @@
             return;
         }
 
-        // Request data rute berkendara (DRIVING) ke server Google Maps
         const request = {
             origin: asalText,
             destination: tujuanText,
@@ -930,20 +944,17 @@
 
         directionsService.route(request, function (response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
-                // Mendapatkan jarak dalam satuan meter dari rute jalan raya tercepat
                 const jarakMeter = response.routes[0].legs[0].distance.value;
-                currentJarakAkurat = parseFloat((jarakMeter / 1000).toFixed(1)); // Ubah ke Kilometer (contoh: 12.4 KM)
+                currentJarakAkurat = parseFloat((jarakMeter / 1000).toFixed(1)); 
 
                 const totalTarif = currentJarakAkurat * TARIF_PER_KM;
 
-                // Format ke Rupiah Indonesia
                 const formatRupiah = new Intl.NumberFormat('id-ID', {
                     style: 'currency',
                     currency: 'IDR',
                     minimumFractionDigits: 0
                 }).format(totalTarif);
 
-                // Update text di box live tracker
                 jarakText.innerText = currentJarakAkurat + " KM";
                 tarifText.innerText = formatRupiah;
                 trackerBox.style.display = "block";
@@ -954,7 +965,6 @@
         });
     }
 
-    // Fungsi Kalkulator Manual
     function hitungTarifManual() {
         const jarakInput = document.getElementById('inputJarak').value;
         const hasilBox = document.getElementById('hasilTarifBox');
@@ -977,7 +987,6 @@
         hasilBox.style.display = "block";
     }
 
-    // Fungsi Hapus Antrean (Admin)
     function hapusPesanan(button) {
         const passwordInput = prompt("Masukkan Password Admin:");
         if (passwordInput === PASSWORD_ADMIN) {
@@ -991,66 +1000,52 @@
         }
     }
 
-    // Event kirim formulir & rekam ke list antrean bawah
     bookingForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
         const nama = document.getElementById('nama').value;
         const jemput = document.getElementById('jemput').value;
         const tujuan = document.getElementById('tujuan').value;
-        const inputTanggal = document.getElementById('tanggalJemput').value;
-        const jam = document.getElementById('jamJemput').value;
+        const tanggalJemput = document.getElementById('tanggalJemput').value;
+        const jamJemput = document.getElementById('jamJemput').value;
 
-        const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const tanggalDiformat = new Date(inputTanggal).toLocaleDateString('id-ID', opsiTanggal); 
-        const waktuSubmit = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-
-        let cetakTarifAntrean = "Menghitung...";
-        if(currentJarakAkurat > 0) {
-            cetakTarifAntrean = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(currentJarakAkurat * TARIF_PER_KM) + ` (${currentJarakAkurat} KM)`;
-        }
+        const jarakFinal = currentJarakAkurat > 0 ? currentJarakAkurat : 0;
+        const totalTarif = jarakFinal * TARIF_PER_KM;
+        const formatRupiah = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(totalTarif);
 
         waitingListContainer.style.display = 'block';
-
-        const card = document.createElement('div');
-        card.className = 'antrean-card'; 
-        card.style.cssText = `
-            background: rgba(0, 177, 79, 0.04);
-            border: 1px solid rgba(0, 177, 79, 0.2);
-            padding: 22px;
-            border-radius: 15px;
-            position: relative;
-            animation: fadeIn 0.5s ease;
-        `;
-
-        card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
-                <span style="color: #00B14F; font-weight: 700; font-size: 13px;">#AntreanAktif</span>
-                <span style="font-size: 11px; color: #a3b1cc;">Dibuat: ${waktuSubmit} WIB</span>
+        
+        const newCard = document.createElement('div');
+        newCard.className = 'card antrean-card';
+        newCard.style.animation = 'fadeIn 0.5s ease-in-out';
+        newCard.innerHTML = `
+            <div>
+                <h3>👤 ${nama}</h3>
+                <p style="margin-bottom: 8px;"><strong>📍 Jemput:</strong> ${jemput}</p>
+                <p style="margin-bottom: 8px;"><strong>🏁 Tujuan:</strong> ${tujuan}</p>
+                <p style="margin-bottom: 8px;"><strong>📅 Jadwal:</strong> ${tanggalJemput} | ${jamJemput} WIB</p>
+                <p style="margin-bottom: 15px;"><strong>💵 Estimasi Tarif:</strong> <span style="color: #FFD700; font-weight:700;">${jarakFinal > 0 ? formatRupiah + ' ('+jarakFinal+' KM)' : 'Menunggu Konfirmasi Admin'}</span></p>
             </div>
-            <p style="margin-bottom: 8px;"><strong style="color: white; font-size: 16px;">${nama}</strong></p>
-            <div style="background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.15); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px;">
-                <p style="color: #FFD700; margin-bottom: 2px;">📅 <strong>Jadwal:</strong> ${tanggalDiformat}</p>
-                <p style="color: #FFD700; margin-bottom: 2px;">⏰ <strong>Jam Jemput:</strong> ${jam} WIB</p>
-                <p style="color: #00B14F;">💵 <strong>Estimasi Argo:</strong> ${cetakTarifAntrean}</p>
-            </div>
-            <p style="font-size: 13px; color: #c9d2e3; margin-bottom: 4px;">📍 <span style="color: #a3b1cc;">Dari:</span> ${jemput}</p>
-            <p style="font-size: 13px; color: #c9d2e3; margin-bottom: 15px;">🏁 <span style="color: #00B14F;">Ke:</span> ${tujuan}</p>
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div style="font-size: 11px; background: rgba(0, 177, 79, 0.2); display: inline-block; padding: 5px 12px; border-radius: 50px; color: #00B14F; font-weight: 500;">
-                    <i class="fa-solid fa-spinner fa-spin" style="margin-right: 5px;"></i> Menunggu Konfirmasi Driver
-                </div>
-                <button onclick="hapusPesanan(this)" style="background: rgba(220, 38, 38, 0.2); border: 1px solid rgba(220, 38, 38, 0.4); color: #ef4444; font-size: 11px; font-weight:600; padding: 5px 12px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
-                    <i class="fa-solid fa-trash-can"></i> Hapus Pesanan
-                </button>
+            <div style="display:flex; gap:10px; margin-top:auto;">
+                <button onclick="hapusPesanan(this)" class="card-btn" style="border-color:#ff4d4d; color:#ff4d4d; flex:1; padding:8px;"><i class="fa-solid fa-trash"></i> Hapus</button>
+                <a href="https://wa.me/6281260636666?text=Halo%20Admin%20Cruizemate,%20saya%20ingin%20konfirmasi%20booking%20GrabCar.%0A%0A*Detail%20Pesanan*%0ANama%3A%20${encodeURIComponent(nama)}%0AJemput%3A%20${encodeURIComponent(jemput)}%0ATujuan%3A%20${encodeURIComponent(tujuan)}%0ATanggal%3A%20${encodeURIComponent(tanggalJemput)}%0AJam%3A%20${encodeURIComponent(jamJemput)}%0AJarak%3A%20${jarakFinal}%20KM%0AEstimasi%20Tarif%3A%20${encodeURIComponent(formatRupiah)}" target="_blank" class="card-btn" style="background:#00B14F; color:white; flex:2; padding:8px; display:flex; justify-content:center; align-items:center; gap:5px;"><i class="fa-brands fa-whatsapp"></i> Hubungi Admin</a>
             </div>
         `;
+        
+        waitingList.appendChild(newCard);
 
-        waitingList.prepend(card);
+        const waBaseUrl = "https://wa.me/6281260636666";
+        const messageText = `Halo Admin Cruizemate, saya ingin booking GrabCar.\n\n*Detail Pesanan*\nNama: ${nama}\nJemput: ${jemput}\nTujuan: ${tujuan}\nTanggal: ${tanggalJemput}\nJam: ${jamJemput}\nJarak: ${jarakFinal} KM\nEstimasi Tarif: ${formatRupiah}`;
+        
+        window.open(`${waBaseUrl}?text=${encodeURIComponent(messageText)}`, '_blank');
+
         bookingForm.reset();
         document.getElementById('liveTracker').style.display = "none";
         currentJarakAkurat = 0;
-        waitingListContainer.scrollIntoView({ behavior: 'smooth' });
     });
 </script>
 </body>
