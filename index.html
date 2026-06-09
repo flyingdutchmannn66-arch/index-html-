@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRABBOOKING PRO</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body{
+            background:#afb1b4;
+            color:white;
+        }
+
+        .container{
+            width:90%;
+            max-width:1400px;
+            margin:auto;
+        }
+
+        /* NAVBAR */
+        nav{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:25px 0;
+        }
+
+        .logo{
+            font-size:32px;
+            font-weight:800;
+            color:#00B14F;
+        }
+
+        .logo span{
+            color:#FFD700;
+        }
+
+        .menu{
+            display:flex;
+            gap:35px;
+            align-items: center;
+        }
+
+        .menu a{
+            color:white;
+            text-decoration:none;
+            transition:.3s;
+            cursor: pointer;
+        }
+
+        .menu a:hover{
+            color:#00B14F;
+        }
+
+        .whatsapp-btn{
+            background:#00B14F;
+            color:white;
+            padding:12px 25px;
+            border-radius:50px;
+            text-decoration:none;
+            font-weight:600;
+        }
+
+        /* HERO */
+        .hero{
+            min-height:85vh;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:50px;
+        }
+
+        .hero-left{
+            width:55%;
+        }
+
+        .badge{
+            display:inline-block;
+            padding:12px 22px;
+            border:1px solid rgba(255,255,255,.2);
+            border-radius:50px;
+            margin-bottom:25px;
+            color:#FFD700;
+        }
+
+        .hero h1{
+            font-size:68px;
+            line-height:1.1;
+            margin-bottom:20px;
+        }
+
+        .hero h1 span{
+            color:#00B14F;
+        }
+
+        .hero p{
+            color:#c9d2e3;
+            font-size:18px;
+            line-height:1.8;
+            margin-bottom:30px;
+        }
+
+        .features{
+            display:flex;
+            flex-wrap:wrap;
+            gap:15px;
+            margin-bottom:40px;
+        }
+
+        .feature{
+            border:1px solid rgba(255,255,255,.15);
+            padding:12px 18px;
+            border-radius:40px;
+            color:#ddd;
+        }
+
+        .buttons{
+            display:flex;
+            gap:20px;
+        }
+
+        .btn-primary{
+            background:#00B14F;
+            color:white;
+            padding:16px 30px;
+            border-radius:50px;
+            text-decoration:none;
+            font-weight:600;
+        }
+
+        .btn-secondary{
+            border:1px solid #00B14F;
+            color:white;
+            padding:16px 30px;
+            border-radius:50px;
+            text-decoration:none;
+        }
+
+        /* RIGHT */
+        .hero-right{
+            width:45%;
+            text-align:center;
+        }
+
+        .hero-right img{
+            width:100%;
+            max-width:600px;
+            filter:drop-shadow(0 0 40px rgba(0,177,79,.5));
+        }
+
+        /* SERVICES */
+        .services{
+            padding:100px 0;
+        }
+
+        .section-title{
+            text-align:center;
+            font-size:48px;
+            margin-bottom:60px;
+        }
+
+        .section-title span{
+            color:#00B14F;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:25px;
+        }
+
+        .card{
+            background:#0c1329;
+            border:1px solid rgba(255,255,255,.1);
+            border-radius:20px;
+            padding:30px;
+            transition:.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+            border-color:#00B14F;
+        }
+
+        .card h3{
+            margin-bottom:15px;
+            color:#00B14F;
+        }
+
+        .card p {
+            color: #c9d2e3;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .card-btn {
+            display: block;
+            text-align: center;
+            background: transparent;
+            border: 1px solid #00B14F;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: .3s;
+            margin-top: auto;
+        }
+
+        .card-btn:hover {
+            background: #00B14F;
+            color: white;
+        }
+
+        /* STEPS */
+        .steps{
+            padding:100px 0;
+        }
+
+        .step-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:25px;
+        }
+
+        .step{
+            background:#0c1329;
+            padding:30px;
+            border-radius:20px;
+            text-align:center;
+        }
+
+        .step-number{
+            width:60px;
+            height:60px;
+            background:#00B14F;
+            border-radius:50%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin:auto;
+            margin-bottom:20px;
+            font-size:24px;
+            font-weight:bold;
+        }
+
+        /* STATS */
+        .stats{
+            padding:80px 0;
+        }
+
+        .stats-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:20px;
+        }
+
+        .stat{
+            background:#0c1329;
+            padding:40px;
+            border-radius:20px;
+            text-align:center;
+        }
+
+        .stat h2{
+            color:#00B14F;
+            font-size:48px;
+        }
+
+        /* TESTI */
+        .testimonials{
+            padding:100px 0;
+        }
+
+        .testi-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:25px;
+        }
+
+        .testi{
+            background:#0c1329;
+            padding:30px;
+            border-radius:20px;
+        }
+
+        .stars{
+            color:gold;
+            margin-bottom:15px;
+        }
+
+        /* FOOTER */
+        footer{
+            text-align:center;
+            padding:50px 20px;
+            border-top:1px solid rgba(255,255,255,.1);
+            margin-top:80px;
+        }
+
+        footer h2{
+            color:#00B14F;
+            margin-bottom:15px;
+        }
+
+        /* STYLE POP-UP MODAL KONTAK */
+        .contact-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 11, 30, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .contact-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: #0c1329;
+            border: 1px solid rgba(0, 177, 79, 0.3);
+            padding: 40px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.7);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .contact-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #c9d2e3;
+            font-size: 22px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #ff4d4d;
+        }
+
+        .modal-content h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .modal-content p {
+            color: #c9d2e3;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .social-links-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 14px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .btn-line { background: #737a76; }
+        .btn-whatsapp-modal { background: #25D366; }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+            filter: brightness(1.1);
+        }
+
+        @media(max-width:991px){
+            .hero{
+                flex-direction:column;
+                text-align:center;
+            }
+
+            .hero-left,
+            .hero-right{
+                width:100%;
+            }
+
+            .hero h1{
+                font-size:45px;
+            }
+
+            .menu{
+                display:none;
+            }
+
+            .stats-grid{
+                grid-template-columns:1fr;
+            }
+
+            .buttons{
+                justify-content:center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <nav>
+        <div class="logo">
+            CITY<span>CRUISER</span>
+        </div>
+
+        <div class="menu">
+            <a href="#">Home</a>
+            <a href="#layanan">Layanan</a>
+            <a href="#cara-pesan">Cara Pesan</a>
+            <a href="#testimoni">Testimoni</a>
+            <a onclick="openContactModal()">Kontak</a>
+        </div>
+
+        <a href="https://wa.me/6281260636666" class="whatsapp-btn">
+            WhatsApp
+        </a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-left">
+            <div class="badge">
+                🚖 JASA BOOKING GRAB CAR ONLINE TERPERCAYA
+            </div>
+
+            <h1>
+                <span>GRAB BOOKING ALIONG</span><br>
+                Melayani Pemesanan Grab Car
+            </h1>
+
+            <p>
+                Solusi cepat dan aman untuk pemesanan Grab Online.
+                Melayani GrabCar antar jemput bandara, perjalanan dalam kota,luar kota,
+                dan kebutuhan transportasi harian.
+            </p>
+
+            <div class="features">
+                <div class="feature">⚡ Respon Cepat</div>
+                <div class="feature">🚗 Driver Terpercaya</div>
+                <div class="feature">📱 Booking Mudah</div>
+                <div class="feature">💰 Harga Transparan</div>
+            </div>
+
+            <div class="buttons">
+                <a href="https://wa.me/6281260636666?text=Halo%20GrabBooking%20Pro,%20saya%20ingin%20memesan%20layanan%20Grab." class="btn-primary">
+                    Pesan via WhatsApp
+                </a>
+                <a href="#layanan" class="btn-secondary">
+                    Lihat Layanan
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <img src="https://github.com/flyingdutchmannn66-arch/npl/blob/main/image-removebg-preview%20(1).jpg?raw=true" alt="Mobil Grab">
+        </div>
+    </section>
+
+</div>
+
+<section id="layanan" class="services">
+    <div class="container">
+        <h2 class="section-title">
+            Layanan <span>Kami</span>
+        </h2>
+
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h3>🚗 GrabCar</h3>
+                    <p>Perjalanan nyaman untuk individu dan keluarga dengan armada mobil terbaik.</p>
+                </div>
+                <a href="https://wa.me/6281260636666?text=Halo%20Admin,%20saya%20mau%20booking%20GrabCar" class="card-btn">Pesan Sekarang</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>🚗 Grab Private</h3>
+                    <p>Layanan perjalanan privat eksklusif dengan kenyamanan ekstra untuk kebutuhan bisnis maupun pribadi Anda.</p>
+                </div>
+                <a href="https://wa.me/6281260636666?text=Halo%20Admin,%20saya%20mau%20booking%20GrabPrivate" class="card-btn">Pesan Sekarang</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cara-pesan" class="steps">
+    <div class="container">
+        <h2 class="section-title">
+            Cara <span>Pemesanan</span>
+        </h2>
+
+        <div class="step-grid">
+            <div class="step">
+                <div class="step-number">1</div>
+                Hubungi WhatsApp
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                Kirim Lokasi Jemput
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                Kirim Tujuan
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                Konfirmasi Biaya
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                Driver Berangkat
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat">
+                <h2>378+</h2>
+                <p>Booking Berhasil</p>
+            </div>
+            <div class="stat">
+                <h2>24 Jam</h2>
+                <p>Layanan Aktif</p>
+            </div>
+            <div class="stat">
+                <h2>98%</h2>
+                <p>Pelanggan Puas</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="testimoni" class="testimonials">
+    <div class="container">
+        <h2 class="section-title">
+            Testimoni <span>Pelanggan</span>
+        </h2>
+
+        <div class="testi-grid">
+            <div class="testi">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                Booking sangat cepat dan admin responsif.
+            </div>
+            <div class="testi">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                Sangat membantu saat tidak bisa pesan Grab sendiri.
+            </div>
+            <div class="testi">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                Harga jelas dan driver cepat datang.
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <h2>GRABBOOKING 
+        
+    </h2>
+    <p>Melayani pemesanan Grab Online 24 Jam.</p>
+    <br>
+    <p>WhatsApp: +62 812-6063-6666</p>
+    <br>
+    <p>© 2026 GRABBOOKING PRO</p>
+</footer>
+
+
+<div class="contact-modal" id="contactModal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeContactModal()"><i class="fa-solid fa-xmark"></i></button>
+        <h3>Hubungi Kami</h3>
+        <p>Silakan pilih platform di bawah ini untuk tersambung dengan admin kami</p>
+        
+        <div class="social-links-grid">
+            <!-- Instagram Link Perbaikan -->
+            <a href="https://www.instagram.com/nopallrmdd/" target="_blank" class="social-btn btn-instagram">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+            
+            <!-- Line Link dengan Username nopallrmdd_ -->
+            <a href="https://line.me/ti/p/~nopallrmdd_" target="_blank" class="social-btn btn-line">
+                <i class="fa-brands fa-line"></i> Line Official
+            </a>
+           
+            <a href="https://wa.me/6281260636666" target="_blank" class="social-btn btn-whatsapp-modal">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Chat
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('contactModal');
+
+    function openContactModal() {
+        modal.classList.add('active');
+    }
+
+    function closeContactModal() {
+        modal.classList.remove('active');
+    }
+
+    // Menutup pop-up otomatis jika mengklik area luar kotak dialog
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeContactModal();
+        }
+    }
+</script>
+
+</body>
+</html>
