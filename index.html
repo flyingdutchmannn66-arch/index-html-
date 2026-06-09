@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUIZEMATE - Jasa Booking Grab Car</title>
+    <title>CRUIZEMATE - Jasa Booking Transportasi & Logistik</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,7 +23,7 @@
         body{
             background:#0f0f0f;
             color:white;
-            overflow-x: hidden; /* Mencegah overflow horizontal di mobile */
+            overflow-x: hidden;
         }
 
         .container{
@@ -74,7 +74,7 @@
         .whatsapp-btn{
             background:#00B14F;
             color:white;
-            padding:10px 20px;
+            padding:10px 24px;
             border-radius:50px;
             text-decoration:none;
             font-weight:600;
@@ -84,9 +84,9 @@
 
         .whatsapp-btn:hover {
             background: #008f3e;
+            transform: translateY(-1px);
         }
 
-        /* Hamburger Menu (Mobile Only) */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -325,7 +325,7 @@
             color: white;
         }
 
-        /* FORM */
+        /* FORM FIELD LAYOUT */
         .form-group {
             display: flex;
             flex-direction: column;
@@ -337,7 +337,7 @@
             color: #a3b1cc;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             padding: 12px 15px;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -349,9 +349,26 @@
             width: 100%;
         }
 
-        .form-group input:focus {
+        .form-group select option {
+            background: #0c1329;
+            color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
             border-color: #00B14F;
             background: rgba(255,255,255,0.08);
+        }
+
+        /* BOX KHUSUS DATA BARANG GOSEND */
+        .gosend-extra-box {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(0, 177, 79, 0.04);
+            border: 1px dashed rgba(0, 177, 79, 0.4);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 5px;
         }
 
         /* LIVE TRACKER */
@@ -426,29 +443,6 @@
             font-size:20px;
             font-weight:bold;
             box-shadow: 0 0 15px rgba(0, 177, 79, 0.3);
-        }
-
-        /* TESTIMONI */
-        .testi-grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-            gap:20px;
-        }
-
-        .testi{
-            background:#0c1329;
-            padding:25px;
-            border-radius:20px;
-            border: 1px solid rgba(255,255,255,.05);
-            line-height: 1.6;
-            color: #c9d2e3;
-            font-size: 14px;
-        }
-
-        .stars{
-            color:gold;
-            margin-bottom:12px;
-            font-size: 16px;
         }
 
         /* FOOTER */
@@ -545,7 +539,6 @@
         .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .btn-whatsapp-modal { background: #25D366; }
 
-        /* GOOGLE AUTOCOMPLETE DROPDOWN */
         .pac-container {
             background-color: #0c1329 !important;
             border: 1px solid rgba(0, 177, 79, 0.4) !important;
@@ -559,9 +552,6 @@
         }
         .pac-item-query { color: #fff !important; }
 
-        /* =============================================
-           RESPONSIVE MEDIA QUERIES (FLEKSIBEL HP/TABLET)
-           ============================================= */
         @media(max-width: 991px) {
             .hero {
                 flex-direction: column-reverse;
@@ -589,7 +579,6 @@
                 width: 100%;
             }
 
-            /* Mobile Menu Toggle Logic */
             .menu-toggle {
                 display: flex;
             }
@@ -614,7 +603,6 @@
                 left: 0;
             }
 
-            /* Animasi Hamburger ke silang (X) */
             .menu-toggle.active span:nth-child(1) {
                 transform: translateY(9px) rotate(45deg);
             }
@@ -625,8 +613,9 @@
                 transform: translateY(-9px) rotate(-45deg);
             }
             
-            .whatsapp-btn {
-                display: none; /* Disembunyikan di navbar mobile untuk menghemat ruang */
+            /* Pada mobile, link wa di dalam menu dropdown akan terlihat */
+            .menu .mobile-wa-link {
+                display: block !important;
             }
         }
 
@@ -640,16 +629,14 @@
             .card {
                 padding: 20px;
             }
-            /* Form Grid tanggal & jam menjadi satu kolom vertikal di HP Kecil */
             .dateTime-grid {
                 grid-template-columns: 1fr !important;
                 gap: 15px;
             }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            .gosend-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -659,7 +646,6 @@
     <nav>
         <div class="logo">CRUIZE<span>MATE</span></div>
         
-        <!-- Tambahan Tombol Hamburger -->
         <button class="menu-toggle" id="mobileMenuBtn">
             <span></span>
             <span></span>
@@ -672,10 +658,8 @@
             <a href="#form-pemesanan">Pesan</a>
             <a href="#fitur-pembayaran">Fitur Pembayaran</a>
             <a href="#cara-pesan">Cara Pesan</a>
-            <a href="#testimoni">Testimoni</a>
             <a onclick="openContactModal()">Kontak</a>
-            <!-- Muncul di dalam menu saat mode mobile -->
-            <a href="https://wa.me/6281260636666" style="background:#00B14F; padding: 10px 25px; border-radius: 50px; text-align: center; font-weight: 600; width: 100%;" class="mobile-only-wa">WhatsApp</a>
+            <a href="https://wa.me/6281260636666" class="mobile-wa-link" style="display:none; background:#00B14F; padding: 10px 25px; border-radius: 50px; text-align: center; font-weight: 600; width: 100%;">WhatsApp</a>
         </div>
         
         <a href="https://wa.me/6281260636666" class="whatsapp-btn">WhatsApp</a>
@@ -683,9 +667,9 @@
 
     <section class="hero">
         <div class="hero-left">
-            <div class="badge">🚖 JASA BOOKING GRAB CAR ONLINE</div>
-            <h1><span>GRAB BOOKING ALIONG</span><br>Melayani Pemesanan Grab Car</h1>
-            <p>Solusi cepat dan aman untuk pemesanan Grab Online. Melayani GrabCar antar jemput bandara, perjalanan dalam kota, luar kota, dan kebutuhan harian.</p>
+            <div class="badge">🚖 JASA BOOKING ONLINE TERPERCAYA</div>
+            <h1><span>GRAB BOOKING ALIONG</span><br>Melayani Pemesanan Online</h1>
+            <p>Solusi cepat dan aman untuk berbagai kebutuhan perjalanan dan logistik Anda. Melayani pemesanan armada roda empat, pengiriman paket kilat, hingga pemesanan makanan harian secara praktis.</p>
             <div class="features">
                 <div class="feature">⚡ Respon Cepat</div>
                 <div class="feature">🚗 Driver Terpercaya</div>
@@ -712,14 +696,23 @@
                     <h3>🚗 GrabCar</h3>
                     <p>Perjalanan nyaman untuk individu dan keluarga dengan armada mobil terbaik.</p>
                 </div>
-                <a href="#form-pemesanan" class="card-btn">Pesan Sekarang</a>
+                <a href="#form-pemesanan" onclick="setJenisLayanan('GrabCar')" class="card-btn">Pesan Sekarang</a>
             </div>
+            
             <div class="card">
                 <div>
-                    <h3>🚗 Grab Private</h3>
-                    <p>Layanan perjalanan privat eksklusif dengan kenyamanan ekstra untuk kebutuhan bisnis maupun pribadi Anda.</p>
+                    <h3>📦 GoSend</h3>
+                    <p>Pengiriman paket dan dokumen kilat, aman, dan tepercaya langsung sampai ke alamat tujuan dalam hitungan jam.</p>
                 </div>
-                <a href="#form-pemesanan" class="card-btn">Pesan Sekarang</a>
+                <a href="#form-pemesanan" onclick="setJenisLayanan('GoSend')" class="card-btn">Kirim Barang</a>
+            </div>
+            
+            <div class="card">
+                <div>
+                    <h3>🍔 GoFood</h3>
+                    <p>Jasa titip beli makanan dan minuman favorit Anda dari resto andalan. Praktis, cepat, dan siap antar.</p>
+                </div>
+                <a href="#form-pemesanan" onclick="setJenisLayanan('GoFood')" class="card-btn">Titip Makan</a>
             </div>
         </div>
     </div>
@@ -733,18 +726,45 @@
             <form id="bookingForm" style="display: flex; flex-direction: column; gap: 20px;">
                 
                 <div class="form-group">
-                    <label>Nama Penumpang</label>
+                    <label>Nama Pelanggan / Penumpang</label>
                     <input type="text" id="nama" required placeholder="Masukkan nama lengkap">
                 </div>
 
                 <div class="form-group">
-                    <label>Lokasi Penjemputan</label>
-                    <input type="text" id="jemput" required placeholder="Ketik lokasi penjemputan...">
+                    <label>Pilih Jenis Layanan</label>
+                    <select id="jenisLayanan" required>
+                        <option value="" disabled selected>-- Pilih Layanan --</option>
+                        <option value="GrabCar">🚗 GrabCar (Mobil Standar)</option>
+                        <option value="GoSend">📦 GoSend (Kirim Paket/Barang)</option>
+                        <option value="GoFood">🍔 GoFood (Titip Beli Makanan)</option>
+                    </select>
+                </div>
+
+                <div id="gosendFields" class="gosend-extra-box">
+                    <div class="form-group">
+                        <label style="color:#00B14F; font-weight:600;"><i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?</label>
+                        <input type="text" id="namaBarang" placeholder="Contoh: Pakaian, Dokumen, Paket Sembako">
+                    </div>
+                    <div class="gosend-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label style="color:#00B14F; font-weight:600;"><i class="fa-solid fa-weight-hanging"></i> Berat Barang (Kg)</label>
+                            <input type="number" id="beratBarang" min="1" placeholder="Contoh: 3">
+                        </div>
+                        <div class="form-group">
+                            <label style="color:#00B14F; font-weight:600;"><i class="fa-solid fa-layer-group"></i> Jumlah Barang</label>
+                            <input type="number" id="jumlahBarang" min="1" placeholder="Contoh: 1">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Lokasi Tujuan</label>
-                    <input type="text" id="tujuan" required placeholder="Ketik lokasi tujuan...">
+                    <label id="labelJemput">Lokasi Penjemputan / Pengambilan</label>
+                    <input type="text" id="jemput" required placeholder="Ketik lokasi penjemputan atau alamat toko...">
+                </div>
+
+                <div class="form-group">
+                    <label id="labelTujuan">Lokasi Tujuan / Pengantaran</label>
+                    <input type="text" id="tujuan" required placeholder="Ketik lokasi tujuan pengantaran...">
                     
                     <div id="liveTracker" class="live-tracker-box">
                         <div class="tracker-flex">
@@ -762,16 +782,16 @@
 
                 <div class="dateTime-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="form-group">
-                        <label>Tanggal Jemput</label>
+                        <label>Tanggal Pelaksanaan</label>
                         <input type="date" id="tanggalJemput" required style="color-scheme: dark;">
                     </div>
                     <div class="form-group">
-                        <label>Jam Jemput</label>
+                        <label>Jam Pelaksanaan</label>
                         <input type="time" id="jamJemput" required style="color-scheme: dark;">
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary" style="padding: 14px; font-weight: 600; width:100%;">Kirim Pesanan</button>
+                <button type="submit" class="btn-primary" style="padding: 14px; font-weight: 600; width:100%;">Kirim Pesanan via WhatsApp</button>
             </form>
 
             <hr style="border: 0; border-top: 1px dashed rgba(255, 255, 255, 0.15);">
@@ -798,11 +818,6 @@
                 </div>
             </div>
         </div>
-
-        <div id="waitingListContainer" style="margin-top: 50px; display: none;">
-            <h3 style="text-align: center; margin-bottom: 30px; font-size: 24px;">Antrean <span>Pemesanan</span></h3>
-            <div id="waitingList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;"></div>
-        </div>
     </div>
 </section>
 
@@ -813,7 +828,7 @@
             <div class="card">
                 <div>
                     <h3><i class="fa-solid fa-money-bill-wave"></i> Tunai (Cash)</h3>
-                    <p>Bayar langsung dengan uang tunai kepada driver setelah Anda sampai di lokasi tujuan dengan aman.</p>
+                    <p>Bayar langsung dengan uang tunai kepada driver/kurir setelah Anda sampai di lokasi tujuan atau barang diterima.</p>
                 </div>
                 <a href="https://wa.me/6281260636666?text=Halo%20Admin" class="card-btn">Info Lebih Lanjut</a>
             </div>
@@ -842,18 +857,18 @@
     <div class="container">
         <h2 class="section-title">Cara <span>Pemesanan</span></h2>
         <div class="step-grid">
-            <div class="step"><div class="step-number">1</div>Hubungi WhatsApp</div>
-            <div class="step"><div class="step-number">2</div>Kirim Lokasi Jemput</div>
-            <div class="step"><div class="step-number">3</div>Kirim Tujuan</div>
+            <div class="step"><div class="step-number">1</div>Isi Form / Hubungi WA</div>
+            <div class="step"><div class="step-number">2</div>Kirim Info Alamat</div>
+            <div class="step"><div class="step-number">3</div>Pilih Jenis Layanan</div>
             <div class="step"><div class="step-number">4</div>Konfirmasi Biaya</div>
-            <div class="step"><div class="step-number">5</div>Driver Berangkat</div>
+            <div class="step"><div class="step-number">5</div>Driver/Kurir Jalan</div>
         </div>
     </div>
 </section>
 
 <footer>
     <h2>GRABBOOKING</h2>
-    <p>Melayani pemesanan Grab Online 24 Jam.</p>
+    <p>Melayani pemesanan online transportasi & logistik 24 Jam.</p>
     <br>
     <p>WhatsApp: +62 812-6063-6666</p>
     <br>
@@ -875,7 +890,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=GANTI_DENGAN_API_KEY_GOOGLE_ANDA&libraries=places&callback=initGoogleMapsServices" async defer></script>
 
 <script>
-    // Logic Navigasi Hamburger Mobile
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navMenu = document.getElementById('navMenu');
 
@@ -884,7 +898,6 @@
         navMenu.classList.toggle('active');
     });
 
-    // Menutup menu otomatis jika salah satu link di klik (khusus mobile)
     document.querySelectorAll('.menu a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenuBtn.classList.remove('active');
@@ -894,18 +907,56 @@
 
     const modal = document.getElementById('contactModal');
     const bookingForm = document.getElementById('bookingForm');
-    const waitingListContainer = document.getElementById('waitingListContainer');
-    const waitingList = document.getElementById('waitingList');
+    const labelJemput = document.getElementById('labelJemput');
+    const labelTujuan = document.getElementById('labelTujuan');
+    const jenisLayananSelect = document.getElementById('jenisLayanan');
+    
+    const gosendFields = document.getElementById('gosendFields');
+    const namaBarang = document.getElementById('namaBarang');
+    const beratBarang = document.getElementById('beratBarang');
+    const jumlahBarang = document.getElementById('jumlahBarang');
 
-    const PASSWORD_ADMIN = "admin123"; 
     const TARIF_PER_KM = 3300; 
     let currentJarakAkurat = 0; 
-
     let autocompleteJemput, autocompleteTujuan, directionsService;
 
     function openContactModal() { modal.classList.add('active'); }
     function closeContactModal() { modal.classList.remove('active'); }
     window.onclick = function(event) { if (event.target == modal) { closeContactModal(); } }
+
+    function setJenisLayanan(namaLayanan) {
+        jenisLayananSelect.value = namaLayanan;
+        updateFormLabels();
+        document.getElementById('form-pemesanan').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Penyesuaian Label Form Otomatis
+    function updateFormLabels() {
+        const val = jenisLayananSelect.value;
+        
+        if(val === "GoSend") {
+            labelJemput.innerText = "Lokasi Pengambilan Paket / Jemput";
+            labelTujuan.innerText = "Alamat Tujuan Pengantaran Paket";
+            gosendFields.style.display = "flex"; 
+            namaBarang.required = true;
+            beratBarang.required = true;
+            jumlahBarang.required = true;
+        } else {
+            gosendFields.style.display = "none"; 
+            namaBarang.required = false;
+            beratBarang.required = false;
+            jumlahBarang.required = false;
+
+            if(val === "GoFood") {
+                labelJemput.innerText = "Lokasi Resto / Toko Makanan";
+                labelTujuan.innerText = "Alamat Pengiriman Makanan";
+            } else {
+                labelJemput.innerText = "Lokasi Penjemputan Penumpang";
+                labelTujuan.innerText = "Lokasi Tujuan Perjalanan";
+            }
+        }
+    }
+    jenisLayananSelect.addEventListener('change', updateFormLabels);
 
     function initGoogleMapsServices() {
         directionsService = new google.maps.DirectionsService();
@@ -948,7 +999,6 @@
                 currentJarakAkurat = parseFloat((jarakMeter / 1000).toFixed(1)); 
 
                 const totalTarif = currentJarakAkurat * TARIF_PER_KM;
-
                 const formatRupiah = new Intl.NumberFormat('id-ID', {
                     style: 'currency',
                     currency: 'IDR',
@@ -959,7 +1009,7 @@
                 tarifText.innerText = formatRupiah;
                 trackerBox.style.display = "block";
             } else {
-                console.log("Gagal melacak rute Google Maps karena: " + status);
+                console.log("Gagal melacak rute Google Maps: " + status);
                 trackerBox.style.display = "none";
             }
         });
@@ -976,7 +1026,7 @@
             return;
         }
 
-        const totalTarif = parseFloat(jarakInput) * TARIF_PER_KM;
+        const totalTarif = jarakInput * TARIF_PER_KM;
         const formatRupiah = new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR',
@@ -987,65 +1037,35 @@
         hasilBox.style.display = "block";
     }
 
-    function hapusPesanan(button) {
-        const passwordInput = prompt("Masukkan Password Admin:");
-        if (passwordInput === PASSWORD_ADMIN) {
-            const cardElement = button.closest('.antrean-card');
-            cardElement.remove();
-            if (waitingList.children.length === 0) {
-                waitingListContainer.style.display = 'none';
-            }
-        } else if (passwordInput !== null) {
-            alert("Password Salah!");
-        }
-    }
-
     bookingForm.addEventListener('submit', function(e) {
         e.preventDefault();
-
+        
         const nama = document.getElementById('nama').value;
+        const layanan = document.getElementById('jenisLayanan').value;
         const jemput = document.getElementById('jemput').value;
         const tujuan = document.getElementById('tujuan').value;
-        const tanggalJemput = document.getElementById('tanggalJemput').value;
-        const jamJemput = document.getElementById('jamJemput').value;
-
-        const jarakFinal = currentJarakAkurat > 0 ? currentJarakAkurat : 0;
-        const totalTarif = jarakFinal * TARIF_PER_KM;
-        const formatRupiah = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(totalTarif);
-
-        waitingListContainer.style.display = 'block';
+        const tanggal = document.getElementById('tanggalJemput').value;
+        const jam = document.getElementById('jamJemput').value;
         
-        const newCard = document.createElement('div');
-        newCard.className = 'card antrean-card';
-        newCard.style.animation = 'fadeIn 0.5s ease-in-out';
-        newCard.innerHTML = `
-            <div>
-                <h3>👤 ${nama}</h3>
-                <p style="margin-bottom: 8px;"><strong>📍 Jemput:</strong> ${jemput}</p>
-                <p style="margin-bottom: 8px;"><strong>🏁 Tujuan:</strong> ${tujuan}</p>
-                <p style="margin-bottom: 8px;"><strong>📅 Jadwal:</strong> ${tanggalJemput} | ${jamJemput} WIB</p>
-                <p style="margin-bottom: 15px;"><strong>💵 Estimasi Tarif:</strong> <span style="color: #FFD700; font-weight:700;">${jarakFinal > 0 ? formatRupiah + ' ('+jarakFinal+' KM)' : 'Menunggu Konfirmasi Admin'}</span></p>
-            </div>
-            <div style="display:flex; gap:10px; margin-top:auto;">
-                <button onclick="hapusPesanan(this)" class="card-btn" style="border-color:#ff4d4d; color:#ff4d4d; flex:1; padding:8px;"><i class="fa-solid fa-trash"></i> Hapus</button>
-                <a href="https://wa.me/6281260636666?text=Halo%20Admin%20Cruizemate,%20saya%20ingin%20konfirmasi%20booking%20GrabCar.%0A%0A*Detail%20Pesanan*%0ANama%3A%20${encodeURIComponent(nama)}%0AJemput%3A%20${encodeURIComponent(jemput)}%0ATujuan%3A%20${encodeURIComponent(tujuan)}%0ATanggal%3A%20${encodeURIComponent(tanggalJemput)}%0AJam%3A%20${encodeURIComponent(jamJemput)}%0AJarak%3A%20${jarakFinal}%20KM%0AEstimasi%20Tarif%3A%20${encodeURIComponent(formatRupiah)}" target="_blank" class="card-btn" style="background:#00B14F; color:white; flex:2; padding:8px; display:flex; justify-content:center; align-items:center; gap:5px;"><i class="fa-brands fa-whatsapp"></i> Hubungi Admin</a>
-            </div>
-        `;
-        
-        waitingList.appendChild(newCard);
+        let detailGoSendText = "";
+        if(layanan === "GoSend") {
+            detailGoSendText = `📦 Nama Barang: ${namaBarang.value}%0A` +
+                               `⚖️ Berat Barang: ${beratBarang.value} Kg%0A` +
+                               `🔢 Jumlah Barang: ${jumlahBarang.value} Item%0A`;
+        }
 
-        const waBaseUrl = "https://wa.me/6281260636666";
-        const messageText = `Halo Admin Cruizemate, saya ingin booking GrabCar.\n\n*Detail Pesanan*\nNama: ${nama}\nJemput: ${jemput}\nTujuan: ${tujuan}\nTanggal: ${tanggalJemput}\nJam: ${jamJemput}\nJarak: ${jarakFinal} KM\nEstimasi Tarif: ${formatRupiah}`;
-        
-        window.open(`${waBaseUrl}?text=${encodeURIComponent(messageText)}`, '_blank');
+        let infoTarif = currentJarakAkurat > 0 ? `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi Tarif: Rp ${new Intl.NumberFormat('id-ID').format(currentJarakAkurat * TARIF_PER_KM)}` : '';
 
-        bookingForm.reset();
-        document.getElementById('liveTracker').style.display = "none";
-        currentJarakAkurat = 0;
+        const textWhatsApp = `Halo Admin, saya ingin melakukan pemesanan:%0A%0A` +
+                             `👤 Nama: ${nama}%0A` +
+                             `🛠️ Layanan: ${layanan}%0A` +
+                             detailGoSendText +
+                             `🛫 Titik Pengambilan/Jemput: ${jemput}%0A` +
+                             `🛬 Titik Pengantaran/Tujuan: ${tujuan}%0A` +
+                             `📅 Tanggal: ${tanggal}%0A` +
+                             `⏰ Jam: ${jam}${infoTarif}`;
+        
+        window.open(`https://wa.me/6281260636666?text=${textWhatsApp}`, '_blank');
     });
 </script>
 </body>
