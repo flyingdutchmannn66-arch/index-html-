@@ -2,12 +2,25 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>CRUIZEMATE - Jasa Booking Transportasi & Logistik Premium</title>
-
-    <!-- Google Maps API (ganti YOUR_API_KEY dengan API key Anda) -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMapAsync" async defer></script>
-
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json,{
+        \"name\": \"CRUIZEMATE\",
+        \"short_name\": \"CRUIZEMATE\",
+        \"description\": \"Jasa Booking Transportasi & Logistik Premium\",
+        \"start_url\": \".\",
+        \"display\": \"standalone\",
+        \"theme_color\": \"#00B14F\",
+        \"background_color\": \"#0b0f19\",
+        \"icons\": [{
+            \"src\": \"https://img.icons8.com/fluency/96/000000/taxi.png\",
+            \"sizes\": \"96x96\",
+            \"type\": \"image/png\"
+        }]
+    }">
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -94,6 +107,79 @@
             width: 90%;
             max-width: 1400px;
             margin: auto;
+        }
+
+        /* PWA Install Button */
+        .install-pwa-btn {
+            background: #00B14F;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .install-pwa-btn:hover {
+            background: #008f3e;
+        }
+
+        /* Image Upload Styles */
+        .image-upload-area {
+            border: 2px dashed rgba(0, 177, 79, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .image-upload-area:hover {
+            border-color: #00B14F;
+            background: rgba(0, 177, 79, 0.05);
+        }
+
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 10px;
         }
 
         /* THEME TOGGLE */
@@ -601,76 +687,6 @@
             background: rgba(255,255,255,0.08);
         }
 
-        .google-maps-picker {
-            background: rgba(0, 177, 79, 0.05);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 10px;
-        }
-
-        .location-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .location-input {
-            flex: 1;
-            position: relative;
-        }
-
-        .location-input input {
-            width: 100%;
-            padding-right: 40px;
-        }
-
-        .pick-location-btn {
-            background: #00B14F;
-            border: none;
-            padding: 12px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            color: white;
-            font-size: 14px;
-        }
-
-        .pick-location-btn:hover {
-            background: #008f3e;
-        }
-
-        .map-preview {
-            width: 100%;
-            height: 200px;
-            background: #1e293b;
-            border-radius: 12px;
-            margin-top: 10px;
-            display: none;
-            position: relative;
-        }
-
-        .map-preview.active {
-            display: block;
-        }
-
-        #routeMap {
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-        }
-
-        .get-distance-btn {
-            background: #FFD700;
-            color: #1a1a2e;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .get-distance-btn:hover {
-            background: #e6c200;
-        }
-
         .gosend-extra-box {
             display: none;
             flex-direction: column;
@@ -829,6 +845,19 @@
             font-weight: 700;
             color: #FFD700;
             margin-top: 5px;
+        }
+
+        .history-images {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .history-images img {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
         }
 
         /* STEPS */
@@ -1131,6 +1160,7 @@
             <button class="lang-toggle" onclick="toggleLanguage()" id="langToggleBtn">🇮🇩 ID</button>
             <button class="theme-toggle" onclick="toggleTheme()">🌓 Mode</button>
             <button class="admin-btn" onclick="openAdminModal()">🔒 Admin</button>
+            <button id="installPwaBtn" class="install-pwa-btn" style="display: none;"><i class="fa-solid fa-download"></i> Install App</button>
             <a href="https://wa.me/6281260636666" class="whatsapp-btn">WhatsApp</a>
         </div>
     </nav>
@@ -1230,7 +1260,7 @@
     <div class="container">
         <h2 class="section-title"><span id="formTitle">Formulir</span> <span id="formTitleHighlight">Pemesanan</span></h2>
         
-        <div style="max-width: 800px; margin: 0 auto; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid rgba(0, 177, 79, 0.3); display: flex; flex-direction: column; gap: 25px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid rgba(0, 177, 79, 0.3); display: flex; flex-direction: column; gap: 25px;">
             
             <div>
                 <h4 style="margin-bottom: 10px; font-size: 14px;"><i class="fa-regular fa-heart"></i> <span id="favAddressTitle">Alamat Favorit</span></h4>
@@ -1269,50 +1299,43 @@
                             <input type="number" id="jumlahBarang" min="1" placeholder="Jumlah">
                         </div>
                     </div>
+                    
+                    <!-- IMAGE UPLOAD AREA -->
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-camera"></i> Upload Foto Barang (Opsional)</label>
+                        <div class="image-upload-area" id="imageUploadArea">
+                            <i class="fa-solid fa-cloud-upload-alt" style="font-size: 24px;"></i>
+                            <p style="margin-top: 5px; font-size: 12px;">Klik atau tap untuk upload foto barang</p>
+                            <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+                        </div>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
                 </div>
 
-                <!-- GOOGLE MAPS PICKER SECTION -->
-                <div class="google-maps-picker">
-                    <div class="location-row">
-                        <div class="location-input">
-                            <input type="text" id="jemput" placeholder="📍 Lokasi Penjemputan" autocomplete="off">
-                        </div>
-                        <button type="button" class="pick-location-btn" onclick="pickLocation('pickup')">
-                            <i class="fa-regular fa-map"></i> Pilih di Maps
-                        </button>
-                    </div>
+                <div class="form-group">
+                    <label id="labelJemput">Lokasi Penjemputan / Pengambilan</label>
+                    <input type="text" id="jemput" required placeholder="Ketik alamat lengkap">
+                </div>
+
+                <div class="form-group">
+                    <label id="labelTujuan">Lokasi Tujuan / Pengantaran</label>
+                    <input type="text" id="tujuan" required placeholder="Ketik alamat lengkap">
                     
-                    <div class="location-row">
-                        <div class="location-input">
-                            <input type="text" id="tujuan" placeholder="🎯 Lokasi Tujuan" autocomplete="off">
-                        </div>
-                        <button type="button" class="pick-location-btn" onclick="pickLocation('destination')">
-                            <i class="fa-regular fa-map"></i> Pilih di Maps
-                        </button>
+                    <div class="manual-distance-input">
+                        <input type="number" id="jarakManual" step="0.1" placeholder="Perkiraan jarak (KM)">
+                        <button type="button" class="btn-secondary calc-distance-btn" onclick="setManualDistance()">Hitung Tarif</button>
                     </div>
-                    
-                    <div class="map-preview" id="mapPreview">
-                        <div id="routeMap"></div>
-                    </div>
-                    
-                    <button type="button" class="btn-primary get-distance-btn" onclick="calculateAndGetDistance()">
-                        <i class="fa-regular fa-road"></i> Hitung Jarak & Tarif Otomatis
-                    </button>
                     
                     <div id="liveTracker" class="live-tracker-box">
                         <div class="tracker-flex">
                             <div class="tracker-item">
-                                <div class="tracker-label">📍 Jarak Rute (Maps)</div>
+                                <div class="tracker-label">📍 Jarak Rute</div>
                                 <div id="liveJarakText" class="tracker-value">0 KM</div>
                             </div>
                             <div class="tracker-item">
                                 <div class="tracker-label">💰 Estimasi Tarif</div>
                                 <div id="liveTarifText" class="tracker-value price">Rp 0</div>
                             </div>
-                        </div>
-                        <div class="tracker-item" style="margin-top: 10px;">
-                            <div class="tracker-label">🕒 Estimasi Waktu Tempuh</div>
-                            <div id="liveDurationText" class="tracker-value">-</div>
                         </div>
                     </div>
                 </div>
@@ -1346,7 +1369,7 @@
             <hr>
 
             <div id="calculator-box" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;">
-                <h4 style="margin-bottom: 15px; font-size: 15px; color: #FFD700;"><i class="fa-solid fa-calculator"></i> <span id="calculatorTitle">Kalkulator Tarif (Cepat)</span></h4>
+                <h4 style="margin-bottom: 15px; font-size: 15px; color: #FFD700;"><i class="fa-solid fa-calculator"></i> <span id="calculatorTitle">Kalkulator Tarif (Manual)</span></h4>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label id="labelJarakManual">Perkiraan Jarak Perjalanan (Kilometer)</label>
                     <input type="number" id="inputJarak" min="1" step="0.1" placeholder="Contoh: 12">
@@ -1414,7 +1437,6 @@
     <div class="container">
         <h2 class="section-title"><span>Dashboard</span> <span>Admin</span></h2>
         
-        <!-- STATISTIK UTAMA -->
         <div class="dashboard-stats">
             <div class="dashboard-card">
                 <h3>📊 Total Pesanan</h3>
@@ -1434,7 +1456,6 @@
             </div>
         </div>
 
-        <!-- STATISTIK PER LAYANAN -->
         <h3 style="text-align: center; margin-bottom: 20px;">📈 Rekap Per Layanan</h3>
         <div class="service-stats" id="serviceStats">
             <div class="service-stat-card">
@@ -1459,7 +1480,6 @@
             </div>
         </div>
 
-        <!-- PEMILIH BULAN -->
         <div class="month-selector">
             <select id="monthSelect">
                 <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
@@ -1471,7 +1491,6 @@
             <button class="btn-primary" onclick="filterReportByMonth()">Tampilkan</button>
         </div>
 
-        <!-- TABEL REKAP BULANAN -->
         <div class="report-table">
             <table>
                 <thead>
@@ -1483,7 +1502,6 @@
             </table>
         </div>
 
-        <!-- TOMBOL EXPORT -->
         <div class="export-buttons">
             <button class="btn-primary" onclick="exportToCSV()">📎 Export CSV</button>
             <button class="btn-secondary" onclick="exportToPDF()">📄 Export PDF</button>
@@ -1509,8 +1527,8 @@
         <h2 class="section-title"><span id="stepsTitle">Cara</span> <span id="stepsTitleHighlight">Pemesanan</span></h2>
         <div class="step-grid">
             <div class="step"><div class="step-number">1</div>Isi Form / Hubungi WA</div>
-            <div class="step"><div class="step-number">2</div>Pilih Lokasi di Maps</div>
-            <div class="step"><div class="step-number">3</div>Hitung Jarak Otomatis</div>
+            <div class="step"><div class="step-number">2</div>Kirim Info Alamat</div>
+            <div class="step"><div class="step-number">3</div>Pilih Jenis Layanan</div>
             <div class="step"><div class="step-number">4</div>Konfirmasi Biaya</div>
             <div class="step"><div class="step-number">5</div>Driver/Kurir Jalan</div>
         </div>
@@ -1557,6 +1575,80 @@
 <button class="emergency-btn" onclick="emergencyCall()"><i class="fa-solid fa-phone"></i></button>
 
 <script>
+    // ================ PWA INSTALLATION ================
+    let deferredPrompt = null;
+    const installBtn = document.getElementById('installPwaBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = 'inline-flex';
+        
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt !== null) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showNotification('Aplikasi berhasil diinstall!', 'success');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            }
+        });
+    });
+
+    // ================ IMAGE UPLOAD FUNCTIONALITY ================
+    let uploadedImages = [];
+
+    function setupImageUpload() {
+        const uploadArea = document.getElementById('imageUploadArea');
+        const fileInput = document.getElementById('imageUpload');
+        
+        if (!uploadArea) return;
+        
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        uploadedImages.push(event.target.result);
+                        displayImagePreviews();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    }
+    
+    function displayImagePreviews() {
+        const previewContainer = document.getElementById('imagePreview');
+        if (!previewContainer) return;
+        
+        previewContainer.innerHTML = uploadedImages.map((img, index) => `
+            <div class="preview-item">
+                <img src="${img}" alt="Preview">
+                <div class="remove-image" onclick="removeImage(${index})">×</div>
+            </div>
+        `).join('');
+    }
+    
+    function removeImage(index) {
+        uploadedImages.splice(index, 1);
+        displayImagePreviews();
+    }
+    
+    function getImagesForWhatsApp() {
+        if (uploadedImages.length === 0) return '';
+        let imgText = '%0A%0A📸 Foto Barang:%0A';
+        uploadedImages.forEach((img, i) => {
+            imgText += `[Foto ${i+1}] ${img.substring(0, 50)}...%0A`;
+        });
+        return imgText;
+    }
+    
     // ================ GLOBAL VARIABLES ================
     let currentLanguage = 'id';
     let currentTheme = 'dark';
@@ -1564,7 +1656,6 @@
     let currentOrderId = null;
     let currentJarakAkurat = 0;
     let currentHargaAkurat = 0;
-    let currentDuration = "";
     let isAdmin = false;
     let currentRating = 0;
     let currentFilterMonth = new Date().getMonth() + 1;
@@ -1572,151 +1663,8 @@
     const ADMIN_PASSWORD = 'admin123';
     const TARIF_PER_KM = 3300;
     
-    let map = null;
-    let directionsService = null;
-    let directionsRenderer = null;
-    let pickupLatLng = null;
-    let destLatLng = null;
-    let autocompletePickup = null;
-    let autocompleteDest = null;
-    let currentPickerType = null;
-    
     let bookingHistory = JSON.parse(localStorage.getItem('bookingHistory') || '[]');
     let favoriteAddresses = JSON.parse(localStorage.getItem('favoriteAddresses') || '[]');
-    
-    // ================ GOOGLE MAPS INITIALIZATION ================
-    function initMapAsync() {
-        if (typeof google === 'undefined') {
-            console.error("Google Maps tidak terload");
-            return;
-        }
-        
-        directionsService = new google.maps.DirectionsService();
-        directionsRenderer = new google.maps.DirectionsRenderer();
-        
-        const mapDiv = document.getElementById('routeMap');
-        if (mapDiv) {
-            map = new google.maps.Map(mapDiv, {
-                center: { lat: -6.200000, lng: 106.816666 },
-                zoom: 12
-            });
-            directionsRenderer.setMap(map);
-        }
-        
-        // Setup autocomplete
-        const pickupInput = document.getElementById('jemput');
-        const destInput = document.getElementById('tujuan');
-        
-        autocompletePickup = new google.maps.places.Autocomplete(pickupInput, {
-            types: ['geocode', 'establishment']
-        });
-        autocompleteDest = new google.maps.places.Autocomplete(destInput, {
-            types: ['geocode', 'establishment']
-        });
-        
-        autocompletePickup.addListener('place_changed', () => {
-            const place = autocompletePickup.getPlace();
-            if (place.geometry) {
-                pickupLatLng = place.geometry.location;
-            }
-        });
-        
-        autocompleteDest.addListener('place_changed', () => {
-            const place = autocompleteDest.getPlace();
-            if (place.geometry) {
-                destLatLng = place.geometry.location;
-            }
-        });
-    }
-    
-    // Pilih lokasi via Google Maps Picker
-    function pickLocation(type) {
-        currentPickerType = type;
-        if (confirm(`Buka Google Maps untuk memilih ${type === 'pickup' ? 'lokasi penjemputan' : 'lokasi tujuan'}?`)) {
-            window.open(`https://www.google.com/maps/@?api=1&map_action=pwa`, '_blank');
-            showNotification(`Silakan pilih lokasi di Google Maps, lalu salin koordinatnya.`, 'info');
-            
-            const lat = prompt(`Masukkan Latitude untuk ${type === 'pickup' ? 'Penjemputan' : 'Tujuan'}:`);
-            const lng = prompt(`Masukkan Longitude untuk ${type === 'pickup' ? 'Penjemputan' : 'Tujuan'}:`);
-            
-            if (lat && lng && !isNaN(lat) && !isNaN(lng)) {
-                const latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-                if (type === 'pickup') {
-                    pickupLatLng = latLng;
-                    getAddressFromLatLng(latLng, 'jemput');
-                } else {
-                    destLatLng = latLng;
-                    getAddressFromLatLng(latLng, 'tujuan');
-                }
-            }
-        }
-    }
-    
-    function getAddressFromLatLng(latLng, inputId) {
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ location: latLng }, (results, status) => {
-            if (status === 'OK' && results[0]) {
-                document.getElementById(inputId).value = results[0].formatted_address;
-                showNotification(`Alamat berhasil diisi: ${results[0].formatted_address.substring(0, 50)}...`, 'success');
-            }
-        });
-    }
-    
-    // Hitung jarak menggunakan Google Maps Directions API
-    function calculateAndGetDistance() {
-        const pickup = document.getElementById('jemput').value;
-        const destination = document.getElementById('tujuan').value;
-        
-        if (!pickup || !destination) {
-            showNotification('Harap isi lokasi penjemputan dan tujuan terlebih dahulu!', 'error');
-            return;
-        }
-        
-        if (!directionsService) {
-            showNotification('Google Maps belum siap, coba lagi sebentar.', 'error');
-            return;
-        }
-        
-        const request = {
-            origin: pickup,
-            destination: destination,
-            travelMode: google.maps.TravelMode.DRIVING
-        };
-        
-        directionsService.route(request, (result, status) => {
-            if (status === 'OK') {
-                const route = result.routes[0];
-                const legs = route.legs[0];
-                const distanceKm = legs.distance.value / 1000;
-                const duration = legs.duration.text;
-                
-                currentJarakAkurat = Math.round(distanceKm * 10) / 10;
-                currentDuration = duration;
-                currentHargaAkurat = currentJarakAkurat * TARIF_PER_KM;
-                
-                document.getElementById('liveJarakText').innerText = currentJarakAkurat + " KM";
-                document.getElementById('liveTarifText').innerText = formatRupiah(currentHargaAkurat);
-                document.getElementById('liveDurationText').innerText = duration;
-                document.getElementById('liveTracker').style.display = "block";
-                
-                // Tampilkan map preview
-                const mapPreview = document.getElementById('mapPreview');
-                if (directionsRenderer) {
-                    directionsRenderer.setDirections(result);
-                    mapPreview.classList.add('active');
-                    if (map) {
-                        const bounds = result.routes[0].bounds;
-                        map.fitBounds(bounds);
-                    }
-                }
-                
-                showNotification(`Jarak: ${currentJarakAkurat} KM, Estimasi tarif: ${formatRupiah(currentHargaAkurat)}`, 'success');
-            } else {
-                showNotification('Tidak dapat menghitung jarak. Periksa alamat Anda.', 'error');
-                console.error('Directions error:', status);
-            }
-        });
-    }
     
     // ================ HELPER FUNCTIONS ================
     function formatRupiah(amount) {
@@ -1753,6 +1701,8 @@
             document.getElementById('favAddressTitle').innerHTML = "Favorite Addresses";
             document.getElementById('labelNama').innerHTML = "Customer Name";
             document.getElementById('labelJenisLayanan').innerHTML = "Select Service";
+            document.getElementById('labelJemput').innerHTML = "Pickup Location";
+            document.getElementById('labelTujuan').innerHTML = "Destination";
             document.getElementById('labelTanggal').innerHTML = "Date";
             document.getElementById('labelJam').innerHTML = "Time";
             document.getElementById('labelRating').innerHTML = "Driver Rating (Optional)";
@@ -1835,6 +1785,21 @@
         container.appendChild(saveBtn);
     }
     
+    // ================ DISTANCE & FARE ================
+    function setManualDistance() {
+        const jarak = parseFloat(document.getElementById('jarakManual').value);
+        if (jarak && jarak > 0) {
+            currentJarakAkurat = jarak;
+            currentHargaAkurat = currentJarakAkurat * TARIF_PER_KM;
+            document.getElementById('liveJarakText').innerText = currentJarakAkurat + " KM";
+            document.getElementById('liveTarifText').innerText = formatRupiah(currentHargaAkurat);
+            document.getElementById('liveTracker').style.display = "block";
+            showNotification(`Jarak ${currentJarakAkurat} KM, estimasi tarif ${formatRupiah(currentHargaAkurat)}`, 'success');
+        } else {
+            showNotification('Masukkan jarak terlebih dahulu!', 'error');
+        }
+    }
+    
     function hitungTarifManual() {
         const jarak = parseFloat(document.getElementById('inputJarak').value);
         if (jarak && jarak > 0) {
@@ -1856,7 +1821,7 @@
             totalAmount: currentHargaAkurat,
             rating: currentRating,
             review: document.getElementById('reviewText').value,
-            duration: currentDuration
+            images: uploadedImages.slice() // Save images
         };
         bookingHistory.unshift(newOrder);
         localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
@@ -1882,6 +1847,12 @@
                 </div>
                 <div style="font-size: 12px;">📍 ${(order.jemput || '-').substring(0, 30)}...</div>
                 <div class="history-amount">💰 ${formatRupiah(order.totalAmount || 0)}</div>
+                ${order.images && order.images.length > 0 ? `
+                    <div class="history-images">
+                        ${order.images.slice(0, 3).map(img => `<img src="${img}" alt="item">`).join('')}
+                        ${order.images.length > 3 ? `<span>+${order.images.length-3}</span>` : ''}
+                    </div>
+                ` : ''}
                 <button class="card-btn" style="margin-top: 10px; padding: 8px;" onclick="event.stopPropagation();repeatOrder(${order.id})">🔄 Pesan Lagi</button>
             </div>
         `).join('');
@@ -1897,14 +1868,16 @@
             document.getElementById('tanggalJemput').value = order.tanggal || '';
             document.getElementById('jamJemput').value = order.jam || '';
             if (order.distance) {
+                document.getElementById('jarakManual').value = order.distance;
                 currentJarakAkurat = order.distance;
                 currentHargaAkurat = order.distance * TARIF_PER_KM;
                 document.getElementById('liveJarakText').innerText = currentJarakAkurat + " KM";
                 document.getElementById('liveTarifText').innerText = formatRupiah(currentHargaAkurat);
                 document.getElementById('liveTracker').style.display = "block";
-                if (order.duration) {
-                    document.getElementById('liveDurationText').innerText = order.duration;
-                }
+            }
+            if (order.images && order.images.length > 0) {
+                uploadedImages = [...order.images];
+                displayImagePreviews();
             }
             updateFormLabels();
             showNotification('Data pesanan telah diisi ulang!', 'success');
@@ -1977,8 +1950,11 @@
         tbody.innerHTML = filtered.map(order => `
             <tr>
                 <td>${new Date(order.timestamp).toLocaleDateString('id-ID')}</td>
-                <td>${order.nama || '-'}</td><td>${order.layanan || '-'}</td><td>${order.distance || '-'}</td>
-                <td>${formatRupiah(order.totalAmount || 0)}</td><td>${order.rating ? '⭐'.repeat(order.rating) : '-'}</td>
+                <td>${order.nama || '-'}</td>
+                <td>${order.layanan || '-'}</td>
+                <td>${order.distance || '-'}</td>
+                <td>${formatRupiah(order.totalAmount || 0)}</td>
+                <td>${order.rating ? '⭐'.repeat(order.rating) : '-'}</td>
             </tr>
         `).join('');
     }
@@ -2023,11 +1999,13 @@
         <style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}th{background:#00B14F;color:white}</style>
         </head><body><h1>CRUIZEMATE - Laporan Bulanan</h1>
         <h3>Bulan: ${currentFilterMonth}/${currentFilterYear}</h3>
-        <table><thead><tr><th>Tanggal</th><th>Pelanggan</th><th>Layanan</th><th>Jarak</th><th>Nominal</th><th>Rating</th></tr></thead><tbody>`;
+        </table><thead><tr><th>Tanggal</th><th>Pelanggan</th><th>Layanan</th><th>Jarak</th><th>Nominal</th><th>Rating</th></tr></thead><tbody>`;
         filtered.forEach(order => {
             html += `<tr><td>${new Date(order.timestamp).toLocaleDateString('id-ID')}</td>
-            <td>${order.nama || '-'}</td><td>${order.layanan || '-'}</td>
-            <td>${order.distance || '-'}</td><td>${formatRupiah(order.totalAmount || 0)}</td>
+            <td>${order.nama || '-'}</td>
+            <td>${order.layanan || '-'}</td>
+            <td>${order.distance || '-'}</td>
+            <td>${formatRupiah(order.totalAmount || 0)}</td>
             <td>${order.rating || '-'}</td></tr>`;
         });
         html += `</tbody></table><p>Total Pendapatan: ${formatRupiah(filtered.reduce((s,o)=>s+(o.totalAmount||0),0))}</p></body></html>`;
@@ -2141,17 +2119,20 @@
         }
         
         if (currentJarakAkurat === 0) {
-            showNotification('Harap hitung jarak terlebih dahulu menggunakan tombol "Hitung Jarak & Tarif Otomatis"!', 'error');
+            showNotification('Harap hitung jarak terlebih dahulu!', 'error');
             return;
         }
         
         let detailGoSend = "";
         if (layanan === "GoSend" || layanan === "Jastip") {
             detailGoSend = `🛍️ Barang: ${document.getElementById('namaBarang').value || '-'}%0A⚖️ Berat: ${document.getElementById('beratBarang').value || '-'} Kg%0A🔢 Jumlah: ${document.getElementById('jumlahBarang').value || '-'} Item%0A`;
+            if (uploadedImages.length > 0) {
+                detailGoSend += `📸 Jumlah Foto: ${uploadedImages.length} buah%0A`;
+            }
         }
         
         let ratingText = currentRating > 0 ? `⭐ Rating: ${currentRating}/5%0A📝 Review: ${document.getElementById('reviewText').value}%0A` : "";
-        let infoTarif = `\n📍 Jarak: ${currentJarakAkurat} KM\n⏱️ Estimasi Waktu: ${currentDuration}\n💰 Estimasi: ${formatRupiah(currentHargaAkurat)}`;
+        let infoTarif = `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi: ${formatRupiah(currentHargaAkurat)}`;
         
         const textWA = `Halo Admin, saya ingin order:%0A%0A👤 Nama: ${nama}%0A🛠️ Layanan: ${layanan}%0A${detailGoSend}${ratingText}🛫 Jemput: ${jemput}%0A🛬 Tujuan: ${tujuan}%0A📅 Tanggal: ${tanggal}%0A⏰ Jam: ${jam}${infoTarif}`;
         
@@ -2167,13 +2148,17 @@
         showNotification('Pesanan berhasil dikirim!', 'success');
         
         // Reset form but keep distance for next booking maybe
-        // Don't reset jarak so user can see last calculation
+        currentJarakAkurat = 0;
+        currentHargaAkurat = 0;
+        document.getElementById('liveTracker').style.display = "none";
+        document.getElementById('jarakManual').value = '';
     });
     
     // ================ INITIALIZATION ================
     loadFavoriteAddresses();
     loadHistory();
     document.getElementById('jenisLayanan').addEventListener('change', updateFormLabels);
+    setupImageUpload();
     
     // Set default date to today
     const today = new Date().toISOString().split('T')[0];
@@ -2208,8 +2193,7 @@
     window.onclick = (event) => { if (event.target === modal) closeContactModal(); };
     
     // Export functions to global
-    window.calculateAndGetDistance = calculateAndGetDistance;
-    window.pickLocation = pickLocation;
+    window.setManualDistance = setManualDistance;
     window.hitungTarifManual = hitungTarifManual;
     window.clearHistory = clearHistory;
     window.shareTrip = shareTrip;
@@ -2226,7 +2210,7 @@
     window.filterReportByMonth = filterReportByMonth;
     window.exportToCSV = exportToCSV;
     window.exportToPDF = exportToPDF;
-    window.initMapAsync = initMapAsync;
+    window.removeImage = removeImage;
 </script>
 </body>
 </html>
