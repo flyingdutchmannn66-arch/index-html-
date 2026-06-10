@@ -24,11 +24,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Firebase SDKs untuk Google Login -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
     <style>
         * {
             margin: 0;
@@ -66,7 +61,9 @@
         body.light-mode .status-tracking,
         body.light-mode .history-item,
         body.light-mode .dashboard-card,
-        body.light-mode .report-table table {
+        body.light-mode .report-table table,
+        body.light-mode .promo-modal-content,
+        body.light-mode .promo-slider-card {
             background: #ffffff;
             border-color: #e0e0e0;
             color: #1a1a2e;
@@ -106,6 +103,10 @@
 
         body.light-mode footer {
             background: #e8ecef;
+        }
+
+        body.light-mode .promo-slider-card {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9) !important;
         }
 
         .container {
@@ -188,7 +189,7 @@
         }
 
         /* THEME TOGGLE */
-        .theme-toggle, .lang-toggle, .admin-btn {
+        .theme-toggle, .lang-toggle, .admin-btn, .promo-manage-btn {
             background: rgba(255,255,255,0.1);
             border: none;
             color: white;
@@ -203,12 +204,23 @@
             background: #dc3545;
         }
 
+        .promo-manage-btn {
+            background: #FFD700;
+            color: #1a1a2e;
+        }
+
+        .promo-manage-btn:hover {
+            background: #ffc107;
+            transform: translateY(-1px);
+        }
+
         .admin-btn:hover {
             background: #c82333;
         }
 
         body.light-mode .theme-toggle,
-        body.light-mode .lang-toggle {
+        body.light-mode .lang-toggle,
+        body.light-mode .promo-manage-btn {
             background: #e0e0e0;
             color: #1a1a2e;
         }
@@ -905,7 +917,7 @@
         }
 
         /* MODAL */
-        .contact-modal, .admin-modal {
+        .contact-modal, .admin-modal, .promo-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -923,18 +935,20 @@
             padding: 20px;
         }
 
-        .contact-modal.active, .admin-modal.active {
+        .contact-modal.active, .admin-modal.active, .promo-modal.active {
             opacity: 1;
             pointer-events: auto;
         }
 
-        .modal-content, .admin-modal-content {
+        .modal-content, .admin-modal-content, .promo-modal-content {
             background: #0f172a;
             border: 1px solid rgba(0, 177, 79, 0.3);
             padding: 30px 20px;
             border-radius: 24px;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
             text-align: center;
             position: relative;
             transform: scale(0.8);
@@ -942,7 +956,8 @@
         }
 
         .contact-modal.active .modal-content,
-        .admin-modal.active .admin-modal-content {
+        .admin-modal.active .admin-modal-content,
+        .promo-modal.active .promo-modal-content {
             transform: scale(1);
         }
 
@@ -1069,55 +1084,146 @@
             gap: 15px;
         }
 
-        /* Google Login Button */
-        .google-login-btn {
-            background: #4285F4;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 50px;
+        /* PROMO SLIDER STYLES */
+        .promo-slider-container {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .promo-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding: 20px 10px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .promo-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .promo-slider-card {
+            flex: 0 0 300px;
+            scroll-snap-align: start;
+            background: linear-gradient(135deg, #0f172a, #1a2335);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(0, 177, 79, 0.3);
             cursor: pointer;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .google-login-btn:hover {
-            background: #357ae8;
-            transform: translateY(-1px);
+
+        .promo-slider-card:hover {
+            transform: translateY(-5px);
+            border-color: #00B14F;
+            box-shadow: 0 10px 30px rgba(0, 177, 79, 0.2);
         }
-        .user-info {
-            background: rgba(0, 177, 79, 0.1);
-            border-radius: 50px;
-            padding: 5px 15px;
-            font-size: 13px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .user-avatar {
-            width: 30px;
-            height: 30px;
+
+        .promo-slider-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 177, 79, 0.1) 0%, transparent 70%);
             border-radius: 50%;
-            object-fit: cover;
         }
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-        .points-badge {
+
+        .promo-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
             background: #FFD700;
             color: #1a1a2e;
-            padding: 4px 12px;
-            border-radius: 50px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: bold;
+        }
+
+        .promo-code {
+            font-size: 24px;
+            font-weight: 800;
+            color: #00B14F;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .promo-discount {
+            font-size: 28px;
+            font-weight: 800;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .promo-desc {
             font-size: 12px;
+            color: #a3b1cc;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .promo-min {
+            font-size: 11px;
+            color: #a3b1cc;
+            margin-bottom: 5px;
+        }
+
+        .promo-expiry {
+            font-size: 10px;
+            color: #ff6b6b;
+        }
+
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .slider-nav-btn {
+            background: rgba(0, 177, 79, 0.2);
+            border: 1px solid #00B14F;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-nav-btn:hover {
+            background: #00B14F;
+            transform: scale(1.1);
+        }
+
+        .promo-section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .promo-section-title h4 {
+            font-size: 18px;
+            color: #FFD700;
+        }
+
+        .view-all-promo {
+            font-size: 12px;
+            color: #00B14F;
+            cursor: pointer;
+            text-decoration: underline;
         }
 
         @media(max-width: 991px) {
@@ -1171,6 +1277,9 @@
             .dateTime-grid, .gosend-grid {
                 grid-template-columns: 1fr;
             }
+            .promo-slider-card {
+                flex: 0 0 260px;
+            }
         }
 
         @media(max-width: 576px) {
@@ -1185,6 +1294,9 @@
                 height: 50px;
                 bottom: 20px;
                 right: 20px;
+            }
+            .promo-slider-card {
+                flex: 0 0 240px;
             }
         }
     </style>
@@ -1213,10 +1325,10 @@
         </div>
         
         <div class="nav-controls">
-            <div id="userProfileContainer"></div>
             <button class="lang-toggle" onclick="toggleLanguage()" id="langToggleBtn">🇮🇩 ID</button>
             <button class="theme-toggle" onclick="toggleTheme()">🌓 Mode</button>
             <button class="admin-btn" onclick="openAdminModal()">🔒 Admin</button>
+            <button class="promo-manage-btn" onclick="openPromoAdminPanel()" id="promoManageBtn" style="display: none;">🎫 Kelola Promo</button>
             <button id="installPwaBtn" class="install-pwa-btn" style="display: none;"><i class="fa-solid fa-download"></i> Install App</button>
             <a href="https://wa.me/6281260636666" class="whatsapp-btn">WhatsApp</a>
         </div>
@@ -1232,7 +1344,7 @@
                 <div class="feature">🚗 Driver Terpercaya</div>
                 <div class="feature">📱 Booking Mudah</div>
                 <div class="feature">💰 Harga Transparan</div>
-                <div class="feature">🎁 Dapat Poin Setiap Order (1 Poin = Rp500)</div>
+                <div class="feature">🎟️ Promo Spesial</div>
             </div>
             <div class="buttons">
                 <a href="#form-pemesanan" class="btn-primary" id="btnBookNow">📝 Pesan via Formulir</a>
@@ -1325,6 +1437,21 @@
                 <div class="favorite-addresses" id="favoriteAddresses"></div>
             </div>
 
+            <!-- PROMO SLIDER SECTION -->
+            <div class="promo-slider-container">
+                <div class="promo-section-title">
+                    <h4><i class="fa-solid fa-ticket"></i> 🎉 Promo Spesial untuk Anda!</h4>
+                    <span class="view-all-promo" onclick="openPromoModal()">Lihat Semua <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="promo-slider" id="promoSlider">
+                    <!-- Promo cards will be dynamically inserted here -->
+                </div>
+                <div class="slider-nav">
+                    <button class="slider-nav-btn" onclick="scrollPromoSlider(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-nav-btn" onclick="scrollPromoSlider(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
             <form id="bookingForm" style="display: flex; flex-direction: column; gap: 20px;">
                 <div class="form-group">
                     <label id="labelNama">Nama Pelanggan / Penumpang</label>
@@ -1358,7 +1485,6 @@
                         </div>
                     </div>
                     
-                    <!-- IMAGE UPLOAD AREA -->
                     <div class="form-group">
                         <label><i class="fa-solid fa-camera"></i> Upload Foto Barang (Opsional)</label>
                         <div class="image-upload-area" id="imageUploadArea">
@@ -1552,10 +1678,10 @@
         <div class="report-table">
             <table>
                 <thead>
-                    <tr><th>Tanggal</th><th>Pelanggan</th><th>Layanan</th><th>Jarak</th><th>Nominal</th><th>Rating</th></tr>
+                    <tr><th>Tanggal</th><th>Pelanggan</th><th>Layanan</th><th>Jarak</th><th>Nominal</th><th>Promo</th><th>Rating</th></tr>
                 </thead>
                 <tbody id="reportTableBody">
-                    <tr><td colspan="6" style="text-align:center;">Loading...</td></tr>
+                    <tr><td colspan="7" style="text-align:center;">Loading...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -1563,9 +1689,43 @@
         <div class="export-buttons">
             <button class="btn-primary" onclick="exportToCSV()">📎 Export CSV</button>
             <button class="btn-secondary" onclick="exportToPDF()">📄 Export PDF</button>
+            <button class="btn-secondary" onclick="openPromoAdminPanel()">🎫 Kelola Promo</button>
         </div>
     </div>
 </section>
+
+<!-- PROMO MODAL (FULL LIST) -->
+<div class="promo-modal" id="promoModal">
+    <div class="promo-modal-content">
+        <button class="close-modal" onclick="closePromoModal()"><i class="fa-solid fa-xmark"></i></button>
+        <h3 style="margin-bottom: 10px; color: #FFD700;">
+            <i class="fa-solid fa-ticket"></i> Semua Kode Promo
+        </h3>
+        <p style="font-size: 13px; margin-bottom: 20px; color: #a3b1cc;">
+            Klik promo untuk langsung menggunakannya
+        </p>
+        
+        <div id="promoListContent" style="margin-bottom: 20px; max-height: 400px; overflow-y: auto;">
+            Loading...
+        </div>
+        
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+            <label style="font-size: 13px; margin-bottom: 8px; display: block;">Atau masukkan kode manual:</label>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="manualPromoCode" placeholder="Contoh: GRAB10" style="
+                    flex: 1;
+                    padding: 12px;
+                    border-radius: 10px;
+                    border: 1px solid #00B14F;
+                    background: rgba(255,255,255,0.05);
+                    color: white;
+                    text-transform: uppercase;
+                ">
+                <button onclick="applyManualPromo()" class="btn-primary" style="padding: 12px 20px;">Gunakan</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- HISTORY SECTION -->
 <section id="history" class="history-section">
@@ -1633,146 +1793,6 @@
 <button class="emergency-btn" onclick="emergencyCall()"><i class="fa-solid fa-phone"></i></button>
 
 <script>
-    // ================ FIREBASE CONFIGURATION (DEMO MODE) ================
-    // Note: For production, replace with your actual Firebase config
-    const firebaseConfig = {
-        apiKey: "AIzaSyDummyKeyForDemoPurposeOnly123456",
-        authDomain: "cruizemate-demo.firebaseapp.com",
-        projectId: "cruizemate-demo",
-        storageBucket: "cruizemate-demo.appspot.com",
-        messagingSenderId: "123456789012",
-        appId: "1:123456789012:web:abcdef123456"
-    };
-    
-    // Initialize Firebase (will work in demo mode with local storage fallback)
-    let auth, db, currentUser = null;
-    let userPoints = 0;
-    let currentUserEmail = null;
-    
-    try {
-        firebase.initializeApp(firebaseConfig);
-        auth = firebase.auth();
-        db = firebase.firestore();
-        console.log("Firebase initialized");
-    } catch(e) {
-        console.warn("Firebase init warning (demo mode):", e);
-    }
-    
-    // ================ POINTS SYSTEM ================
-    const POINTS_VALUE = 500; // 1 point = Rp 500
-    
-    function addPointsToUser(userId, pointsToAdd = 1) {
-        if (!userId) return;
-        // Update local storage for demo
-        let userPointsData = JSON.parse(localStorage.getItem(`points_${userId}`) || '0');
-        userPointsData += pointsToAdd;
-        localStorage.setItem(`points_${userId}`, userPointsData);
-        if (currentUser && currentUser.uid === userId) {
-            userPoints = userPointsData;
-            updatePointsDisplay();
-        }
-        showNotification(`✨ Anda mendapat ${pointsToAdd} Poin! (1 Poin = Rp ${POINTS_VALUE})`, 'success');
-    }
-    
-    function getUserPoints(userId) {
-        return parseInt(localStorage.getItem(`points_${userId}`) || '0');
-    }
-    
-    function updatePointsDisplay() {
-        const container = document.getElementById('userProfileContainer');
-        if (container && currentUser) {
-            const pointsSpan = container.querySelector('.points-badge');
-            if (pointsSpan) {
-                pointsSpan.innerHTML = `🎁 ${userPoints} Poin (Rp ${userPoints * POINTS_VALUE})`;
-            }
-        }
-    }
-    
-    // ================ GOOGLE LOGIN ================
-    async function handleGoogleLogin() {
-        if (!auth) {
-            // Demo mode: Simulate login
-            const mockUser = {
-                uid: "demo_user_" + Date.now(),
-                displayName: "Pengguna Demo",
-                email: "demo@cruizemate.com",
-                photoURL: "https://ui-avatars.com/api/?background=00B14F&color=fff&name=Demo"
-            };
-            currentUser = mockUser;
-            currentUserEmail = mockUser.email;
-            userPoints = getUserPoints(mockUser.uid);
-            updateUIForLoggedInUser(mockUser);
-            showNotification(`Selamat datang, ${mockUser.displayName}!`, 'success');
-            return;
-        }
-        
-        try {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            const result = await auth.signInWithPopup(provider);
-            currentUser = result.user;
-            currentUserEmail = currentUser.email;
-            userPoints = getUserPoints(currentUser.uid);
-            updateUIForLoggedInUser(currentUser);
-            showNotification(`Login berhasil! Selamat datang, ${currentUser.displayName}`, 'success');
-        } catch(error) {
-            console.error(error);
-            showNotification('Gagal login dengan Google: ' + error.message, 'error');
-        }
-    }
-    
-    function handleLogout() {
-        if (auth) {
-            auth.signOut();
-        }
-        currentUser = null;
-        currentUserEmail = null;
-        userPoints = 0;
-        updateUIForLoggedOutUser();
-        showNotification('Anda telah logout', 'info');
-    }
-    
-    function updateUIForLoggedInUser(user) {
-        const container = document.getElementById('userProfileContainer');
-        container.innerHTML = `
-            <div class="user-info">
-                <img src="${user.photoURL || 'https://ui-avatars.com/api/?background=00B14F&color=fff&name=' + (user.displayName || 'User')}" class="user-avatar">
-                <span>${user.displayName || user.email}</span>
-                <span class="points-badge">🎁 ${userPoints} Poin (Rp ${userPoints * POINTS_VALUE})</span>
-                <button class="logout-btn" onclick="handleLogout()"><i class="fa-solid fa-sign-out-alt"></i> Keluar</button>
-            </div>
-        `;
-        // Update nama field if empty
-        const namaField = document.getElementById('nama');
-        if (namaField && !namaField.value) {
-            namaField.value = user.displayName || '';
-        }
-    }
-    
-    function updateUIForLoggedOutUser() {
-        const container = document.getElementById('userProfileContainer');
-        container.innerHTML = `<button class="google-login-btn" onclick="handleGoogleLogin()"><i class="fa-brands fa-google"></i> Login dengan Google</button>`;
-    }
-    
-    // Check auth state
-    if (auth) {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                currentUser = user;
-                currentUserEmail = user.email;
-                userPoints = getUserPoints(user.uid);
-                updateUIForLoggedInUser(user);
-            } else {
-                currentUser = null;
-                currentUserEmail = null;
-                userPoints = 0;
-                updateUIForLoggedOutUser();
-            }
-        });
-    } else {
-        // Demo mode: show login button
-        updateUIForLoggedOutUser();
-    }
-    
     // ================ PWA INSTALLATION ================
     let deferredPrompt = null;
     const installBtn = document.getElementById('installPwaBtn');
@@ -1863,6 +1883,379 @@
     
     let bookingHistory = JSON.parse(localStorage.getItem('bookingHistory') || '[]');
     let favoriteAddresses = JSON.parse(localStorage.getItem('favoriteAddresses') || '[]');
+    
+    // ================ PROMO DATABASE ================
+    let promoDatabase = {
+        "GRAB10": {
+            type: "percentage",
+            value: 10,
+            minTransaction: 0,
+            maxDiscount: 50000,
+            description: "Diskon 10% (maks. Rp 50.000)",
+            expiredDate: "2026-12-31",
+            usageLimit: 100,
+            usedCount: 0,
+            icon: "🎉"
+        },
+        "NEWUSER5RB": {
+            type: "nominal",
+            value: 5000,
+            minTransaction: 20000,
+            maxDiscount: 5000,
+            description: "Potongan Rp 5.000 untuk transaksi minimal Rp 20.000",
+            expiredDate: "2026-06-30",
+            usageLimit: 50,
+            usedCount: 0,
+            icon: "🆕"
+        },
+        "FREESHIP50": {
+            type: "percentage",
+            value: 50,
+            minTransaction: 50000,
+            maxDiscount: 30000,
+            description: "Diskon 50% ongkir maks. Rp 30.000 (min belanja Rp 50.000)",
+            expiredDate: "2026-05-31",
+            usageLimit: 30,
+            usedCount: 0,
+            icon: "🚚"
+        },
+        "GRABWEEKEND": {
+            type: "nominal",
+            value: 15000,
+            minTransaction: 75000,
+            maxDiscount: 15000,
+            description: "Potongan Rp 15.000 (min transaksi Rp 75.000)",
+            expiredDate: "2026-08-31",
+            usageLimit: 200,
+            usedCount: 0,
+            icon: "🎈"
+        },
+        "JASTIP20": {
+            type: "percentage",
+            value: 20,
+            minTransaction: 30000,
+            maxDiscount: 40000,
+            description: "Diskon 20% untuk layanan Jastip (maks. Rp 40.000)",
+            expiredDate: "2026-10-31",
+            usageLimit: 100,
+            usedCount: 0,
+            icon: "🛍️"
+        }
+    };
+    
+    let userPromoHistory = JSON.parse(localStorage.getItem('userPromoHistory') || '{}');
+    let appliedPromo = null;
+    let originalPrice = 0;
+    let discountedPrice = 0;
+    
+    // ================ PROMO SLIDER FUNCTIONS ================
+    function renderPromoSlider() {
+        const slider = document.getElementById('promoSlider');
+        if (!slider) return;
+        
+        const activePromos = Object.entries(promoDatabase)
+            .filter(([code, promo]) => {
+                const now = new Date();
+                const expired = new Date(promo.expiredDate);
+                return now <= expired && promo.usedCount < promo.usageLimit;
+            });
+        
+        if (activePromos.length === 0) {
+            slider.innerHTML = `<div style="text-align: center; width: 100%; padding: 40px; color: #a3b1cc;">✨ Belum ada promo aktif saat ini</div>`;
+            return;
+        }
+        
+        slider.innerHTML = activePromos.map(([code, promo]) => `
+            <div class="promo-slider-card" onclick="applyPromoCode('${code}')">
+                <div class="promo-badge">${promo.icon || '🎟️'} ${promo.type === 'percentage' ? `${promo.value}% OFF` : `RP ${promo.value.toLocaleString()} OFF`}</div>
+                <div class="promo-code">${code}</div>
+                <div class="promo-discount">
+                    ${promo.type === 'percentage' ? `${promo.value}%` : `Rp ${promo.value.toLocaleString()}`}
+                </div>
+                <div class="promo-desc">${promo.description}</div>
+                <div class="promo-min">
+                    ${promo.minTransaction > 0 ? `Min. transaksi: ${formatRupiah(promo.minTransaction)}` : 'Tanpa minimal transaksi'}
+                </div>
+                <div class="promo-expiry">
+                    ⏰ Berlaku hingga: ${new Date(promo.expiredDate).toLocaleDateString('id-ID')}
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function scrollPromoSlider(direction) {
+        const slider = document.getElementById('promoSlider');
+        if (slider) {
+            const scrollAmount = 320;
+            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+        }
+    }
+    
+    function showAvailablePromos() {
+        const promoList = Object.entries(promoDatabase)
+            .filter(([code, promo]) => {
+                const now = new Date();
+                const expired = new Date(promo.expiredDate);
+                return now <= expired && promo.usedCount < promo.usageLimit;
+            })
+            .map(([code, promo]) => `
+                <div class="promo-card" onclick="applyPromoCode('${code}')" style="
+                    background: rgba(0, 177, 79, 0.1);
+                    border-radius: 12px;
+                    padding: 12px;
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    border: 1px solid rgba(0, 177, 79, 0.3);
+                ">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span style="font-weight: 700; color: #00B14F; font-size: 18px;">${code}</span>
+                            <span style="font-size: 11px; background: #00B14F; color: white; padding: 2px 8px; border-radius: 20px; margin-left: 10px;">${promo.type === 'percentage' ? `${promo.value}%` : `Rp ${promo.value.toLocaleString()}`}</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right" style="color: #00B14F;"></i>
+                    </div>
+                    <div style="font-size: 12px; color: #a3b1cc; margin-top: 8px;">
+                        ${promo.description}
+                    </div>
+                    <div style="font-size: 11px; margin-top: 5px;">
+                        📅 Berlaku hingga: ${new Date(promo.expiredDate).toLocaleDateString('id-ID')}
+                        ${promo.minTransaction > 0 ? ` | 💰 Min. transaksi: ${formatRupiah(promo.minTransaction)}` : ''}
+                    </div>
+                </div>
+            `).join('');
+        
+        if (promoList.length === 0) {
+            return '<div style="text-align: center; padding: 20px; color: #a3b1cc;">✨ Belum ada promo aktif saat ini</div>';
+        }
+        return promoList;
+    }
+    
+    function openPromoModal() {
+        const promoContent = document.getElementById('promoListContent');
+        if (promoContent) {
+            promoContent.innerHTML = showAvailablePromos();
+        }
+        document.getElementById('promoModal').classList.add('active');
+    }
+    
+    function closePromoModal() {
+        document.getElementById('promoModal').classList.remove('active');
+    }
+    
+    function applyPromoCode(code) {
+        const promo = promoDatabase[code];
+        if (!promo) {
+            showNotification('Kode promo tidak valid!', 'error');
+            return false;
+        }
+        
+        const now = new Date();
+        const expired = new Date(promo.expiredDate);
+        if (now > expired) {
+            showNotification('Kode promo sudah kadaluarsa!', 'error');
+            return false;
+        }
+        
+        if (promo.usedCount >= promo.usageLimit) {
+            showNotification('Kode promo sudah mencapai batas penggunaan!', 'error');
+            return false;
+        }
+        
+        const userKey = `user_${localStorage.getItem('userId') || 'anonymous'}_${code}`;
+        if (userPromoHistory[userKey]) {
+            showNotification('Anda sudah pernah menggunakan kode promo ini!', 'error');
+            return false;
+        }
+        
+        const currentFare = currentHargaAkurat;
+        if (currentFare < promo.minTransaction) {
+            showNotification(`Minimal transaksi untuk promo ini adalah ${formatRupiah(promo.minTransaction)}`, 'error');
+            return false;
+        }
+        
+        let discount = 0;
+        if (promo.type === 'percentage') {
+            discount = currentFare * (promo.value / 100);
+            if (discount > promo.maxDiscount) {
+                discount = promo.maxDiscount;
+            }
+        } else {
+            discount = promo.value;
+        }
+        
+        discountedPrice = currentFare - discount;
+        
+        appliedPromo = {
+            code: code,
+            discount: discount,
+            originalPrice: currentFare,
+            finalPrice: discountedPrice,
+            promoData: promo
+        };
+        
+        updateDisplayWithPromo();
+        showNotification(`✅ Kode ${code} berhasil! Potongan ${formatRupiah(discount)}`, 'success');
+        closePromoModal();
+        return true;
+    }
+    
+    function applyManualPromo() {
+        const code = document.getElementById('manualPromoCode').value.trim().toUpperCase();
+        if (!code) {
+            showNotification('Masukkan kode promo!', 'error');
+            return;
+        }
+        applyPromoCode(code);
+    }
+    
+    function updateDisplayWithPromo() {
+        const trackerElement = document.getElementById('liveTarifText');
+        if (trackerElement && appliedPromo && currentHargaAkurat > 0) {
+            trackerElement.innerHTML = `<span style="text-decoration: line-through; color: #ff6b6b; font-size: 12px;">${formatRupiah(appliedPromo.originalPrice)}</span> → ${formatRupiah(appliedPromo.finalPrice)}`;
+            
+            let promoInfo = document.getElementById('promoInfoBox');
+            if (!promoInfo) {
+                promoInfo = document.createElement('div');
+                promoInfo.id = 'promoInfoBox';
+                promoInfo.className = 'promo-info-box';
+                const liveTracker = document.getElementById('liveTracker');
+                if (liveTracker) liveTracker.appendChild(promoInfo);
+            }
+            promoInfo.innerHTML = `
+                🎉 Promo <strong>${appliedPromo.code}</strong> aktif! 
+                Hemat ${formatRupiah(appliedPromo.discount)}
+                <button onclick="removePromo()" style="background: none; border: none; color: #ff6b6b; cursor: pointer; margin-left: 10px; text-decoration: underline;">Batalkan</button>
+            `;
+        }
+        
+        const hasilTarifBox = document.getElementById('hasilTarifBox');
+        if (hasilTarifBox && hasilTarifBox.style.display === 'block') {
+            const totalElement = document.getElementById('textTotalTarif');
+            if (totalElement && appliedPromo) {
+                totalElement.innerHTML = `<span style="text-decoration: line-through; color: #ff6b6b; font-size: 14px;">${formatRupiah(appliedPromo.originalPrice)}</span><br>${formatRupiah(appliedPromo.finalPrice)}`;
+            }
+        }
+    }
+    
+    function removePromo() {
+        appliedPromo = null;
+        discountedPrice = 0;
+        const trackerElement = document.getElementById('liveTarifText');
+        if (trackerElement && currentHargaAkurat > 0) {
+            trackerElement.innerHTML = formatRupiah(currentHargaAkurat);
+        }
+        const promoInfo = document.getElementById('promoInfoBox');
+        if (promoInfo) promoInfo.remove();
+        
+        const hasilTarifBox = document.getElementById('hasilTarifBox');
+        if (hasilTarifBox && hasilTarifBox.style.display === 'block') {
+            const totalElement = document.getElementById('textTotalTarif');
+            if (totalElement && currentJarakAkurat > 0) {
+                totalElement.innerHTML = formatRupiah(currentJarakAkurat * TARIF_PER_KM);
+            }
+        }
+        
+        showNotification('Promo dibatalkan', 'info');
+    }
+    
+    // ================ PROMO ADMIN PANEL ================
+    function openPromoAdminPanel() {
+        if (!isAdmin) {
+            showNotification('Hanya admin yang bisa mengelola promo!', 'error');
+            return;
+        }
+        
+        let promoListHTML = Object.entries(promoDatabase).map(([code, promo]) => `
+            <div style="background: rgba(0, 177, 79, 0.1); border-radius: 12px; padding: 15px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong style="color: #00B14F; font-size: 18px;">${code}</strong>
+                    <button onclick="editPromo('${code}')" class="btn-secondary" style="padding: 5px 15px;">✏️ Edit</button>
+                </div>
+                <div style="font-size: 13px; margin-top: 8px;">
+                    <div>📝 ${promo.description}</div>
+                    <div>🎟️ Tipe: ${promo.type === 'percentage' ? `${promo.value}%` : `Rp ${promo.value.toLocaleString()}`}</div>
+                    <div>💰 Min transaksi: ${formatRupiah(promo.minTransaction)}</div>
+                    <div>📅 Expired: ${new Date(promo.expiredDate).toLocaleDateString('id-ID')}</div>
+                    <div>📊 Terpakai: ${promo.usedCount} / ${promo.usageLimit}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        const adminModal = document.createElement('div');
+        adminModal.id = 'promoAdminModal';
+        adminModal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 11, 30, 0.95);
+            z-index: 10003;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `;
+        adminModal.innerHTML = `
+            <div style="background: #0f172a; border-radius: 24px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fa-solid fa-gear"></i> Kelola Promo</h3>
+                    <button onclick="this.closest('#promoAdminModal').remove()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">✖</button>
+                </div>
+                <div id="promoAdminList">${promoListHTML}</div>
+                <button onclick="addNewPromo()" class="btn-primary" style="width: 100%; margin-top: 20px;">+ Tambah Promo Baru</button>
+            </div>
+        `;
+        document.body.appendChild(adminModal);
+    }
+    
+    function editPromo(code) {
+        const promo = promoDatabase[code];
+        const newValue = prompt(`Edit nilai promo untuk ${code}:\n(Untuk percentage: angka saja, misal 10 untuk 10%)\n(Untuk nominal: angka rupiah, misal 5000)`, promo.value);
+        if (newValue !== null) {
+            const newType = confirm('Apakah ini promo persentase? (OK = Ya, Cancel = Nominal)');
+            promoDatabase[code] = {
+                ...promo,
+                type: newType ? 'percentage' : 'nominal',
+                value: parseFloat(newValue)
+            };
+            showNotification('Promo berhasil diupdate!', 'success');
+            document.getElementById('promoAdminModal')?.remove();
+            openPromoAdminPanel();
+            renderPromoSlider();
+        }
+    }
+    
+    function addNewPromo() {
+        const code = prompt('Masukkan kode promo (contoh: GRAB20):');
+        if (!code) return;
+        
+        const type = confirm('Jenis promo: OK = Persentase (%), Cancel = Nominal (Rp)');
+        const value = parseFloat(prompt('Masukkan nilai promo:', '10'));
+        if (isNaN(value)) return;
+        
+        const minTransaction = parseFloat(prompt('Minimal transaksi (Rp):', '0')) || 0;
+        const maxDiscount = type ? parseFloat(prompt('Maksimal diskon (Rp):', '50000')) : value;
+        const expiredDate = prompt('Tanggal kadaluarsa (YYYY-MM-DD):', '2026-12-31');
+        const usageLimit = parseInt(prompt('Batas penggunaan:', '100')) || 100;
+        
+        promoDatabase[code.toUpperCase()] = {
+            type: type ? 'percentage' : 'nominal',
+            value: value,
+            minTransaction: minTransaction,
+            maxDiscount: maxDiscount,
+            description: `${type ? `${value}% diskon` : `Rp ${value.toLocaleString()} potongan`}${minTransaction > 0 ? ` (min. ${formatRupiah(minTransaction)})` : ''}`,
+            expiredDate: expiredDate,
+            usageLimit: usageLimit,
+            usedCount: 0,
+            icon: "🎁"
+        };
+        
+        showNotification(`Promo ${code.toUpperCase()} berhasil ditambahkan!`, 'success');
+        document.getElementById('promoAdminModal')?.remove();
+        renderPromoSlider();
+        if (confirm('Buka panel admin promo lagi?')) openPromoAdminPanel();
+    }
     
     // ================ HELPER FUNCTIONS ================
     function formatRupiah(amount) {
@@ -1992,6 +2385,7 @@
             document.getElementById('liveJarakText').innerText = currentJarakAkurat + " KM";
             document.getElementById('liveTarifText').innerText = formatRupiah(currentHargaAkurat);
             document.getElementById('liveTracker').style.display = "block";
+            if (appliedPromo) updateDisplayWithPromo();
             showNotification(`Jarak ${currentJarakAkurat} KM, estimasi tarif ${formatRupiah(currentHargaAkurat)}`, 'success');
         } else {
             showNotification('Masukkan jarak terlebih dahulu!', 'error');
@@ -2011,28 +2405,43 @@
     
     // ================ HISTORY FUNCTIONS ================
     function saveToHistory(orderData) {
+        let finalAmount = currentHargaAkurat;
+        let promoUsed = null;
+        let promoDiscount = 0;
+        
+        if (appliedPromo) {
+            finalAmount = appliedPromo.finalPrice;
+            promoUsed = appliedPromo.code;
+            promoDiscount = appliedPromo.discount;
+            
+            if (promoDatabase[appliedPromo.code]) {
+                promoDatabase[appliedPromo.code].usedCount++;
+                const userKey = `user_${localStorage.getItem('userId') || 'anonymous'}_${appliedPromo.code}`;
+                userPromoHistory[userKey] = {
+                    usedAt: new Date().toISOString(),
+                    orderId: Date.now()
+                };
+                localStorage.setItem('userPromoHistory', JSON.stringify(userPromoHistory));
+            }
+            appliedPromo = null;
+            removePromo();
+        }
+        
         const newOrder = {
             id: Date.now(),
             ...orderData,
             timestamp: new Date().toISOString(),
             distance: currentJarakAkurat,
-            totalAmount: currentHargaAkurat,
+            totalAmount: finalAmount,
+            originalAmount: currentHargaAkurat,
+            promoUsed: promoUsed,
+            promoDiscount: promoDiscount,
             rating: currentRating,
             review: document.getElementById('reviewText').value,
-            images: uploadedImages.slice(),
-            userId: currentUser ? currentUser.uid : null,
-            userEmail: currentUser ? currentUser.email : null
+            images: uploadedImages.slice()
         };
         bookingHistory.unshift(newOrder);
         localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
-        
-        // Add points for user if logged in
-        if (currentUser) {
-            addPointsToUser(currentUser.uid, 1);
-            userPoints = getUserPoints(currentUser.uid);
-            updatePointsDisplay();
-        }
-        
         loadHistory();
         if (isAdmin) loadDashboardData();
         showNotification('Pesanan berhasil disimpan ke riwayat!', 'success');
@@ -2042,18 +2451,12 @@
         const container = document.getElementById('historyList');
         if (!container) return;
         
-        // Filter history for current user only (if logged in)
-        let displayHistory = bookingHistory;
-        if (currentUser) {
-            displayHistory = bookingHistory.filter(order => order.userId === currentUser.uid);
-        }
-        
-        if (displayHistory.length === 0) {
+        if (bookingHistory.length === 0) {
             container.innerHTML = '<p style="text-align: center; color: #a3b1cc;">Belum ada riwayat pemesanan.</p>';
             return;
         }
         
-        container.innerHTML = displayHistory.map(order => `
+        container.innerHTML = bookingHistory.map(order => `
             <div class="history-item" onclick="repeatOrder(${order.id})">
                 <div style="display: flex; justify-content: space-between;">
                     <strong>${order.layanan || '-'}</strong>
@@ -2061,6 +2464,7 @@
                 </div>
                 <div style="font-size: 12px;">📍 ${(order.jemput || '-').substring(0, 30)}...</div>
                 <div class="history-amount">💰 ${formatRupiah(order.totalAmount || 0)}</div>
+                ${order.promoUsed ? `<div style="font-size: 11px; color: #FFD700;">🎟️ Promo: ${order.promoUsed} (hemat ${formatRupiah(order.promoDiscount)})</div>` : ''}
                 ${order.images && order.images.length > 0 ? `
                     <div class="history-images">
                         ${order.images.slice(0, 3).map(img => `<img src="${img}" alt="item">`).join('')}
@@ -2101,11 +2505,7 @@
     
     function clearHistory() {
         if (confirm('Hapus semua riwayat?')) {
-            if (currentUser) {
-                bookingHistory = bookingHistory.filter(order => order.userId !== currentUser.uid);
-            } else {
-                bookingHistory = [];
-            }
+            bookingHistory = [];
             localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
             loadHistory();
             if (isAdmin) loadDashboardData();
@@ -2161,7 +2561,7 @@
         
         const tbody = document.getElementById('reportTableBody');
         if (filtered.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Tidak ada data untuk bulan ${month}/${year}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center;">Tidak ada data untuk bulan ${month}/${year}</td></tr>`;
             return;
         }
         
@@ -2172,6 +2572,7 @@
                 <td>${order.layanan || '-'}</td>
                 <td>${order.distance || '-'}</td>
                 <td>${formatRupiah(order.totalAmount || 0)}</td>
+                <td>${order.promoUsed ? `${order.promoUsed} (-${formatRupiah(order.promoDiscount)})` : '-'}</td>
                 <td>${order.rating ? '⭐'.repeat(order.rating) : '-'}</td>
             </tr>
         `).join('');
@@ -2186,13 +2587,14 @@
             showNotification('Tidak ada data untuk diekspor!', 'error');
             return;
         }
-        const headers = ['Tanggal', 'Pelanggan', 'Layanan', 'Jarak', 'Nominal', 'Rating'];
+        const headers = ['Tanggal', 'Pelanggan', 'Layanan', 'Jarak', 'Nominal', 'Promo', 'Rating'];
         const rows = filtered.map(order => [
             new Date(order.timestamp).toLocaleDateString('id-ID'),
             order.nama || '-',
             order.layanan || '-',
             order.distance || '-',
             order.totalAmount || 0,
+            order.promoUsed ? `${order.promoUsed} (${order.promoDiscount})` : '-',
             order.rating || '-'
         ]);
         const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
@@ -2217,13 +2619,14 @@
         <style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}th{background:#00B14F;color:white}</style>
         </head><body><h1>CRUIZEMATE - Laporan Bulanan</h1>
         <h3>Bulan: ${currentFilterMonth}/${currentFilterYear}</h3>
-        <table><thead><tr><th>Tanggal</th><th>Pelanggan</th><th>Layanan</th><th>Jarak</th><th>Nominal</th><th>Rating</th></tr></thead><tbody>`;
+        <table><thead><tr><th>Tanggal</th><th>Pelanggan</th><th>Layanan</th><th>Jarak</th><th>Nominal</th><th>Promo</th><th>Rating</th></tr></thead><tbody>`;
         filtered.forEach(order => {
             html += `<tr><td>${new Date(order.timestamp).toLocaleDateString('id-ID')}</td>
             <td>${order.nama || '-'}</td>
             <td>${order.layanan || '-'}</td>
             <td>${order.distance || '-'}</td>
             <td>${formatRupiah(order.totalAmount || 0)}</td>
+            <td>${order.promoUsed || '-'}</td>
             <td>${order.rating || '-'}</td></tr>`;
         });
         html += `</tbody></table><p>Total Pendapatan: ${formatRupiah(filtered.reduce((s,o)=>s+(o.totalAmount||0),0))}</p></body></html>`;
@@ -2313,6 +2716,7 @@
             showNotification('Verifikasi admin berhasil!', 'success');
             document.getElementById('dashboardMenuLink').style.display = 'block';
             document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('promoManageBtn').style.display = 'inline-flex';
             loadDashboardData();
             sessionStorage.setItem('adminSession', 'true');
         } else {
@@ -2323,16 +2727,6 @@
     // ================ BOOKING SUBMIT ================
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        // Check if user is logged in
-        if (!currentUser) {
-            if (confirm('Anda belum login. Login dengan Google untuk mendapatkan Poin (1 Poin = Rp 500) setiap pesanan. Lanjutkan tanpa login?')) {
-                // Proceed without login
-            } else {
-                handleGoogleLogin();
-                return;
-            }
-        }
         
         const nama = document.getElementById('nama').value;
         const layanan = document.getElementById('jenisLayanan').value;
@@ -2360,10 +2754,11 @@
         }
         
         let ratingText = currentRating > 0 ? `⭐ Rating: ${currentRating}/5%0A📝 Review: ${document.getElementById('reviewText').value}%0A` : "";
-        let infoTarif = `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi: ${formatRupiah(currentHargaAkurat)}`;
-        let pointsInfo = currentUser ? `\n🎁 Poin yang akan didapat: 1 Poin (Rp 500)` : `\n🔑 Login dengan Google untuk dapat Poin!`;
+        let finalPrice = appliedPromo ? appliedPromo.finalPrice : currentHargaAkurat;
+        let promoText = appliedPromo ? `%0A🎟️ Promo: ${appliedPromo.code} (hemat ${formatRupiah(appliedPromo.discount)})%0A💰 Total Bayar: ${formatRupiah(finalPrice)}` : "";
+        let infoTarif = `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi: ${formatRupiah(currentHargaAkurat)}${promoText}`;
         
-        const textWA = `Halo Admin, saya ingin order:%0A%0A👤 Nama: ${nama}%0A🛠️ Layanan: ${layanan}%0A${detailGoSend}${ratingText}🛫 Jemput: ${jemput}%0A🛬 Tujuan: ${tujuan}%0A📅 Tanggal: ${tanggal}%0A⏰ Jam: ${jam}${infoTarif}${pointsInfo}`;
+        const textWA = `Halo Admin, saya ingin order:%0A%0A👤 Nama: ${nama}%0A🛠️ Layanan: ${layanan}%0A${detailGoSend}${ratingText}🛫 Jemput: ${jemput}%0A🛬 Tujuan: ${tujuan}%0A📅 Tanggal: ${tanggal}%0A⏰ Jam: ${jam}${infoTarif}`;
         
         saveToHistory({ nama, layanan, jemput, tujuan, tanggal, jam });
         
@@ -2376,7 +2771,6 @@
         window.open(`https://wa.me/6281260636666?text=${textWA}`, '_blank');
         showNotification('Pesanan berhasil dikirim!', 'success');
         
-        // Reset form but keep distance for next booking maybe
         currentJarakAkurat = 0;
         currentHargaAkurat = 0;
         document.getElementById('liveTracker').style.display = "none";
@@ -2386,22 +2780,21 @@
     // ================ INITIALIZATION ================
     loadFavoriteAddresses();
     loadHistory();
+    renderPromoSlider();
     document.getElementById('jenisLayanan').addEventListener('change', updateFormLabels);
     setupImageUpload();
     
-    // Set default date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('tanggalJemput').value = today;
     
-    // Admin session check
     if (sessionStorage.getItem('adminSession') === 'true') {
         isAdmin = true;
         document.getElementById('dashboardMenuLink').style.display = 'block';
         document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('promoManageBtn').style.display = 'inline-flex';
         loadDashboardData();
     }
     
-    // Mobile menu
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navMenu = document.getElementById('navMenu');
     mobileMenuBtn.addEventListener('click', () => {
@@ -2415,7 +2808,6 @@
         });
     });
     
-    // Modal functions
     const modal = document.getElementById('contactModal');
     window.openContactModal = () => modal.classList.add('active');
     window.closeContactModal = () => modal.classList.remove('active');
@@ -2440,8 +2832,15 @@
     window.exportToCSV = exportToCSV;
     window.exportToPDF = exportToPDF;
     window.removeImage = removeImage;
-    window.handleGoogleLogin = handleGoogleLogin;
-    window.handleLogout = handleLogout;
+    window.openPromoModal = openPromoModal;
+    window.closePromoModal = closePromoModal;
+    window.applyPromoCode = applyPromoCode;
+    window.applyManualPromo = applyManualPromo;
+    window.removePromo = removePromo;
+    window.openPromoAdminPanel = openPromoAdminPanel;
+    window.editPromo = editPromo;
+    window.addNewPromo = addNewPromo;
+    window.scrollPromoSlider = scrollPromoSlider;
 </script>
 </body>
 </html>
