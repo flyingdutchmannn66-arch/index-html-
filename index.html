@@ -221,13 +221,12 @@
         }
 
         /* SECTIONS GENERAL */
-        .services, .booking-section, .payments, .steps, .testimonials, .tracking-section{
+        .services, .booking-section, .payments, .steps, .testimonials{
             padding:70px 0;
         }
 
         .services { background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); }
         .booking-section { background: rgba(15, 23, 42, 0.2); }
-        .tracking-section { background: rgba(15, 23, 42, 0.5); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .payments { background: rgba(0, 177, 79, 0.02); }
 
         .section-title{
@@ -421,68 +420,6 @@
             color: #FFD700;
         }
 
-        /* STYLE FITUR LACAK RESI TIMELINE */
-        .tracking-timeline {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            position: relative;
-        }
-        .tracking-timeline::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 5%;
-            width: 90%;
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            z-index: 1;
-        }
-        .timeline-progress {
-            position: absolute;
-            top: 20px;
-            left: 5%;
-            height: 4px;
-            background: #00B14F;
-            z-index: 1;
-            transition: all 0.5s ease;
-            width: 0%;
-        }
-        .timeline-step {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            flex: 1;
-        }
-        .timeline-icon {
-            width: 44px;
-            height: 44px;
-            background: #1e293b;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px auto;
-            color: #a3b1cc;
-            transition: 0.3s;
-            font-size: 16px;
-        }
-        .timeline-step.active .timeline-icon {
-            background: #00B14F;
-            border-color: #00B14F;
-            color: white;
-            box-shadow: 0 0 15px rgba(0, 177, 79, 0.5);
-        }
-        .timeline-text {
-            font-size: 11px;
-            font-weight: 600;
-            color: #a3b1cc;
-        }
-        .timeline-step.active .timeline-text {
-            color: #00B14F;
-        }
-
         /* STEPS */
         .step-grid{
             display:grid;
@@ -590,7 +527,6 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 20px;
         }
 
         .social-btn {
@@ -621,18 +557,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
         }
         .pac-item-query { color: #fff !important; }
-
-        /* ADMIN STYLE DESK */
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 14px;
-        }
-        .admin-table th, .admin-table td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
 
         @media(max-width: 991px) {
             .hero {
@@ -718,35 +642,6 @@
                 grid-template-columns: 1fr !important;
                 gap: 15px;
             }
-            
-            /* TIMELINE ADAPTASI HALAMAN MOBILE VERTICAL */
-            .tracking-timeline {
-                flex-direction: column;
-                gap: 25px;
-                align-items: flex-start;
-                padding-left: 20px;
-            }
-            .tracking-timeline::before {
-                left: 40px;
-                top: 0;
-                width: 4px;
-                height: 90%;
-            }
-            .timeline-progress {
-                left: 40px;
-                top: 0;
-                width: 4px;
-                height: 0%;
-            }
-            .timeline-step {
-                display: flex;
-                align-items: center;
-                gap: 20px;
-                text-align: left;
-            }
-            .timeline-icon {
-                margin: 0;
-            }
         }
     </style>
 </head>
@@ -766,8 +661,6 @@
             <a href="#">Home</a>
             <a href="#layanan">Layanan</a>
             <a href="#form-pemesanan">Pesan</a>
-            <a href="#lacak-pesanan">Lacak Status</a>
-            <a href="#admin-panel">Panel Admin</a>
             <a href="#fitur-pembayaran">Fitur Pembayaran</a>
             <a href="#cara-pesan">Cara Pesan</a>
             <a onclick="openContactModal()">Kontak</a>
@@ -790,7 +683,7 @@
             </div>
             <div class="buttons">
                 <a href="#form-pemesanan" class="btn-primary">Pesan via Formulir</a>
-                <a href="#lacak-pesanan" class="btn-secondary">Lacak Pesanan</a>
+                <a href="#layanan" class="btn-secondary">Lihat Layanan</a>
             </div>
         </div>
         <div class="hero-right">
@@ -828,6 +721,7 @@
                 <a href="#form-pemesanan" onclick="setJenisLayanan('GoFood')" class="card-btn">Titip Makan</a>
             </div>
 
+            <!-- LAYANAN JASTIP BARU -->
             <div class="card">
                 <div>
                     <h3>🛍️ Jastip</h3>
@@ -863,6 +757,7 @@
                     </select>
                 </div>
 
+                <!-- KOLOM FORM INPUT DATA BARANG GOSEND & JASTIP -->
                 <div id="gosendFields" class="gosend-extra-box">
                     <div class="form-group">
                         <label id="labelNamaBarang" style="color:#00B14F; font-weight:600;"><i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?</label>
@@ -945,246 +840,75 @@
     </div>
 </section>
 
-<!-- FITUR LACAK STATUS PESANAN -->
-<section id="lacak-pesanan" class="tracking-section">
-    <div class="container">
-        <h2 class="section-title">Lacak Status <span>Pesanan</span></h2>
-        <div style="max-width: 750px; margin: 0 auto; background: #0f172a; padding: 30px; border-radius: 24px; border: 1px solid rgba(255,215,0,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
-            <p style="font-size: 14px; color: #c9d2e3; text-align: center; margin-bottom: 20px;">
-                Masukkan <b>ID Pesanan</b> unik Anda untuk memantau status pengerjaan kurir/driver secara real-time.
-            </p>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="text" id="inputResi" placeholder="Contoh: CM-31972" style="flex: 1; min-width: 200px; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; outline: none; font-weight: 600; letter-spacing: 1px;">
-                <button type="button" onclick="lacakStatusPesanan()" class="btn-primary" style="padding: 14px 28px; border-radius: 12px; font-size: 15px;"><i class="fa-solid fa-magnifying-glass"></i> Cek Status</button>
-            </div>
-
-            <!-- AREA HASIL LACAK -->
-            <div id="hasilLacakArea" style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); display: none;">
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                    <div>
-                        <span style="font-size: 11px; color: #a3b1cc; display: block; text-transform: uppercase;">ID Pesanan</span>
-                        <span id="display-order-id" style="font-size: 18px; color: #FFD700; font-weight: 700; font-family: monospace;">-</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <span style="font-size: 11px; color: #a3b1cc; display: block; text-transform: uppercase;">Pelanggan / Layanan</span>
-                        <span style="font-size: 16px; color: #fff; font-weight: 500;"><span id="display-customer-name">-</span> <span id="display-service-type" style="color: #00B14F; font-size: 14px;">(-)</span></span>
-                    </div>
-                </div>
-
-                <!-- PROGRESS TIMELINE BAR (5 LANGKAH) -->
-                <div class="tracking-timeline">
-                    <div class="timeline-progress" id="timelineProgress"></div>
-                    
-                    <div class="timeline-step" data-step="1">
-                        <div class="timeline-icon"><i class="fa-solid fa-file-invoice"></i></div>
-                        <div class="timeline-text">Diterima Admin</div>
-                    </div>
-                    <div class="timeline-step" data-step="2">
-                        <div class="timeline-icon"><i class="fa-solid fa-user"></i></div>
-                        <div class="timeline-text">Menuju Lokasi</div>
-                    </div>
-                    <div class="timeline-step" data-step="3">
-                        <div class="timeline-icon"><i class="fa-solid fa-basket-shopping"></i></div>
-                        <div class="timeline-text">Membeli Barang</div>
-                    </div>
-                    <div class="timeline-step" data-step="4">
-                        <div class="timeline-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                        <div class="timeline-text">Dalam Perjalanan</div>
-                    </div>
-                    <div class="timeline-step" data-step="5">
-                        <div class="timeline-icon"><i class="fa-solid fa-circle-check"></i></div>
-                        <div class="timeline-text">Pesanan Sampai</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- PANEL ADMIN CONTROL (DASHBOARD) -->
-<section id="admin-panel" class="services">
-    <div class="container">
-        <h2 class="section-title">Panel Control <span>Admin</span></h2>
-        <div style="max-width: 900px; margin: 0 auto; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); overflow-x: auto;">
-            <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
-                <h4 style="color: #FFD700; font-size:15px;"><i class="fa-solid fa-bars-progress"></i> Live Update Status Pesanan</h4>
-                <span style="font-size: 11px; background: rgba(0, 177, 79, 0.15); color: #00B14F; padding:4px 10px; border-radius:50px; font-weight: 600;">⚡ Sinkronisasi Lintas Tab Aktif</span>
-            </div>
-            
-            <table class="admin-table">
-                <thead>
-                    <tr style="color: #a3b1cc; border-bottom: 2px solid rgba(255,255,255,0.1);">
-                        <th>ID Pesanan</th>
-                        <th>Nama</th>
-                        <th>Layanan</th>
-                        <th>Status Saat Ini</th>
-                        <th>Ubah Status Kerja</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="font-family: monospace; font-weight: 700; color: #FFD700;">CM-31972</td>
-                        <td>naufal</td>
-                        <td style="color: #a3b1cc;">GoSend</td>
-                        <td><span id="badge-CM-31972" style="background: rgba(0, 177, 79, 0.1); color: #00B14F; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,177,79,0.2); font-size: 12px;">Diterima Admin</span></td>
-                        <td>
-                            <select data-order-id="CM-31972" class="select-status" style="padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: #1e293b; color: white; font-size: 13px; outline:none; cursor:pointer;">
-                                <option value="1">1. Diterima Admin</option>
-                                <option value="2">2. Menuju Lokasi</option>
-                                <option value="3">3. Membeli Barang</option>
-                                <option value="4">4. Dalam Perjalanan</option>
-                                <option value="5">5. Pesanan Sampai</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="font-family: monospace; font-weight: 700; color: #FFD700;">CM-88291</td>
-                        <td>Siti Rahma</td>
-                        <td style="color: #a3b1cc;">GoFood</td>
-                        <td><span id="badge-CM-88291" style="background: rgba(0, 177, 79, 0.1); color: #00B14F; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(0,177,79,0.2); font-size: 12px;">Membeli Barang</span></td>
-                        <td>
-                            <select data-order-id="CM-88291" class="select-status" style="padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: #1e293b; color: white; font-size: 13px; outline:none; cursor:pointer;">
-                                <option value="1">1. Diterima Admin</option>
-                                <option value="2">2. Menuju Lokasi</option>
-                                <option value="3" selected>3. Membeli Barang</option>
-                                <option value="4">4. Dalam Perjalanan</option>
-                                <option value="5">5. Pesanan Sampai</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-<!-- FITUR PEMBAYARAN -->
 <section id="fitur-pembayaran" class="payments">
     <div class="container">
         <h2 class="section-title">Fitur <span>Pembayaran</span></h2>
-        <div style="max-width: 500px; margin: 0 auto;">
-            <div class="bank-info-container">
-                <div class="bank-item">
-                    <i class="fa-solid fa-building-columns"></i>
-                    <div class="bank-details">
-                        <div class="bank-name">BANK CENTRAL ASIA (BCA)</div>
-                        <div class="bank-account">699-517-4255</div>
-                        <div class="bank-holder">a.n. NAUFAL RAMADHAN </div>
-                    </div>
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h3><i class="fa-solid fa-money-bill-wave"></i> Tunai (Cash)</h3>
+                    <p>Bayar langsung dengan uang tunai kepada driver/kurir setelah Anda sampai di lokasi tujuan atau barang diterima.</p>
                 </div>
-                <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.05);">
-                <div class="bank-item">
-                    <i class="fa-solid fa-wallet"></i>
-                    <div class="bank-details">
-                        <div class="bank-name">E-WALLET GOPAY</div>
-                        <div class="bank-account">0812-6063-6666</div>
-                        <div class="bank-holder">a.n. NAUFAL RAMADHAN </div>
-                    </div>
-                </div>
+                <a href="https://wa.me/6281260636666?text=Halo%20Admin" class="card-btn">Info Lebih Lanjut</a>
             </div>
-            <p style="font-size:12px; color:#a3b1cc; text-align:center;">*Mohon simpan bukti transfer untuk dilampirkan konfirmasi via WhatsApp.</p>
+            <div class="card">
+                <div>
+                    <h3><i class="fa-solid fa-credit-card"></i> Transfer Bank </h3>
+                    <p>Mendukung pembayaran non-tunai yang praktis via Transfer Bank .</p>
+                    <div class="bank-info-container">
+                        <div class="bank-item">
+                            <i class="fa-solid fa-university"></i>
+                            <div class="bank-details">
+                                <div class="bank-name">BANK BCA</div>
+                                <div class="bank-account">699 517 4255</div>
+                                <div class="bank-holder">a/n NAUFAL RAMADHAN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://wa.me/6281260636666" class="card-btn">Konfirmasi Transfer</a>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- CARA PESAN -->
 <section id="cara-pesan" class="steps">
     <div class="container">
-        <h2 class="section-title">Cara <span>Pesan</span></h2>
+        <h2 class="section-title">Cara <span>Pemesanan</span></h2>
         <div class="step-grid">
-            <div class="step">
-                <div class="step-number">1</div>
-                <p style="font-weight:600; color:#fff; margin-bottom:8px;">Isi Formulir</p>
-                Pilih jenis layanan lalu lengkapi kolom alamat penjemputan & tujuan.
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <p style="font-weight:600; color:#fff; margin-bottom:8px;">Kirim WhatsApp</p>
-                Sistem akan menyusun pesan teks otomatis untuk dikirim ke nomor WhatsApp Admin.
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <p style="font-weight:600; color:#fff; margin-bottom:8px;">Bayar / Amankan Rute</p>
-                Lakukan transfer biaya argo sesuai kalkulasi kesepakatan bersama admin resmi.
-            </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                <p style="font-weight:600; color:#fff; margin-bottom:8px;">Pantau Status</p>
-                Gunakan ID Pesanan unik yang diberikan admin untuk memantau perjalanan kurir.
-            </div>
+            <div class="step"><div class="step-number">1</div>Isi Form / Hubungi WA</div>
+            <div class="step"><div class="step-number">2</div>Kirim Info Alamat</div>
+            <div class="step"><div class="step-number">3</div>Pilih Jenis Layanan</div>
+            <div class="step"><div class="step-number">4</div>Konfirmasi Biaya</div>
+            <div class="step"><div class="step-number">5</div>Driver/Kurir Jalan</div>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-    <div class="container">
-        <h2>CRUIZE<span>MATE</span></h2>
-        <p>&copy; 2026 CRUIZEMATE & Aliong Booking System. All Rights Reserved.</p>
-    </div>
+    <h2>GRABBOOKING</h2>
+    <p>Melayani pemesanan online transportasi & logistik 24 Jam.</p>
+    <br>
+    <p>WhatsApp: +62 812-6063-6666</p>
+    <br>
+    <p>© 2026 GRABBOOKING PRO</p>
 </footer>
 
-<!-- MODAL KONTAK -->
 <div class="contact-modal" id="contactModal">
     <div class="modal-content">
         <button class="close-modal" onclick="closeContactModal()"><i class="fa-solid fa-xmark"></i></button>
-        <h3 style="color:#00B14F; font-size:22px; margin-bottom:10px;">Hubungi Kami</h3>
-        <p style="color:#a3b1cc; font-size:14px; margin-bottom:20px;">Silakan pilih platform komunikasi utama Anda dibawah ini:</p>
-        
+        <h3>Hubungi Kami</h3>
+        <p style="color:#c9d2e3; font-size:14px; margin-bottom:20px;">Silakan pilih platform di bawah ini untuk tersambung dengan admin kami</p>
         <div class="social-links-grid">
-            <a href="https://wa.me/6281260636666" target="_blank" class="social-btn btn-whatsapp-modal">
-                <i class="fa-brands fa-whatsapp" style="font-size:20px;"></i> Chat WhatsApp Resmi
-            </a>
-            <a href="https://instagram.com/" target="_blank" class="social-btn btn-instagram">
-                <i class="fa-brands fa-instagram" style="font-size:20px;"></i> Follow Instagram
-            </a>
+            <a href="https://www.instagram.com/nopallrmdd/" target="_blank" class="social-btn btn-instagram"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            <a href="https://wa.me/6281260636666" target="_blank" class="social-btn btn-whatsapp-modal"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
         </div>
     </div>
 </div>
 
-<!-- LOGIKA JAVASCRIPT UTAMA (DIPERBARUI DENGAN LOCALSTORAGE DATABASE & POLLING REAL-TIME) -->
+<script src="https://maps.googleapis.com/maps/api/js?key=GANTI_DENGAN_API_KEY_GOOGLE_ANDA&libraries=places&callback=initGoogleMapsServices" async defer></script>
+
 <script>
-    // Inisialisasi Database bawaan di LocalStorage agar sinkron antar tab browser
-    const defaultDatabase = {
-        "CM-31972": { customer: "naufal", service: "GoSend", currentStep: 1 },
-        "CM-88291": { customer: "Siti Rahma", service: "GoFood", currentStep: 3 }
-    };
-
-    if (!localStorage.getItem('cruizemate_db')) {
-        localStorage.setItem('cruizemate_db', JSON.stringify(defaultDatabase));
-    }
-
-    function getDatabase() {
-        return JSON.parse(localStorage.getItem('cruizemate_db'));
-    }
-
-    function saveDatabase(db) {
-        localStorage.setItem('cruizemate_db', JSON.stringify(db));
-    }
-
-    const statusNames = {
-        1: "Diterima Admin",
-        2: "Menuju Lokasi",
-        3: "Membeli Barang",
-        4: "Dalam Perjalanan",
-        5: "Pesanan Sampai"
-    };
-
-    // Sinkronisasi dropdown saat pertama kali halaman dimuat
-    window.addEventListener('DOMContentLoaded', () => {
-        const db = getDatabase();
-        document.querySelectorAll('.select-status').forEach(dropdown => {
-            const orderId = dropdown.getAttribute('data-order-id');
-            if (db[orderId]) {
-                dropdown.value = db[orderId].currentStep;
-                const badge = document.getElementById(`badge-${orderId}`);
-                if (badge) badge.innerText = statusNames[db[orderId].currentStep];
-            }
-        });
-    });
-
-    // NAV MOBILE TOGGLE
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navMenu = document.getElementById('navMenu');
 
@@ -1200,192 +924,178 @@
         });
     });
 
-    // EVENT DROPDOWN LAYANAN FORMULIR
-    const jenisLayananSelect = document.getElementById('jenisLayanan');
-    const gosendFields = document.getElementById('gosendFields');
+    const modal = document.getElementById('contactModal');
+    const bookingForm = document.getElementById('bookingForm');
     const labelJemput = document.getElementById('labelJemput');
     const labelTujuan = document.getElementById('labelTujuan');
     const labelNamaBarang = document.getElementById('labelNamaBarang');
+    const jenisLayananSelect = document.getElementById('jenisLayanan');
+    
+    const gosendFields = document.getElementById('gosendFields');
+    const namaBarang = document.getElementById('namaBarang');
+    const beratBarang = document.getElementById('beratBarang');
+    const jumlahBarang = document.getElementById('jumlahBarang');
 
-    jenisLayananSelect.addEventListener('change', function() {
-        adjustFormLayout(this.value);
-    });
+    const TARIF_PER_KM = 3300; 
+    let currentJarakAkurat = 0; 
+    let autocompleteJemput, autocompleteTujuan, directionsService;
 
-    function setJenisLayanan(layanan) {
-        jenisLayananSelect.value = layanan;
-        adjustFormLayout(layanan);
+    function openContactModal() { modal.classList.add('active'); }
+    function closeContactModal() { modal.classList.remove('active'); }
+    window.onclick = function(event) { if (event.target == modal) { closeContactModal(); } }
+
+    function setJenisLayanan(namaLayanan) {
+        jenisLayananSelect.value = namaLayanan;
+        updateFormLabels();
         document.getElementById('form-pemesanan').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function adjustFormLayout(layanan) {
-        if (layanan === 'GrabCar') {
-            gosendFields.style.display = 'none';
-            labelJemput.innerText = 'Lokasi Penjemputan / Penumpang';
-            labelTujuan.innerText = 'Lokasi Tujuan / Pengantaran';
-        } else if (layanan === 'GoSend') {
-            gosendFields.style.display = 'flex';
-            labelNamaBarang.innerHTML = '<i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?';
-            labelJemput.innerText = 'Alamat Pengambilan Paket (Pick Up)';
-            labelTujuan.innerText = 'Alamat Tujuan Pengiriman Paket (Drop Off)';
-        } else if (layanan === 'GoFood') {
-            gosendFields.style.display = 'flex';
-            labelNamaBarang.innerHTML = '<i class="fa-solid fa-utensils"></i> Tulis Pesanan Makanan & Nama Restoran';
-            labelJemput.innerText = 'Alamat Toko / Restoran Makanan';
-            labelTujuan.innerText = 'Alamat Pengantaran Makanan Anda';
-        } else if (layanan === 'Jastip') {
-            gosendFields.style.display = 'flex';
-            labelNamaBarang.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> Detail Barang Belanjaan yang Ingin Dititip';
-            labelJemput.innerText = 'Nama Toko / Alamat Lokasi Pembelian Barang';
-            labelTujuan.innerText = 'Alamat Pengiriman Barang Belanjaan';
+    function updateFormLabels() {
+        const val = jenisLayananSelect.value;
+        
+        if(val === "GoSend" || val === "Jastip") {
+            gosendFields.style.display = "flex"; 
+            namaBarang.required = true;
+            beratBarang.required = true;
+            jumlahBarang.required = true;
+
+            if(val === "Jastip") {
+                labelNamaBarang.innerHTML = `<i class="fa-solid fa-bag-shopping"></i> Barang Apa yang Ingin Dititip Beli?`;
+                namaBarang.placeholder = "Contoh: Sepatu Brand X, Baju Uniqlo size L, Oleh-oleh Khas";
+                labelJemput.innerText = "Lokasi Toko / Tempat Pembelian Barang";
+                labelTujuan.innerText = "Alamat Pengantaran / Rumah Anda";
+            } else {
+                labelNamaBarang.innerHTML = `<i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?`;
+                namaBarang.placeholder = "Contoh: Pakaian, Dokumen, Paket Sembako";
+                labelJemput.innerText = "Lokasi Pengambilan Paket / Jemput";
+                labelTujuan.innerText = "Alamat Tujuan Pengantaran Paket";
+            }
+        } else {
+            gosendFields.style.display = "none"; 
+            namaBarang.required = false;
+            beratBarang.required = false;
+            jumlahBarang.required = false;
+
+            if(val === "GoFood") {
+                labelJemput.innerText = "Lokasi Resto / Toko Makanan";
+                labelTujuan.innerText = "Alamat Pengiriman Makanan";
+            } else {
+                labelJemput.innerText = "Lokasi Penjemputan Penumpang";
+                labelTujuan.innerText = "Lokasi Tujuan Perjalanan";
+            }
         }
     }
+    jenisLayananSelect.addEventListener('change', updateFormLabels);
 
-    // FORM SUBMIT WHATSAPP INTEGRATION
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    function initGoogleMapsServices() {
+        directionsService = new google.maps.DirectionsService();
+
+        autocompleteJemput = new google.maps.places.Autocomplete(document.getElementById('jemput'), {
+            types: ['geocode', 'establishment'],
+            componentRestrictions: { country: 'id' }
+        });
+
+        autocompleteTujuan = new google.maps.places.Autocomplete(document.getElementById('tujuan'), {
+            types: ['geocode', 'establishment'],
+            componentRestrictions: { country: 'id' }
+        });
+
+        autocompleteJemput.addListener('place_changed', hitungRuteGoogleMaps);
+        autocompleteTujuan.addListener('place_changed', hitungRuteGoogleMaps);
+    }
+
+    function hitungRuteGoogleMaps() {
+        const asalText = document.getElementById('jemput').value;
+        const tujuanText = document.getElementById('tujuan').value;
+        const trackerBox = document.getElementById('liveTracker');
+        const jarakText = document.getElementById('liveJarakText');
+        const tarifText = document.getElementById('liveTarifText');
+
+        if (asalText.trim() === "" || tujuanText.trim() === "") {
+            trackerBox.style.display = "none";
+            return;
+        }
+
+        const request = {
+            origin: asalText,
+            destination: tujuanText,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        directionsService.route(request, function (response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                const jarakMeter = response.routes[0].legs[0].distance.value;
+                currentJarakAkurat = parseFloat((jarakMeter / 1000).toFixed(1)); 
+
+                const totalTarif = currentJarakAkurat * TARIF_PER_KM;
+                const formatRupiah = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(totalTarif);
+
+                jarakText.innerText = currentJarakAkurat + " KM";
+                tarifText.innerText = formatRupiah;
+                trackerBox.style.display = "block";
+            } else {
+                console.log("Gagal melacak rute Google Maps: " + status);
+                trackerBox.style.display = "none";
+            }
+        });
+    }
+
+    function hitungTarifManual() {
+        const jarakInput = document.getElementById('inputJarak').value;
+        const hasilBox = document.getElementById('hasilTarifBox');
+        const textTotal = document.getElementById('textTotalTarif');
+
+        if(jarakInput === "" || jarakInput <= 0) {
+            alert("Silakan masukkan kilometer dengan benar!");
+            hasilBox.style.display = "none";
+            return;
+        }
+
+        const totalTarif = jarakInput * TARIF_PER_KM;
+        const formatRupiah = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(totalTarif);
+
+        textTotal.innerText = formatRupiah;
+        hasilBox.style.display = "block";
+    }
+
+    bookingForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const nama = document.getElementById('nama').value;
-        const layanan = jenisLayananSelect.value;
+        const layanan = document.getElementById('jenisLayanan').value;
         const jemput = document.getElementById('jemput').value;
         const tujuan = document.getElementById('tujuan').value;
         const tanggal = document.getElementById('tanggalJemput').value;
         const jam = document.getElementById('jamJemput').value;
         
-        let teksExtra = '';
-        if (layanan !== 'GrabCar') {
-            const barang = document.getElementById('namaBarang').value || '-';
-            const berat = document.getElementById('beratBarang').value || '-';
-            const jumlah = document.getElementById('jumlahBarang').value || '-';
-            teksExtra = `\n📦 *Detail Barang:* ${barang}\n⚖️ *Estimasi Berat:* ${berat} Kg\n🔢 *Jumlah:* ${jumlah} Pcs`;
+        let detailGoSendText = "";
+        if(layanan === "GoSend" || layanan === "Jastip") {
+            detailGoSendText = `🛍️ Detail Barang: ${namaBarang.value}%0A` +
+                               `⚖️ Est. Berat: ${beratBarang.value} Kg%0A` +
+                               `🔢 Jumlah Barang: ${jumlahBarang.value} Item%0A`;
         }
 
-        const waText = `Halo Admin Cruizemate, saya ingin memesan layanan berikut:\n\n👤 *Nama Pelanggan:* ${nama}\n🚖 *Jenis Layanan:* ${layanan}${teksExtra}\n📍 *Lokasi Awal:* ${jemput}\n🏁 *Lokasi Tujuan:* ${tujuan}\n📅 *Tanggal:* ${tanggal}\n⏰ *Jam:* ${jam}\n\nMohon dihitung rute tarif argo resminya, terima kasih!`;
+        let infoTarif = currentJarakAkurat > 0 ? `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi Tarif: Rp ${new Intl.NumberFormat('id-ID').format(currentJarakAkurat * TARIF_PER_KM)}` : '';
+
+        const textWhatsApp = `Halo Admin, saya ingin melakukan pemesanan:%0A%0A` +
+                             `👤 Nama: ${nama}%0A` +
+                             `🛠️ Layanan: ${layanan}%0A` +
+                             detailGoSendText +
+                             `🛫 Titik Pengambilan/Jemput: ${jemput}%0A` +
+                             `🛬 Titik Pengantaran/Tujuan: ${tujuan}%0A` +
+                             `📅 Tanggal: ${tanggal}%0A` +
+                             `⏰ Jam: ${jam}${infoTarif}`;
         
-        window.open(`https://wa.me/6281260636666?text=${encodeURIComponent(waText)}`, '_blank');
+        window.open(`https://wa.me/6281260636666?text=${textWhatsApp}`, '_blank');
     });
-
-    // KALKULATOR ARGO MANUAL
-    function hitungTarifManual() {
-        const jarak = parseFloat(document.getElementById('inputJarak').value);
-        const hasilBox = document.getElementById('hasilTarifBox');
-        const textTotal = document.getElementById('textTotalTarif');
-
-        if (isNaN(jarak) || jarak <= 0) {
-            alert('Silakan masukkan perkiraan angka jarak perjalanan yang valid!');
-            return;
-        }
-
-        const tarifPerKm = 3300;
-        let total = jarak * tarifPerKm;
-
-        textTotal.innerText = 'Rp ' + total.toLocaleString('id-ID');
-        hasilBox.style.display = 'block';
-    }
-
-    // ANIMASI TIMELINE STEPPER
-    function updateStepperUI(targetStep) {
-        const steps = document.querySelectorAll('.timeline-step');
-        const progressLine = document.getElementById('timelineProgress');
-        const isMobile = window.innerWidth <= 576;
-
-        steps.forEach(step => {
-            const stepNum = parseInt(step.getAttribute('data-step'));
-            if (stepNum <= targetStep) {
-                step.classList.add('active');
-            } else {
-                step.classList.remove('active');
-            }
-        });
-
-        const totalSteps = steps.length;
-        const progressPercent = ((targetStep - 1) / (totalSteps - 1)) * 100;
-        
-        if (isMobile) {
-            progressLine.style.width = '4px';
-            progressLine.style.height = `${progressPercent}%`;
-        } else {
-            progressLine.style.height = '4px';
-            progressLine.style.width = `${progressPercent}%`;
-        }
-    }
-
-    // VARIABEL UNTUK LIVE TRACKING POLLING
-    let trackingIntervalId = null;
-    let activeTrackedResi = "";
-
-    // TOMBOL CARI / CEK RESI STATUS PESANAN
-    function lacakStatusPesanan() {
-        const resi = document.getElementById('inputResi').value.trim().toUpperCase();
-        const hasilArea = document.getElementById('hasilLacakArea');
-
-        if (!resi) {
-            alert('Masukkan ID Resi / ID Pesanan Anda terlebih dahulu!');
-            return;
-        }
-
-        const db = getDatabase();
-
-        if (db[resi]) {
-            activeTrackedResi = resi;
-            const data = db[resi];
-            document.getElementById('display-order-id').innerText = resi;
-            document.getElementById('display-customer-name').innerText = data.customer;
-            document.getElementById('display-service-type').innerText = `(${data.service})`;
-            
-            hasilArea.style.display = 'block';
-            updateStepperUI(data.currentStep);
-
-            // Bersihkan interval tracking yang lama jika ada
-            if (trackingIntervalId) clearInterval(trackingIntervalId);
-
-            // AKTIFKAN AUTO-POLLING: Cek data terbaru di Storage setiap 2 detik tanpa reload halaman
-            trackingIntervalId = setInterval(() => {
-                const liveDb = getDatabase();
-                if (liveDb[activeTrackedResi]) {
-                    const currentLiveStep = liveDb[activeTrackedResi].currentStep;
-                    updateStepperUI(currentLiveStep);
-                }
-            }, 2000);
-
-        } else {
-            alert('ID Pesanan tidak ditemukan! Gunakan ID demonstrasi: CM-31972 atau CM-88291');
-            hasilArea.style.display = 'none';
-            if (trackingIntervalId) clearInterval(trackingIntervalId);
-        }
-    }
-
-    // INTERAKSI REAL-TIME DI PANEL ADMIN
-    document.querySelectorAll('.select-status').forEach(dropdown => {
-        dropdown.addEventListener('change', function() {
-            const orderId = this.getAttribute('data-order-id');
-            const newStep = parseInt(this.value);
-
-            // 1. Ambil DB, update step terbaru, lalu simpan kembali ke Storage
-            const db = getDatabase();
-            if (db[orderId]) {
-                db[orderId].currentStep = newStep;
-                saveDatabase(db);
-            }
-
-            // 2. Update badge teks status langsung di tabel admin
-            const badge = document.getElementById(`badge-${orderId}`);
-            if (badge) {
-                badge.innerText = statusNames[newStep];
-            }
-
-            // 3. Jika admin mengubah data resi yang kebetulan sedang dia lacak sendiri di atas, update UI langsung
-            if (orderId === activeTrackedResi) {
-                updateStepperUI(newStep);
-            }
-        });
-    });
-
-    // MODAL WINDOW FUNCTION
-    const modal = document.getElementById('contactModal');
-    function openContactModal() { modal.classList.add('active'); }
-    function closeContactModal() { modal.classList.remove('active'); }
-    window.addEventListener('click', (e) => { if (e.target === modal) closeContactModal(); });
 </script>
-
 </body>
 </html>
