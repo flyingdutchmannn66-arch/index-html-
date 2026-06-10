@@ -221,12 +221,13 @@
         }
 
         /* SECTIONS GENERAL */
-        .services, .booking-section, .payments, .steps, .testimonials{
+        .services, .booking-section, .payments, .steps, .testimonials, .tracking-section{
             padding:70px 0;
         }
 
         .services { background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); }
         .booking-section { background: rgba(15, 23, 42, 0.2); }
+        .tracking-section { background: rgba(15, 23, 42, 0.5); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .payments { background: rgba(0, 177, 79, 0.02); }
 
         .section-title{
@@ -420,6 +421,68 @@
             color: #FFD700;
         }
 
+        /* STYLE FITUR LACAK RESI TIMELINE (DIPERBARUI JADI 5 MODUL) */
+        .tracking-timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            position: relative;
+        }
+        .tracking-timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 5%;
+            width: 90%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            z-index: 1;
+        }
+        .timeline-progress {
+            position: absolute;
+            top: 20px;
+            left: 5%;
+            height: 4px;
+            background: #00B14F;
+            z-index: 1;
+            transition: all 0.5s ease;
+            width: 0%;
+        }
+        .timeline-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+        .timeline-icon {
+            width: 44px;
+            height: 44px;
+            background: #1e293b;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+            color: #a3b1cc;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .timeline-step.active .timeline-icon {
+            background: #00B14F;
+            border-color: #00B14F;
+            color: white;
+            box-shadow: 0 0 15px rgba(0, 177, 79, 0.5);
+        }
+        .timeline-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #a3b1cc;
+        }
+        .timeline-step.active .timeline-text {
+            color: #00B14F;
+        }
+
         /* STEPS */
         .step-grid{
             display:grid;
@@ -558,6 +621,18 @@
         }
         .pac-item-query { color: #fff !important; }
 
+        /* ADMIN STYLE DESK */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
         @media(max-width: 991px) {
             .hero {
                 flex-direction: column-reverse;
@@ -642,6 +717,35 @@
                 grid-template-columns: 1fr !important;
                 gap: 15px;
             }
+            
+            /* TIMELINE ADAPTASI HALAMAN MOBILE VERTICAL */
+            .tracking-timeline {
+                flex-direction: column;
+                gap: 25px;
+                align-items: flex-start;
+                padding-left: 20px;
+            }
+            .tracking-timeline::before {
+                left: 40px;
+                top: 0;
+                width: 4px;
+                height: 90%;
+            }
+            .timeline-progress {
+                left: 40px;
+                top: 0;
+                width: 4px;
+                height: 0%;
+            }
+            .timeline-step {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                text-align: left;
+            }
+            .timeline-icon {
+                margin: 0;
+            }
         }
     </style>
 </head>
@@ -661,6 +765,8 @@
             <a href="#">Home</a>
             <a href="#layanan">Layanan</a>
             <a href="#form-pemesanan">Pesan</a>
+            <a href="#lacak-pesanan">Lacak Status</a>
+            <a href="#admin-panel">Panel Admin</a>
             <a href="#fitur-pembayaran">Fitur Pembayaran</a>
             <a href="#cara-pesan">Cara Pesan</a>
             <a onclick="openContactModal()">Kontak</a>
@@ -683,7 +789,7 @@
             </div>
             <div class="buttons">
                 <a href="#form-pemesanan" class="btn-primary">Pesan via Formulir</a>
-                <a href="#layanan" class="btn-secondary">Lihat Layanan</a>
+                <a href="#lacak-pesanan" class="btn-secondary">Lacak Pesanan</a>
             </div>
         </div>
         <div class="hero-right">
@@ -721,7 +827,6 @@
                 <a href="#form-pemesanan" onclick="setJenisLayanan('GoFood')" class="card-btn">Titip Makan</a>
             </div>
 
-            <!-- LAYANAN JASTIP BARU -->
             <div class="card">
                 <div>
                     <h3>🛍️ Jastip</h3>
@@ -757,7 +862,6 @@
                     </select>
                 </div>
 
-                <!-- KOLOM FORM INPUT DATA BARANG GOSEND & JASTIP -->
                 <div id="gosendFields" class="gosend-extra-box">
                     <div class="form-group">
                         <label id="labelNamaBarang" style="color:#00B14F; font-weight:600;"><i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?</label>
@@ -836,6 +940,108 @@
                     <p style="font-size: 11px; color: #a3b1cc; margin-top: 5px;">*Tarif dasar Rp 3.300 / km</p>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- FITUR LACAK STATUS PESANAN (UPGRADED JADI 5 LANGLAH) -->
+<section id="lacak-pesanan" class="tracking-section">
+    <div class="container">
+        <h2 class="section-title">Lacak Status <span>Pesanan</span></h2>
+        <div style="max-width: 750px; margin: 0 auto; background: #0f172a; padding: 30px; border-radius: 24px; border: 1px solid rgba(255,215,0,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
+            <p style="font-size: 14px; color: #c9d2e3; text-align: center; margin-bottom: 20px;">
+                Masukkan <b>ID Pesanan</b> unik Anda untuk memantau status pengerjaan kurir/driver secara real-time.
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="inputResi" placeholder="Contoh: CM-31972" style="flex: 1; min-width: 200px; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; outline: none; font-weight: 600; letter-spacing: 1px;">
+                <button type="button" onclick="lacakStatusPesanan()" class="btn-primary" style="padding: 14px 28px; border-radius: 12px; font-size: 15px;"><i class="fa-solid fa-magnifying-glass"></i> Cek Status</button>
+            </div>
+
+            <!-- AREA HASIL LACAK -->
+            <div id="hasilLacakArea" style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); display: none;">
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <div style="font-size: 11px; color:#a3b1cc; text-transform: uppercase;">ID PESANAN</div>
+                        <div id="resIdPesanan" style="font-size: 18px; font-weight: 800; color: #FFD700;">CM-XXXXX</div>
+                    </div>
+                    <div style="text-align: right;" id="metaPesanan">
+                        <div style="font-size: 11px; color:#a3b1cc; text-transform: uppercase;">PELANGGAN / LAYANAN</div>
+                        <div id="resDetailLayanan" style="font-size: 14px; font-weight: 600; color: #fff;">-</div>
+                    </div>
+                </div>
+
+                <!-- Komponen Linimasa 5 Langkah -->
+                <div class="tracking-timeline">
+                    <div class="timeline-progress" id="progressLine"></div>
+                    
+                    <div class="timeline-step" id="step1">
+                        <div class="timeline-icon"><i class="fa-solid fa-receipt"></i></div>
+                        <div class="timeline-text">Diterima Admin</div>
+                    </div>
+                    <div class="timeline-step" id="step2">
+                        <div class="timeline-icon"><i class="fa-solid fa-user-clock"></i></div>
+                        <div class="timeline-text">Menuju Lokasi</div>
+                    </div>
+                    <div class="timeline-step" id="step3">
+                        <div class="timeline-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <div class="timeline-text">Membeli Barang</div>
+                    </div>
+                    <div class="timeline-step" id="step4">
+                        <div class="timeline-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                        <div class="timeline-text">Dalam Perjalanan</div>
+                    </div>
+                    <div class="timeline-step" id="step5">
+                        <div class="timeline-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <div class="timeline-text">Pesanan Sampai</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FITUR BARU: PANEL DASHBOARD KONTROL STATUS ADMIN -->
+<section id="admin-panel" class="services" style="border-top: 1px solid rgba(255,255,255,0.05); background: rgba(15, 23, 42, 0.6);">
+    <div class="container">
+        <h2 class="section-title">Dashboard Control <span>Admin</span></h2>
+        <div style="max-width: 950px; margin: 0 auto; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid #00B14F; box-shadow: 0 10px 30px rgba(0,177,79,0.1);">
+            
+            <!-- Box Login Admin Pengaman -->
+            <div id="adminAuthBox" style="text-align: center; padding: 15px 0;">
+                <p style="font-size: 14px; color: #c9d2e3; margin-bottom: 15px;">
+                    <i class="fa-solid fa-lock" style="color: #FFD700;"></i> Masukkan Kode Sandi Akses Admin untuk membuka manajemen status pesanan.
+                </p>
+                <div style="display: flex; gap: 10px; max-width: 380px; margin: 0 auto;">
+                    <input type="password" id="adminPassword" placeholder="Password default: admin123" style="flex:1; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; text-align: center;">
+                    <button onclick="checkAdminAccess()" class="btn-primary" style="padding: 10px 22px; border-radius: 8px; font-size: 14px;">Masuk</button>
+                </div>
+            </div>
+
+            <!-- Konten Utama Kelola Status Admin -->
+            <div id="adminControlPanel" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                    <h4 style="color: #FFD700; font-size: 16px;"><i class="fa-solid fa-list-check"></i> Monitoring & Update Status Pesanan Pelanggan</h4>
+                    <button onclick="renderAdminDashboard()" class="btn-secondary" style="padding: 6px 15px; font-size: 12px; border-radius: 6px;"><i class="fa-solid fa-rotate"></i> Refresh Data</button>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr style="color: #a3b1cc; border-bottom: 2px solid rgba(255,255,255,0.1);">
+                                <th>ID Pesanan</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Jenis Layanan</th>
+                                <th>Status Saat Ini</th>
+                                <th style="text-align: center;">Aksi Ubah Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrderTableBody">
+                            <!-- Data Load Secara Dinamis Melalui JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
@@ -936,166 +1142,285 @@
     const beratBarang = document.getElementById('beratBarang');
     const jumlahBarang = document.getElementById('jumlahBarang');
 
-    const TARIF_PER_KM = 3300; 
-    let currentJarakAkurat = 0; 
-    let autocompleteJemput, autocompleteTujuan, directionsService;
-
-    function openContactModal() { modal.classList.add('active'); }
-    function closeContactModal() { modal.classList.remove('active'); }
-    window.onclick = function(event) { if (event.target == modal) { closeContactModal(); } }
-
-    function setJenisLayanan(namaLayanan) {
-        jenisLayananSelect.value = namaLayanan;
-        updateFormLabels();
-        document.getElementById('form-pemesanan').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function updateFormLabels() {
-        const val = jenisLayananSelect.value;
-        
-        if(val === "GoSend" || val === "Jastip") {
-            gosendFields.style.display = "flex"; 
-            namaBarang.required = true;
-            beratBarang.required = true;
-            jumlahBarang.required = true;
-
-            if(val === "Jastip") {
-                labelNamaBarang.innerHTML = `<i class="fa-solid fa-bag-shopping"></i> Barang Apa yang Ingin Dititip Beli?`;
-                namaBarang.placeholder = "Contoh: Sepatu Brand X, Baju Uniqlo size L, Oleh-oleh Khas";
-                labelJemput.innerText = "Lokasi Toko / Tempat Pembelian Barang";
-                labelTujuan.innerText = "Alamat Pengantaran / Rumah Anda";
+    jenisLayananSelect.addEventListener('change', function() {
+        const val = this.value;
+        if(val === 'GoSend' || val === 'Jastip') {
+            gosendFields.style.display = 'flex';
+            if(val === 'Jastip') {
+                labelNamaBarang.innerHTML = '<i class="fa-solid fa-shopping-bag"></i> Barang Apa yang Ingin Dititip Beli?';
+                namaBarang.placeholder = 'Contoh: Indomie 1 Kardus, Kopi Susu, Oleh-oleh Khas';
             } else {
-                labelNamaBarang.innerHTML = `<i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?`;
-                namaBarang.placeholder = "Contoh: Pakaian, Dokumen, Paket Sembako";
-                labelJemput.innerText = "Lokasi Pengambilan Paket / Jemput";
-                labelTujuan.innerText = "Alamat Tujuan Pengantaran Paket";
+                labelNamaBarang.innerHTML = '<i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?';
+                namaBarang.placeholder = 'Contoh: Pakaian, Dokumen, Paket Sembako';
             }
         } else {
-            gosendFields.style.display = "none"; 
-            namaBarang.required = false;
-            beratBarang.required = false;
-            jumlahBarang.required = false;
-
-            if(val === "GoFood") {
-                labelJemput.innerText = "Lokasi Resto / Toko Makanan";
-                labelTujuan.innerText = "Alamat Pengiriman Makanan";
-            } else {
-                labelJemput.innerText = "Lokasi Penjemputan Penumpang";
-                labelTujuan.innerText = "Lokasi Tujuan Perjalanan";
-            }
+            gosendFields.style.display = 'none';
         }
-    }
-    jenisLayananSelect.addEventListener('change', updateFormLabels);
+    });
 
-    function initGoogleMapsServices() {
-        directionsService = new google.maps.DirectionsService();
-
-        autocompleteJemput = new google.maps.places.Autocomplete(document.getElementById('jemput'), {
-            types: ['geocode', 'establishment'],
-            componentRestrictions: { country: 'id' }
-        });
-
-        autocompleteTujuan = new google.maps.places.Autocomplete(document.getElementById('tujuan'), {
-            types: ['geocode', 'establishment'],
-            componentRestrictions: { country: 'id' }
-        });
-
-        autocompleteJemput.addListener('place_changed', hitungRuteGoogleMaps);
-        autocompleteTujuan.addListener('place_changed', hitungRuteGoogleMaps);
+    function setJenisLayanan(layanan) {
+        jenisLayananSelect.value = layanan;
+        const event = new Event('change');
+        jenisLayananSelect.dispatchEvent(event);
     }
 
-    function hitungRuteGoogleMaps() {
-        const asalText = document.getElementById('jemput').value;
-        const tujuanText = document.getElementById('tujuan').value;
-        const trackerBox = document.getElementById('liveTracker');
-        const jarakText = document.getElementById('liveJarakText');
-        const tarifText = document.getElementById('liveTarifText');
+    function openContactModal() {
+        modal.classList.add('active');
+    }
 
-        if (asalText.trim() === "" || tujuanText.trim() === "") {
-            trackerBox.style.display = "none";
-            return;
-        }
-
-        const request = {
-            origin: asalText,
-            destination: tujuanText,
-            travelMode: google.maps.TravelMode.DRIVING
-        };
-
-        directionsService.route(request, function (response, status) {
-            if (status === google.maps.DirectionsStatus.OK) {
-                const jarakMeter = response.routes[0].legs[0].distance.value;
-                currentJarakAkurat = parseFloat((jarakMeter / 1000).toFixed(1)); 
-
-                const totalTarif = currentJarakAkurat * TARIF_PER_KM;
-                const formatRupiah = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                }).format(totalTarif);
-
-                jarakText.innerText = currentJarakAkurat + " KM";
-                tarifText.innerText = formatRupiah;
-                trackerBox.style.display = "block";
-            } else {
-                console.log("Gagal melacak rute Google Maps: " + status);
-                trackerBox.style.display = "none";
-            }
-        });
+    function closeContactModal() {
+        modal.classList.remove('active');
     }
 
     function hitungTarifManual() {
-        const jarakInput = document.getElementById('inputJarak').value;
+        const jarak = parseFloat(document.getElementById('inputJarak').value);
         const hasilBox = document.getElementById('hasilTarifBox');
-        const textTotal = document.getElementById('textTotalTarif');
+        const textTarif = document.getElementById('textTotalTarif');
+        
+        if(!jarak || jarak <= 0) {
+            alert('Masukkan jarak kilometer yang valid.');
+            return;
+        }
+        const total = jarak * 3300;
+        textTarif.innerText = 'Rp ' + total.toLocaleString('id-ID');
+        hasilBox.style.display = 'block';
+    }
 
-        if(jarakInput === "" || jarakInput <= 0) {
-            alert("Silakan masukkan kilometer dengan benar!");
-            hasilBox.style.display = "none";
+    function initGoogleMapsServices() {
+        console.log("Google Maps API callback triggered.");
+    }
+
+    // HANDLER FORM PEMESANAN & GENERATE ID
+    bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const randomID = 'CM-' + Math.floor(10000 + Math.random() * 90000);
+        const namaInput = document.getElementById('nama').value;
+        const layananInput = jenisLayananSelect.value;
+        const jemputInput = document.getElementById('jemput').value;
+        const tujuanInput = document.getElementById('tujuan').value;
+        const tglInput = document.getElementById('tanggalJemput').value;
+        const jamInput = document.getElementById('jamJemput').value;
+
+        // Data awal diset default ke status kesatu
+        const dataPesanan = {
+            id: randomID,
+            nama: namaInput,
+            layanan: layananInput,
+            jemput: jemputInput,
+            tujuan: tujuanInput,
+            tanggal: tglInput,
+            jam: jamInput,
+            status: 'Diterima Admin'
+        };
+
+        let databaseLokal = JSON.parse(localStorage.getItem('cruizemate_orders')) || {};
+        databaseLokal[randomID] = dataPesanan;
+        localStorage.setItem('cruizemate_orders', JSON.stringify(databaseLokal));
+
+        // Susun pesan WA
+        let waMessage = `*FORMULIR PEMESANAN CRUIZEMATE*\n`;
+        waMessage += `----------------------------------------\n`;
+        waMessage += `*ID PESANAN:* ${randomID}\n`;
+        waMessage += `*Nama Pelanggan:* ${namaInput}\n`;
+        waMessage += `*Jenis Layanan:* ${layananInput}\n`;
+        
+        if(layananInput === 'GoSend' || layananInput === 'Jastip') {
+            waMessage += `*Detail Barang:* ${namaBarang.value || '-'}\n`;
+            waMessage += `*Estimasi Berat:* ${beratBarang.value || '-'} Kg\n`;
+            waMessage += `*Jumlah Barang:* ${jumlahBarang.value || '-'} Pcs\n`;
+        }
+
+        waMessage += `*Lokasi Ambil/Jemput:* ${jemputInput}\n`;
+        waMessage += `*Lokasi Tujuan:* ${tujuanInput}\n`;
+        waMessage += `*Waktu Pelaksanaan:* ${tglInput} / Pukul ${jamInput} WIB\n`;
+        waMessage += `----------------------------------------\n`;
+        waMessage += `_Mohon segera dikonfirmasi ya admin, Terima kasih!_`;
+
+        const urlWa = `https://wa.me/6281260636666?text=${encodeURIComponent(waMessage)}`;
+        window.open(urlWa, '_blank');
+
+        alert(`Pesanan Berhasil!\n\nID Lacak Pesanan Anda: ${randomID}\n\nSilakan gunakan ID ini pada kolom 'Lacak Status' untuk memantau perjalanan.`);
+        
+        bookingForm.reset();
+        if(gosendFields) gosendFields.style.display = 'none';
+        
+        // Refresh tabel kontrol admin jika sedang terbuka
+        renderAdminDashboard();
+    });
+
+    // ENGINE OPERASIONAL INTERAKTIF LACAK RESI (DIPERBARUI MENJADI 5 SKENARIO BAR)
+    function lacakStatusPesanan() {
+        const inputResi = document.getElementById('inputResi').value.trim().toUpperCase();
+        const hasilArea = document.getElementById('hasilLacakArea');
+        
+        if(!inputResi) {
+            alert('Silakan masukkan ID Pesanan terlebih dahulu.');
             return;
         }
 
-        const totalTarif = jarakInput * TARIF_PER_KM;
-        const formatRupiah = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(totalTarif);
+        let databaseLokal = JSON.parse(localStorage.getItem('cruizemate_orders')) || {};
+        let dataFound = databaseLokal[inputResi];
 
-        textTotal.innerText = formatRupiah;
-        hasilBox.style.display = "block";
-    }
-
-    bookingForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const nama = document.getElementById('nama').value;
-        const layanan = document.getElementById('jenisLayanan').value;
-        const jemput = document.getElementById('jemput').value;
-        const tujuan = document.getElementById('tujuan').value;
-        const tanggal = document.getElementById('tanggalJemput').value;
-        const jam = document.getElementById('jamJemput').value;
-        
-        let detailGoSendText = "";
-        if(layanan === "GoSend" || layanan === "Jastip") {
-            detailGoSendText = `🛍️ Detail Barang: ${namaBarang.value}%0A` +
-                               `⚖️ Est. Berat: ${beratBarang.value} Kg%0A` +
-                               `🔢 Jumlah Barang: ${jumlahBarang.value} Item%0A`;
+        // Sediakan backup mock data demo default jika data kosong
+        if (!dataFound) {
+            if (inputResi === "CM-TEST1" || inputResi === "CM-31972") dataFound = { id: inputResi, nama: "Naufal", layanan: "GoSend", status: "Menuju Lokasi" };
+            else if (inputResi === "CM-TEST2") dataFound = { id: "CM-TEST2", nama: "Siti Rahma", layanan: "GoFood", status: "Membeli Barang" };
+            else if (inputResi === "CM-TEST3") dataFound = { id: "CM-TEST3", nama: "Andi Wijaya", layanan: "GrabCar", status: "Dalam Perjalanan" };
         }
 
-        let infoTarif = currentJarakAkurat > 0 ? `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi Tarif: Rp ${new Intl.NumberFormat('id-ID').format(currentJarakAkurat * TARIF_PER_KM)}` : '';
+        if(!dataFound) {
+            alert('Maaf, ID Pesanan tidak ditemukan.');
+            hasilArea.style.display = 'none';
+            return;
+        }
 
-        const textWhatsApp = `Halo Admin, saya ingin melakukan pemesanan:%0A%0A` +
-                             `👤 Nama: ${nama}%0A` +
-                             `🛠️ Layanan: ${layanan}%0A` +
-                             detailGoSendText +
-                             `🛫 Titik Pengambilan/Jemput: ${jemput}%0A` +
-                             `🛬 Titik Pengantaran/Tujuan: ${tujuan}%0A` +
-                             `📅 Tanggal: ${tanggal}%0A` +
-                             `⏰ Jam: ${jam}${infoTarif}`;
+        document.getElementById('resIdPesanan').innerText = dataFound.id;
+        document.getElementById('resDetailLayanan').innerHTML = `${dataFound.nama} <span style="color:#00B14F;">(${dataFound.layanan})</span>`;
         
-        window.open(`https://wa.me/6281260636666?text=${textWhatsApp}`, '_blank');
-    });
+        const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
+        steps.forEach(stepId => document.getElementById(stepId).classList.remove('active'));
+        
+        const progressLine = document.getElementById('progressLine');
+        const currentStatus = dataFound.status;
+
+        // Langkah Aktifasi Node & Jalur Progress Bar (Deteksi Otomatis Ukuran Layar HP vs PC)
+        document.getElementById('step1').classList.add('active');
+        const isMobile = window.innerWidth <= 576;
+        
+        if (isMobile) {
+            progressLine.style.width = '4px'; // Kunci ukuran lebar garis vertikal
+            if (currentStatus === 'Menuju Lokasi') {
+                document.getElementById('step2').classList.add('active');
+                progressLine.style.height = '23%';
+            } else if (currentStatus === 'Membeli Barang') {
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step3').classList.add('active');
+                progressLine.style.height = '46%';
+            } else if (currentStatus === 'Dalam Perjalanan') {
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step3').classList.add('active');
+                document.getElementById('step4').classList.add('active');
+                progressLine.style.height = '68%';
+            } else if (currentStatus === 'Pesanan Sampai') {
+                steps.forEach(s => document.getElementById(s).classList.add('active'));
+                progressLine.style.height = '92%';
+            } else {
+                progressLine.style.height = '0%';
+            }
+        } else {
+            progressLine.style.height = '4px'; // Kunci ukuran tinggi garis horizontal
+            if (currentStatus === 'Menuju Lokasi') {
+                document.getElementById('step2').classList.add('active');
+                progressLine.style.width = '25%';
+            } else if (currentStatus === 'Membeli Barang') {
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step3').classList.add('active');
+                progressLine.style.width = '50%';
+            } else if (currentStatus === 'Dalam Perjalanan') {
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step3').classList.add('active');
+                document.getElementById('step4').classList.add('active');
+                progressLine.style.width = '75%';
+            } else if (currentStatus === 'Pesanan Sampai') {
+                steps.forEach(s => document.getElementById(s).classList.add('active'));
+                progressLine.style.width = '100%';
+            } else {
+                progressLine.style.width = '0%';
+            }
+        }
+
+        hasilArea.style.display = 'block';
+        hasilArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ==========================================
+    // LOGIK ENGINE BARU: FITUR DASHBOARD ADMIN
+    // ==========================================
+    function checkAdminAccess() {
+        const pass = document.getElementById('adminPassword').value;
+        if(pass === 'nopall@00') {
+            document.getElementById('adminAuthBox').style.display = 'none';
+            document.getElementById('adminControlPanel').style.display = 'block';
+            renderAdminDashboard();
+        } else {
+            alert('Password Admin salah! Silakan coba lagi dengan pin default: admin123');
+        }
+    }
+
+    function renderAdminDashboard() {
+        const tbody = document.getElementById('adminOrderTableBody');
+        tbody.innerHTML = '';
+        
+        let databaseLokal = JSON.parse(localStorage.getItem('cruizemate_orders')) || {};
+        
+        // Memasukkan data mock bawaan agar admin punya data siap saji untuk uji coba instan
+        const mockData = {
+            "CM-31972": { id: "CM-31972", nama: "Naufal", layanan: "GoSend", status: "Menuju Lokasi" },
+            "CM-TEST2": { id: "CM-TEST2", nama: "Siti Rahma", layanan: "GoFood", status: "Membeli Barang" },
+            "CM-TEST3": { id: "CM-TEST3", nama: "Andi Wijaya", layanan: "GrabCar", status: "Dalam Perjalanan" }
+        };
+        
+        let allOrders = Object.assign({}, mockData, databaseLokal);
+
+        for(let id in allOrders) {
+            const order = allOrders[id];
+            const tr = document.createElement('tr');
+            
+            // Atur warna label indikator teks status agar rapi
+            let colorHex = '#00B14F';
+            if(order.status === 'Pesanan Sampai') colorHex = '#FFD700';
+
+            tr.innerHTML = `
+                <td style="padding:12px; font-weight:700; color:#FFD700;">${order.id}</td>
+                <td style="padding:12px; color:#fff;">${order.nama || 'User Demo'}</td>
+                <td style="padding:12px; color:#a3b1cc;">${order.layanan}</td>
+                <td style="padding:12px;"><span id="adm-lbl-${order.id}" style="padding:4px 8px; border-radius:4px; font-size:12px; font-weight:600; background:rgba(255,255,255,0.03); color:${colorHex}; border: 1px solid rgba(255,255,255,0.05);">${order.status}</span></td>
+                <td style="padding:12px; text-align:center;">
+                    <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding:8px 12px; border-radius:8px; background:#1e293b; color:#fff; border:1px solid rgba(0, 177, 79, 0.4); font-size:13px; outline:none; cursor:pointer;">
+                        <option value="Diterima Admin" ${order.status === 'Diterima Admin' ? 'selected' : ''}>Diterima Admin</option>
+                        <option value="Menuju Lokasi" ${order.status === 'Menuju Lokasi' ? 'selected' : ''}>Menuju Lokasi</option>
+                        <option value="Membeli Barang" ${order.status === 'Membeli Barang' ? 'selected' : ''}>Membeli Barang (Sudah Dibeli)</option>
+                        <option value="Dalam Perjalanan" ${order.status === 'Dalam Perjalanan' ? 'selected' : ''}>Dalam Perjalanan (Sudah Jalan)</option>
+                        <option value="Pesanan Sampai" ${order.status === 'Pesanan Sampai' ? 'selected' : ''}>🏁 Pesanan Sampai / Selesai</option>
+                    </select>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+    }
+
+    function updateOrderStatus(orderId, newStatus) {
+        let databaseLokal = JSON.parse(localStorage.getItem('cruizemate_orders')) || {};
+        
+        // Amankan data ke database lokal jika admin memodifikasi data demo/mock-up bawaan
+        if (!databaseLokal[orderId]) {
+            const mockData = {
+                "CM-31972": { id: "CM-31972", nama: "Naufal", layanan: "GoSend", status: "Menuju Lokasi" },
+                "CM-TEST2": { id: "CM-TEST2", nama: "Siti Rahma", layanan: "GoFood", status: "Membeli Barang" },
+                "CM-TEST3": { id: "CM-TEST3", nama: "Andi Wijaya", layanan: "GrabCar", status: "Dalam Perjalanan" }
+            };
+            if(mockData[orderId]) databaseLokal[orderId] = mockData[orderId];
+        }
+        
+        if(databaseLokal[orderId]) {
+            databaseLokal[orderId].status = newStatus;
+            localStorage.setItem('cruizemate_orders', JSON.stringify(databaseLokal));
+            
+            // Perbarui visual teks status pada tabel secara realtime
+            const label = document.getElementById(`adm-lbl-${orderId}`);
+            if(label) {
+                label.innerText = newStatus;
+                label.style.color = (newStatus === 'Pesanan Sampai') ? '#FFD700' : '#00B14F';
+            }
+            
+            // Sinkronisasi Otomatis: Jika user sedang melacak ID ini di atas, visual garis kemajuan langsung ikut bergerak maju
+            const currentTrackingId = document.getElementById('inputResi').value.trim().toUpperCase();
+            if(currentTrackingId === orderId) {
+                lacakStatusPesanan();
+            }
+        }
+    }
 </script>
 </body>
 </html>
