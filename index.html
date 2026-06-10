@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUIZEMATE - Jasa Booking Transportasi & Logistik Premium</title>
 
+    <!-- Google Maps API (ganti YOUR_API_KEY dengan API key Anda) -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMapAsync" async defer></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -598,6 +601,76 @@
             background: rgba(255,255,255,0.08);
         }
 
+        .google-maps-picker {
+            background: rgba(0, 177, 79, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .location-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .location-input {
+            flex: 1;
+            position: relative;
+        }
+
+        .location-input input {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .pick-location-btn {
+            background: #00B14F;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+        }
+
+        .pick-location-btn:hover {
+            background: #008f3e;
+        }
+
+        .map-preview {
+            width: 100%;
+            height: 200px;
+            background: #1e293b;
+            border-radius: 12px;
+            margin-top: 10px;
+            display: none;
+            position: relative;
+        }
+
+        .map-preview.active {
+            display: block;
+        }
+
+        #routeMap {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        .get-distance-btn {
+            background: #FFD700;
+            color: #1a1a2e;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .get-distance-btn:hover {
+            background: #e6c200;
+        }
+
         .gosend-extra-box {
             display: none;
             flex-direction: column;
@@ -1157,7 +1230,7 @@
     <div class="container">
         <h2 class="section-title"><span id="formTitle">Formulir</span> <span id="formTitleHighlight">Pemesanan</span></h2>
         
-        <div style="max-width: 600px; margin: 0 auto; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid rgba(0, 177, 79, 0.3); display: flex; flex-direction: column; gap: 25px;">
+        <div style="max-width: 800px; margin: 0 auto; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid rgba(0, 177, 79, 0.3); display: flex; flex-direction: column; gap: 25px;">
             
             <div>
                 <h4 style="margin-bottom: 10px; font-size: 14px;"><i class="fa-regular fa-heart"></i> <span id="favAddressTitle">Alamat Favorit</span></h4>
@@ -1198,30 +1271,48 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label id="labelJemput">Lokasi Penjemputan / Pengambilan</label>
-                    <input type="text" id="jemput" required placeholder="Ketik alamat lengkap">
-                </div>
-
-                <div class="form-group">
-                    <label id="labelTujuan">Lokasi Tujuan / Pengantaran</label>
-                    <input type="text" id="tujuan" required placeholder="Ketik alamat lengkap">
-                    
-                    <div class="manual-distance-input">
-                        <input type="number" id="jarakManual" step="0.1" placeholder="Perkiraan jarak (KM)">
-                        <button type="button" class="btn-secondary calc-distance-btn" onclick="setManualDistance()">Hitung Tarif</button>
+                <!-- GOOGLE MAPS PICKER SECTION -->
+                <div class="google-maps-picker">
+                    <div class="location-row">
+                        <div class="location-input">
+                            <input type="text" id="jemput" placeholder="📍 Lokasi Penjemputan" autocomplete="off">
+                        </div>
+                        <button type="button" class="pick-location-btn" onclick="pickLocation('pickup')">
+                            <i class="fa-regular fa-map"></i> Pilih di Maps
+                        </button>
                     </div>
+                    
+                    <div class="location-row">
+                        <div class="location-input">
+                            <input type="text" id="tujuan" placeholder="🎯 Lokasi Tujuan" autocomplete="off">
+                        </div>
+                        <button type="button" class="pick-location-btn" onclick="pickLocation('destination')">
+                            <i class="fa-regular fa-map"></i> Pilih di Maps
+                        </button>
+                    </div>
+                    
+                    <div class="map-preview" id="mapPreview">
+                        <div id="routeMap"></div>
+                    </div>
+                    
+                    <button type="button" class="btn-primary get-distance-btn" onclick="calculateAndGetDistance()">
+                        <i class="fa-regular fa-road"></i> Hitung Jarak & Tarif Otomatis
+                    </button>
                     
                     <div id="liveTracker" class="live-tracker-box">
                         <div class="tracker-flex">
                             <div class="tracker-item">
-                                <div class="tracker-label">📍 Jarak Rute</div>
+                                <div class="tracker-label">📍 Jarak Rute (Maps)</div>
                                 <div id="liveJarakText" class="tracker-value">0 KM</div>
                             </div>
                             <div class="tracker-item">
                                 <div class="tracker-label">💰 Estimasi Tarif</div>
                                 <div id="liveTarifText" class="tracker-value price">Rp 0</div>
                             </div>
+                        </div>
+                        <div class="tracker-item" style="margin-top: 10px;">
+                            <div class="tracker-label">🕒 Estimasi Waktu Tempuh</div>
+                            <div id="liveDurationText" class="tracker-value">-</div>
                         </div>
                     </div>
                 </div>
@@ -1255,7 +1346,7 @@
             <hr>
 
             <div id="calculator-box" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;">
-                <h4 style="margin-bottom: 15px; font-size: 15px; color: #FFD700;"><i class="fa-solid fa-calculator"></i> <span id="calculatorTitle">Kalkulator Tarif (Manual)</span></h4>
+                <h4 style="margin-bottom: 15px; font-size: 15px; color: #FFD700;"><i class="fa-solid fa-calculator"></i> <span id="calculatorTitle">Kalkulator Tarif (Cepat)</span></h4>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label id="labelJarakManual">Perkiraan Jarak Perjalanan (Kilometer)</label>
                     <input type="number" id="inputJarak" min="1" step="0.1" placeholder="Contoh: 12">
@@ -1408,7 +1499,7 @@
             <p style="text-align: center; color: #a3b1cc;">Belum ada riwayat pemesanan.</p>
         </div>
         <div style="text-align: center; margin-top: 20px;">
-            <button class="btn-secondary" onclick="clearHistory()">🗑️ Hapus Riwayat</button>
+            <button class="btn-secondary" onclick="clearHistory()">Hapus Riwayat</button>
         </div>
     </div>
 </section>
@@ -1418,8 +1509,8 @@
         <h2 class="section-title"><span id="stepsTitle">Cara</span> <span id="stepsTitleHighlight">Pemesanan</span></h2>
         <div class="step-grid">
             <div class="step"><div class="step-number">1</div>Isi Form / Hubungi WA</div>
-            <div class="step"><div class="step-number">2</div>Kirim Info Alamat</div>
-            <div class="step"><div class="step-number">3</div>Pilih Jenis Layanan</div>
+            <div class="step"><div class="step-number">2</div>Pilih Lokasi di Maps</div>
+            <div class="step"><div class="step-number">3</div>Hitung Jarak Otomatis</div>
             <div class="step"><div class="step-number">4</div>Konfirmasi Biaya</div>
             <div class="step"><div class="step-number">5</div>Driver/Kurir Jalan</div>
         </div>
@@ -1473,6 +1564,7 @@
     let currentOrderId = null;
     let currentJarakAkurat = 0;
     let currentHargaAkurat = 0;
+    let currentDuration = "";
     let isAdmin = false;
     let currentRating = 0;
     let currentFilterMonth = new Date().getMonth() + 1;
@@ -1480,8 +1572,151 @@
     const ADMIN_PASSWORD = 'admin123';
     const TARIF_PER_KM = 3300;
     
+    let map = null;
+    let directionsService = null;
+    let directionsRenderer = null;
+    let pickupLatLng = null;
+    let destLatLng = null;
+    let autocompletePickup = null;
+    let autocompleteDest = null;
+    let currentPickerType = null;
+    
     let bookingHistory = JSON.parse(localStorage.getItem('bookingHistory') || '[]');
     let favoriteAddresses = JSON.parse(localStorage.getItem('favoriteAddresses') || '[]');
+    
+    // ================ GOOGLE MAPS INITIALIZATION ================
+    function initMapAsync() {
+        if (typeof google === 'undefined') {
+            console.error("Google Maps tidak terload");
+            return;
+        }
+        
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer();
+        
+        const mapDiv = document.getElementById('routeMap');
+        if (mapDiv) {
+            map = new google.maps.Map(mapDiv, {
+                center: { lat: -6.200000, lng: 106.816666 },
+                zoom: 12
+            });
+            directionsRenderer.setMap(map);
+        }
+        
+        // Setup autocomplete
+        const pickupInput = document.getElementById('jemput');
+        const destInput = document.getElementById('tujuan');
+        
+        autocompletePickup = new google.maps.places.Autocomplete(pickupInput, {
+            types: ['geocode', 'establishment']
+        });
+        autocompleteDest = new google.maps.places.Autocomplete(destInput, {
+            types: ['geocode', 'establishment']
+        });
+        
+        autocompletePickup.addListener('place_changed', () => {
+            const place = autocompletePickup.getPlace();
+            if (place.geometry) {
+                pickupLatLng = place.geometry.location;
+            }
+        });
+        
+        autocompleteDest.addListener('place_changed', () => {
+            const place = autocompleteDest.getPlace();
+            if (place.geometry) {
+                destLatLng = place.geometry.location;
+            }
+        });
+    }
+    
+    // Pilih lokasi via Google Maps Picker
+    function pickLocation(type) {
+        currentPickerType = type;
+        if (confirm(`Buka Google Maps untuk memilih ${type === 'pickup' ? 'lokasi penjemputan' : 'lokasi tujuan'}?`)) {
+            window.open(`https://www.google.com/maps/@?api=1&map_action=pwa`, '_blank');
+            showNotification(`Silakan pilih lokasi di Google Maps, lalu salin koordinatnya.`, 'info');
+            
+            const lat = prompt(`Masukkan Latitude untuk ${type === 'pickup' ? 'Penjemputan' : 'Tujuan'}:`);
+            const lng = prompt(`Masukkan Longitude untuk ${type === 'pickup' ? 'Penjemputan' : 'Tujuan'}:`);
+            
+            if (lat && lng && !isNaN(lat) && !isNaN(lng)) {
+                const latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+                if (type === 'pickup') {
+                    pickupLatLng = latLng;
+                    getAddressFromLatLng(latLng, 'jemput');
+                } else {
+                    destLatLng = latLng;
+                    getAddressFromLatLng(latLng, 'tujuan');
+                }
+            }
+        }
+    }
+    
+    function getAddressFromLatLng(latLng, inputId) {
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ location: latLng }, (results, status) => {
+            if (status === 'OK' && results[0]) {
+                document.getElementById(inputId).value = results[0].formatted_address;
+                showNotification(`Alamat berhasil diisi: ${results[0].formatted_address.substring(0, 50)}...`, 'success');
+            }
+        });
+    }
+    
+    // Hitung jarak menggunakan Google Maps Directions API
+    function calculateAndGetDistance() {
+        const pickup = document.getElementById('jemput').value;
+        const destination = document.getElementById('tujuan').value;
+        
+        if (!pickup || !destination) {
+            showNotification('Harap isi lokasi penjemputan dan tujuan terlebih dahulu!', 'error');
+            return;
+        }
+        
+        if (!directionsService) {
+            showNotification('Google Maps belum siap, coba lagi sebentar.', 'error');
+            return;
+        }
+        
+        const request = {
+            origin: pickup,
+            destination: destination,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        
+        directionsService.route(request, (result, status) => {
+            if (status === 'OK') {
+                const route = result.routes[0];
+                const legs = route.legs[0];
+                const distanceKm = legs.distance.value / 1000;
+                const duration = legs.duration.text;
+                
+                currentJarakAkurat = Math.round(distanceKm * 10) / 10;
+                currentDuration = duration;
+                currentHargaAkurat = currentJarakAkurat * TARIF_PER_KM;
+                
+                document.getElementById('liveJarakText').innerText = currentJarakAkurat + " KM";
+                document.getElementById('liveTarifText').innerText = formatRupiah(currentHargaAkurat);
+                document.getElementById('liveDurationText').innerText = duration;
+                document.getElementById('liveTracker').style.display = "block";
+                
+                // Tampilkan map preview
+                const mapPreview = document.getElementById('mapPreview');
+                if (directionsRenderer) {
+                    directionsRenderer.setDirections(result);
+                    mapPreview.classList.add('active');
+                    if (map) {
+                        const bounds = result.routes[0].bounds;
+                        map.fitBounds(bounds);
+                    }
+                }
+                
+                showNotification(`Jarak: ${currentJarakAkurat} KM, Estimasi tarif: ${formatRupiah(currentHargaAkurat)}`, 'success');
+            } else {
+                showNotification('Tidak dapat menghitung jarak. Periksa alamat Anda.', 'error');
+                console.error('Directions error:', status);
+            }
+        });
+    }
     
     // ================ HELPER FUNCTIONS ================
     function formatRupiah(amount) {
@@ -1518,8 +1753,6 @@
             document.getElementById('favAddressTitle').innerHTML = "Favorite Addresses";
             document.getElementById('labelNama').innerHTML = "Customer Name";
             document.getElementById('labelJenisLayanan').innerHTML = "Select Service";
-            document.getElementById('labelJemput').innerHTML = "Pickup Location";
-            document.getElementById('labelTujuan').innerHTML = "Destination";
             document.getElementById('labelTanggal').innerHTML = "Date";
             document.getElementById('labelJam').innerHTML = "Time";
             document.getElementById('labelRating').innerHTML = "Driver Rating (Optional)";
@@ -1602,21 +1835,6 @@
         container.appendChild(saveBtn);
     }
     
-    // ================ DISTANCE & FARE ================
-    function setManualDistance() {
-        const jarak = parseFloat(document.getElementById('jarakManual').value);
-        if (jarak && jarak > 0) {
-            currentJarakAkurat = jarak;
-            currentHargaAkurat = currentJarakAkurat * TARIF_PER_KM;
-            document.getElementById('liveJarakText').innerText = currentJarakAkurat + " KM";
-            document.getElementById('liveTarifText').innerText = formatRupiah(currentHargaAkurat);
-            document.getElementById('liveTracker').style.display = "block";
-            showNotification(`Jarak ${currentJarakAkurat} KM, estimasi tarif ${formatRupiah(currentHargaAkurat)}`, 'success');
-        } else {
-            showNotification('Masukkan jarak terlebih dahulu!', 'error');
-        }
-    }
-    
     function hitungTarifManual() {
         const jarak = parseFloat(document.getElementById('inputJarak').value);
         if (jarak && jarak > 0) {
@@ -1637,7 +1855,8 @@
             distance: currentJarakAkurat,
             totalAmount: currentHargaAkurat,
             rating: currentRating,
-            review: document.getElementById('reviewText').value
+            review: document.getElementById('reviewText').value,
+            duration: currentDuration
         };
         bookingHistory.unshift(newOrder);
         localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
@@ -1678,12 +1897,14 @@
             document.getElementById('tanggalJemput').value = order.tanggal || '';
             document.getElementById('jamJemput').value = order.jam || '';
             if (order.distance) {
-                document.getElementById('jarakManual').value = order.distance;
                 currentJarakAkurat = order.distance;
                 currentHargaAkurat = order.distance * TARIF_PER_KM;
                 document.getElementById('liveJarakText').innerText = currentJarakAkurat + " KM";
                 document.getElementById('liveTarifText').innerText = formatRupiah(currentHargaAkurat);
                 document.getElementById('liveTracker').style.display = "block";
+                if (order.duration) {
+                    document.getElementById('liveDurationText').innerText = order.duration;
+                }
             }
             updateFormLabels();
             showNotification('Data pesanan telah diisi ulang!', 'success');
@@ -1703,13 +1924,11 @@
     
     // ================ DASHBOARD FUNCTIONS ================
     function loadDashboardData() {
-        // Total semua
         const totalOrders = bookingHistory.length;
         const totalRevenue = bookingHistory.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
         document.getElementById('totalOrders').innerText = totalOrders;
         document.getElementById('totalRevenue').innerText = formatRupiah(totalRevenue);
         
-        // Statistik per layanan
         const services = ['GrabCar', 'GoSend', 'GoFood', 'Jastip'];
         services.forEach(service => {
             const filtered = bookingHistory.filter(o => o.layanan === service);
@@ -1722,7 +1941,6 @@
             }
         });
         
-        // Bulan ini
         const now = new Date();
         const currentMonth = now.getMonth() + 1;
         const currentYear = now.getFullYear();
@@ -1759,11 +1977,8 @@
         tbody.innerHTML = filtered.map(order => `
             <tr>
                 <td>${new Date(order.timestamp).toLocaleDateString('id-ID')}</td>
-                <td>${order.nama || '-'}</td>
-                <td>${order.layanan || '-'}</td>
-                <td>${order.distance || '-'}</td>
-                <td>${formatRupiah(order.totalAmount || 0)}</td>
-                <td>${order.rating ? '⭐'.repeat(order.rating) : '-'}</td>
+                <td>${order.nama || '-'}</td><td>${order.layanan || '-'}</td><td>${order.distance || '-'}</td>
+                <td>${formatRupiah(order.totalAmount || 0)}</td><td>${order.rating ? '⭐'.repeat(order.rating) : '-'}</td>
             </tr>
         `).join('');
     }
@@ -1926,7 +2141,7 @@
         }
         
         if (currentJarakAkurat === 0) {
-            showNotification('Harap hitung jarak terlebih dahulu!', 'error');
+            showNotification('Harap hitung jarak terlebih dahulu menggunakan tombol "Hitung Jarak & Tarif Otomatis"!', 'error');
             return;
         }
         
@@ -1936,7 +2151,7 @@
         }
         
         let ratingText = currentRating > 0 ? `⭐ Rating: ${currentRating}/5%0A📝 Review: ${document.getElementById('reviewText').value}%0A` : "";
-        let infoTarif = `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi: ${formatRupiah(currentHargaAkurat)}`;
+        let infoTarif = `\n📍 Jarak: ${currentJarakAkurat} KM\n⏱️ Estimasi Waktu: ${currentDuration}\n💰 Estimasi: ${formatRupiah(currentHargaAkurat)}`;
         
         const textWA = `Halo Admin, saya ingin order:%0A%0A👤 Nama: ${nama}%0A🛠️ Layanan: ${layanan}%0A${detailGoSend}${ratingText}🛫 Jemput: ${jemput}%0A🛬 Tujuan: ${tujuan}%0A📅 Tanggal: ${tanggal}%0A⏰ Jam: ${jam}${infoTarif}`;
         
@@ -1951,17 +2166,18 @@
         window.open(`https://wa.me/6281260636666?text=${textWA}`, '_blank');
         showNotification('Pesanan berhasil dikirim!', 'success');
         
-        // Reset form
-        currentJarakAkurat = 0;
-        currentHargaAkurat = 0;
-        document.getElementById('liveTracker').style.display = "none";
-        document.getElementById('jarakManual').value = '';
+        // Reset form but keep distance for next booking maybe
+        // Don't reset jarak so user can see last calculation
     });
     
     // ================ INITIALIZATION ================
     loadFavoriteAddresses();
     loadHistory();
     document.getElementById('jenisLayanan').addEventListener('change', updateFormLabels);
+    
+    // Set default date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('tanggalJemput').value = today;
     
     // Admin session check
     if (sessionStorage.getItem('adminSession') === 'true') {
@@ -1992,7 +2208,8 @@
     window.onclick = (event) => { if (event.target === modal) closeContactModal(); };
     
     // Export functions to global
-    window.setManualDistance = setManualDistance;
+    window.calculateAndGetDistance = calculateAndGetDistance;
+    window.pickLocation = pickLocation;
     window.hitungTarifManual = hitungTarifManual;
     window.clearHistory = clearHistory;
     window.shareTrip = shareTrip;
@@ -2009,6 +2226,7 @@
     window.filterReportByMonth = filterReportByMonth;
     window.exportToCSV = exportToCSV;
     window.exportToPDF = exportToPDF;
+    window.initMapAsync = initMapAsync;
 </script>
 </body>
 </html>
