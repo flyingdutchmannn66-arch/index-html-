@@ -24,6 +24,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Firebase SDKs untuk Google Login -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -1064,6 +1069,57 @@
             gap: 15px;
         }
 
+        /* Google Login Button */
+        .google-login-btn {
+            background: #4285F4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .google-login-btn:hover {
+            background: #357ae8;
+            transform: translateY(-1px);
+        }
+        .user-info {
+            background: rgba(0, 177, 79, 0.1);
+            border-radius: 50px;
+            padding: 5px 15px;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .points-badge {
+            background: #FFD700;
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
         @media(max-width: 991px) {
             .hero {
                 flex-direction: column-reverse;
@@ -1157,6 +1213,7 @@
         </div>
         
         <div class="nav-controls">
+            <div id="userProfileContainer"></div>
             <button class="lang-toggle" onclick="toggleLanguage()" id="langToggleBtn">🇮🇩 ID</button>
             <button class="theme-toggle" onclick="toggleTheme()">🌓 Mode</button>
             <button class="admin-btn" onclick="openAdminModal()">🔒 Admin</button>
@@ -1175,6 +1232,7 @@
                 <div class="feature">🚗 Driver Terpercaya</div>
                 <div class="feature">📱 Booking Mudah</div>
                 <div class="feature">💰 Harga Transparan</div>
+                <div class="feature">🎁 Dapat Poin Setiap Order (1 Poin = Rp500)</div>
             </div>
             <div class="buttons">
                 <a href="#form-pemesanan" class="btn-primary" id="btnBookNow">📝 Pesan via Formulir</a>
@@ -1575,6 +1633,146 @@
 <button class="emergency-btn" onclick="emergencyCall()"><i class="fa-solid fa-phone"></i></button>
 
 <script>
+    // ================ FIREBASE CONFIGURATION (DEMO MODE) ================
+    // Note: For production, replace with your actual Firebase config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDummyKeyForDemoPurposeOnly123456",
+        authDomain: "cruizemate-demo.firebaseapp.com",
+        projectId: "cruizemate-demo",
+        storageBucket: "cruizemate-demo.appspot.com",
+        messagingSenderId: "123456789012",
+        appId: "1:123456789012:web:abcdef123456"
+    };
+    
+    // Initialize Firebase (will work in demo mode with local storage fallback)
+    let auth, db, currentUser = null;
+    let userPoints = 0;
+    let currentUserEmail = null;
+    
+    try {
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+        console.log("Firebase initialized");
+    } catch(e) {
+        console.warn("Firebase init warning (demo mode):", e);
+    }
+    
+    // ================ POINTS SYSTEM ================
+    const POINTS_VALUE = 500; // 1 point = Rp 500
+    
+    function addPointsToUser(userId, pointsToAdd = 1) {
+        if (!userId) return;
+        // Update local storage for demo
+        let userPointsData = JSON.parse(localStorage.getItem(`points_${userId}`) || '0');
+        userPointsData += pointsToAdd;
+        localStorage.setItem(`points_${userId}`, userPointsData);
+        if (currentUser && currentUser.uid === userId) {
+            userPoints = userPointsData;
+            updatePointsDisplay();
+        }
+        showNotification(`✨ Anda mendapat ${pointsToAdd} Poin! (1 Poin = Rp ${POINTS_VALUE})`, 'success');
+    }
+    
+    function getUserPoints(userId) {
+        return parseInt(localStorage.getItem(`points_${userId}`) || '0');
+    }
+    
+    function updatePointsDisplay() {
+        const container = document.getElementById('userProfileContainer');
+        if (container && currentUser) {
+            const pointsSpan = container.querySelector('.points-badge');
+            if (pointsSpan) {
+                pointsSpan.innerHTML = `🎁 ${userPoints} Poin (Rp ${userPoints * POINTS_VALUE})`;
+            }
+        }
+    }
+    
+    // ================ GOOGLE LOGIN ================
+    async function handleGoogleLogin() {
+        if (!auth) {
+            // Demo mode: Simulate login
+            const mockUser = {
+                uid: "demo_user_" + Date.now(),
+                displayName: "Pengguna Demo",
+                email: "demo@cruizemate.com",
+                photoURL: "https://ui-avatars.com/api/?background=00B14F&color=fff&name=Demo"
+            };
+            currentUser = mockUser;
+            currentUserEmail = mockUser.email;
+            userPoints = getUserPoints(mockUser.uid);
+            updateUIForLoggedInUser(mockUser);
+            showNotification(`Selamat datang, ${mockUser.displayName}!`, 'success');
+            return;
+        }
+        
+        try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            const result = await auth.signInWithPopup(provider);
+            currentUser = result.user;
+            currentUserEmail = currentUser.email;
+            userPoints = getUserPoints(currentUser.uid);
+            updateUIForLoggedInUser(currentUser);
+            showNotification(`Login berhasil! Selamat datang, ${currentUser.displayName}`, 'success');
+        } catch(error) {
+            console.error(error);
+            showNotification('Gagal login dengan Google: ' + error.message, 'error');
+        }
+    }
+    
+    function handleLogout() {
+        if (auth) {
+            auth.signOut();
+        }
+        currentUser = null;
+        currentUserEmail = null;
+        userPoints = 0;
+        updateUIForLoggedOutUser();
+        showNotification('Anda telah logout', 'info');
+    }
+    
+    function updateUIForLoggedInUser(user) {
+        const container = document.getElementById('userProfileContainer');
+        container.innerHTML = `
+            <div class="user-info">
+                <img src="${user.photoURL || 'https://ui-avatars.com/api/?background=00B14F&color=fff&name=' + (user.displayName || 'User')}" class="user-avatar">
+                <span>${user.displayName || user.email}</span>
+                <span class="points-badge">🎁 ${userPoints} Poin (Rp ${userPoints * POINTS_VALUE})</span>
+                <button class="logout-btn" onclick="handleLogout()"><i class="fa-solid fa-sign-out-alt"></i> Keluar</button>
+            </div>
+        `;
+        // Update nama field if empty
+        const namaField = document.getElementById('nama');
+        if (namaField && !namaField.value) {
+            namaField.value = user.displayName || '';
+        }
+    }
+    
+    function updateUIForLoggedOutUser() {
+        const container = document.getElementById('userProfileContainer');
+        container.innerHTML = `<button class="google-login-btn" onclick="handleGoogleLogin()"><i class="fa-brands fa-google"></i> Login dengan Google</button>`;
+    }
+    
+    // Check auth state
+    if (auth) {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                currentUserEmail = user.email;
+                userPoints = getUserPoints(user.uid);
+                updateUIForLoggedInUser(user);
+            } else {
+                currentUser = null;
+                currentUserEmail = null;
+                userPoints = 0;
+                updateUIForLoggedOutUser();
+            }
+        });
+    } else {
+        // Demo mode: show login button
+        updateUIForLoggedOutUser();
+    }
+    
     // ================ PWA INSTALLATION ================
     let deferredPrompt = null;
     const installBtn = document.getElementById('installPwaBtn');
@@ -1821,10 +2019,20 @@
             totalAmount: currentHargaAkurat,
             rating: currentRating,
             review: document.getElementById('reviewText').value,
-            images: uploadedImages.slice() // Save images
+            images: uploadedImages.slice(),
+            userId: currentUser ? currentUser.uid : null,
+            userEmail: currentUser ? currentUser.email : null
         };
         bookingHistory.unshift(newOrder);
         localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
+        
+        // Add points for user if logged in
+        if (currentUser) {
+            addPointsToUser(currentUser.uid, 1);
+            userPoints = getUserPoints(currentUser.uid);
+            updatePointsDisplay();
+        }
+        
         loadHistory();
         if (isAdmin) loadDashboardData();
         showNotification('Pesanan berhasil disimpan ke riwayat!', 'success');
@@ -1834,12 +2042,18 @@
         const container = document.getElementById('historyList');
         if (!container) return;
         
-        if (bookingHistory.length === 0) {
+        // Filter history for current user only (if logged in)
+        let displayHistory = bookingHistory;
+        if (currentUser) {
+            displayHistory = bookingHistory.filter(order => order.userId === currentUser.uid);
+        }
+        
+        if (displayHistory.length === 0) {
             container.innerHTML = '<p style="text-align: center; color: #a3b1cc;">Belum ada riwayat pemesanan.</p>';
             return;
         }
         
-        container.innerHTML = bookingHistory.map(order => `
+        container.innerHTML = displayHistory.map(order => `
             <div class="history-item" onclick="repeatOrder(${order.id})">
                 <div style="display: flex; justify-content: space-between;">
                     <strong>${order.layanan || '-'}</strong>
@@ -1887,7 +2101,11 @@
     
     function clearHistory() {
         if (confirm('Hapus semua riwayat?')) {
-            bookingHistory = [];
+            if (currentUser) {
+                bookingHistory = bookingHistory.filter(order => order.userId !== currentUser.uid);
+            } else {
+                bookingHistory = [];
+            }
             localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
             loadHistory();
             if (isAdmin) loadDashboardData();
@@ -1999,7 +2217,7 @@
         <style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}th{background:#00B14F;color:white}</style>
         </head><body><h1>CRUIZEMATE - Laporan Bulanan</h1>
         <h3>Bulan: ${currentFilterMonth}/${currentFilterYear}</h3>
-        </table><thead><tr><th>Tanggal</th><th>Pelanggan</th><th>Layanan</th><th>Jarak</th><th>Nominal</th><th>Rating</th></tr></thead><tbody>`;
+        <table><thead><tr><th>Tanggal</th><th>Pelanggan</th><th>Layanan</th><th>Jarak</th><th>Nominal</th><th>Rating</th></tr></thead><tbody>`;
         filtered.forEach(order => {
             html += `<tr><td>${new Date(order.timestamp).toLocaleDateString('id-ID')}</td>
             <td>${order.nama || '-'}</td>
@@ -2106,6 +2324,16 @@
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
+        // Check if user is logged in
+        if (!currentUser) {
+            if (confirm('Anda belum login. Login dengan Google untuk mendapatkan Poin (1 Poin = Rp 500) setiap pesanan. Lanjutkan tanpa login?')) {
+                // Proceed without login
+            } else {
+                handleGoogleLogin();
+                return;
+            }
+        }
+        
         const nama = document.getElementById('nama').value;
         const layanan = document.getElementById('jenisLayanan').value;
         const jemput = document.getElementById('jemput').value;
@@ -2133,8 +2361,9 @@
         
         let ratingText = currentRating > 0 ? `⭐ Rating: ${currentRating}/5%0A📝 Review: ${document.getElementById('reviewText').value}%0A` : "";
         let infoTarif = `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi: ${formatRupiah(currentHargaAkurat)}`;
+        let pointsInfo = currentUser ? `\n🎁 Poin yang akan didapat: 1 Poin (Rp 500)` : `\n🔑 Login dengan Google untuk dapat Poin!`;
         
-        const textWA = `Halo Admin, saya ingin order:%0A%0A👤 Nama: ${nama}%0A🛠️ Layanan: ${layanan}%0A${detailGoSend}${ratingText}🛫 Jemput: ${jemput}%0A🛬 Tujuan: ${tujuan}%0A📅 Tanggal: ${tanggal}%0A⏰ Jam: ${jam}${infoTarif}`;
+        const textWA = `Halo Admin, saya ingin order:%0A%0A👤 Nama: ${nama}%0A🛠️ Layanan: ${layanan}%0A${detailGoSend}${ratingText}🛫 Jemput: ${jemput}%0A🛬 Tujuan: ${tujuan}%0A📅 Tanggal: ${tanggal}%0A⏰ Jam: ${jam}${infoTarif}${pointsInfo}`;
         
         saveToHistory({ nama, layanan, jemput, tujuan, tanggal, jam });
         
@@ -2211,6 +2440,8 @@
     window.exportToCSV = exportToCSV;
     window.exportToPDF = exportToPDF;
     window.removeImage = removeImage;
+    window.handleGoogleLogin = handleGoogleLogin;
+    window.handleLogout = handleLogout;
 </script>
 </body>
 </html>
