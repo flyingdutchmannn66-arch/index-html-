@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUIZEMATE - Jasa Booking Transportasi & Logistik</title>
+    <title>CRUIZEMATE - Jasa Booking Transportasi & Logistik Premium</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -18,6 +18,66 @@
 
         html {
             scroll-behavior: smooth;
+        }
+
+        /* LIGHT MODE THEME */
+        body {
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            background-color: #f5f7fa;
+            background-image: none;
+            color: #1a1a2e;
+        }
+
+        body.light-mode .card,
+        body.light-mode .step,
+        body.light-mode .modal-content,
+        body.light-mode .bank-info-container,
+        body.light-mode .gosend-extra-box,
+        body.light-mode .booking-section > div > div,
+        body.light-mode .calculator-box {
+            background: #ffffff;
+            border-color: #e0e0e0;
+            color: #1a1a2e;
+        }
+
+        body.light-mode .menu {
+            background: #ffffff;
+        }
+
+        body.light-mode .menu a {
+            color: #1a1a2e;
+        }
+
+        body.light-mode .menu a:hover {
+            color: #00B14F;
+        }
+
+        body.light-mode .hero p,
+        body.light-mode .card p,
+        body.light-mode .bank-details,
+        body.light-mode .tracker-label,
+        body.light-mode .step p {
+            color: #4a5568;
+        }
+
+        body.light-mode .form-group input,
+        body.light-mode .form-group select {
+            background: #f7f9fc;
+            border-color: #d0d5dd;
+            color: #1a1a2e;
+        }
+
+        body.light-mode .form-group label {
+            color: #4a5568;
+        }
+
+        body.light-mode .live-tracker-box,
+        body.light-mode #calculator-box {
+            background: #f7f9fc;
+            border-color: #d0d5dd;
         }
 
         body{
@@ -38,6 +98,51 @@
             margin:auto;
         }
 
+        /* THEME TOGGLE BUTTON */
+        .theme-toggle {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            margin-left: 10px;
+        }
+
+        body.light-mode .theme-toggle {
+            background: #e0e0e0;
+            color: #1a1a2e;
+        }
+
+        .theme-toggle:hover {
+            background: #00B14F;
+            transform: translateY(-1px);
+        }
+
+        /* LANGUAGE TOGGLE */
+        .lang-toggle {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        body.light-mode .lang-toggle {
+            background: #e0e0e0;
+            color: #1a1a2e;
+        }
+
+        .lang-toggle:hover {
+            background: #FFD700;
+            color: #1a1a2e;
+        }
+
         /* NAVBAR */
         nav{
             display:flex;
@@ -46,6 +151,12 @@
             padding:20px 0;
             position: relative;
             z-index: 100;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
         .logo{
@@ -112,6 +223,10 @@
             transition: 0.3s;
         }
 
+        body.light-mode .menu-toggle span {
+            background: #1a1a2e;
+        }
+
         /* HERO SECTION */
         .hero{
             min-height:80vh;
@@ -136,6 +251,11 @@
             background: rgba(255, 215, 0, 0.05);
             font-size: 12px;
             font-weight: 600;
+        }
+
+        body.light-mode .badge {
+            border-color: #d0d5dd;
+            background: rgba(0, 177, 79, 0.05);
         }
 
         .hero h1{
@@ -172,6 +292,12 @@
             font-size: 13px;
         }
 
+        body.light-mode .feature {
+            border-color: #d0d5dd;
+            background: #f7f9fc;
+            color: #4a5568;
+        }
+
         .buttons{
             display:flex;
             gap:15px;
@@ -185,13 +311,16 @@
             font-size: 15px;
             transition: 0.3s;
             text-align: center;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary{
             background:#00B14F;
             color:white;
             border: none;
-            cursor: pointer;
         }
 
         .btn-primary:hover{
@@ -202,6 +331,7 @@
         .btn-secondary{
             border:1px solid #00B14F;
             color:white;
+            background: transparent;
         }
 
         .btn-secondary:hover{
@@ -221,13 +351,23 @@
         }
 
         /* SECTIONS GENERAL */
-        .services, .booking-section, .payments, .steps, .testimonials{
+        .services, .booking-section, .payments, .steps, .testimonials, .history-section, .promo-section{
             padding:70px 0;
         }
 
         .services { background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); }
         .booking-section { background: rgba(15, 23, 42, 0.2); }
         .payments { background: rgba(0, 177, 79, 0.02); }
+        .history-section { background: rgba(15, 23, 42, 0.3); }
+        .promo-section { background: rgba(255, 215, 0, 0.02); }
+
+        body.light-mode .services,
+        body.light-mode .booking-section,
+        body.light-mode .payments,
+        body.light-mode .history-section,
+        body.light-mode .promo-section {
+            background: rgba(0, 0, 0, 0.02);
+        }
 
         .section-title{
             text-align:center;
@@ -279,6 +419,41 @@
             line-height: 1.6;
         }
 
+        /* RATING STARS */
+        .rating {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .rating i {
+            cursor: pointer;
+            color: #ffc107;
+            font-size: 20px;
+            transition: 0.2s;
+        }
+
+        .rating i:hover {
+            transform: scale(1.1);
+        }
+
+        .review-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            margin-top: 10px;
+            resize: vertical;
+        }
+
+        body.light-mode .review-input {
+            background: #f7f9fc;
+            border-color: #d0d5dd;
+            color: #1a1a2e;
+        }
+
         /* BANK INFO */
         .bank-info-container {
             display: flex;
@@ -311,6 +486,9 @@
         .bank-account { font-family: monospace; font-size: 15px; color: #00B14F; }
         .bank-holder { color: #a3b1cc; font-size: 12px; }
 
+        body.light-mode .bank-name { color: #1a1a2e; }
+        body.light-mode .bank-holder { color: #4a5568; }
+
         .card-btn {
             display: block;
             text-align: center;
@@ -331,6 +509,10 @@
             color: white;
         }
 
+        body.light-mode .card-btn {
+            color: #00B14F;
+        }
+
         /* FORM FIELD LAYOUT */
         .form-group {
             display: flex;
@@ -343,7 +525,7 @@
             color: #a3b1cc;
         }
 
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             padding: 12px 15px;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -360,7 +542,7 @@
             color: white;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: #00B14F;
             background: rgba(255,255,255,0.08);
         }
@@ -451,12 +633,137 @@
             box-shadow: 0 0 15px rgba(0, 177, 79, 0.3);
         }
 
+        /* STATUS TRACKING */
+        .status-tracking {
+            background: linear-gradient(135deg, #0f172a 0%, #1a2335 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        body.light-mode .status-tracking {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+        }
+
+        .status-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .status-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: rgba(0, 177, 79, 0.3);
+            z-index: 1;
+        }
+
+        .status-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .status-icon {
+            width: 50px;
+            height: 50px;
+            background: #1a2335;
+            border: 2px solid #00B14F;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            transition: 0.3s;
+        }
+
+        .status-step.active .status-icon {
+            background: #00B14F;
+            color: white;
+        }
+
+        .status-step.completed .status-icon {
+            background: #00B14F;
+            border-color: #00B14F;
+        }
+
+        /* FAVORITE ADDRESSES */
+        .favorite-addresses {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .fav-address-btn {
+            background: rgba(0, 177, 79, 0.1);
+            border: 1px solid #00B14F;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .fav-address-btn:hover {
+            background: #00B14F;
+            color: white;
+        }
+
+        /* PROMO CODE */
+        .promo-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .promo-input-group input {
+            flex: 1;
+        }
+
+        /* HISTORY TABLE */
+        .history-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .history-item:hover {
+            background: rgba(0, 177, 79, 0.1);
+            transform: translateX(5px);
+        }
+
+        body.light-mode .history-item {
+            background: #f7f9fc;
+            border: 1px solid #e0e0e0;
+        }
+
         /* FOOTER */
         footer{
             text-align:center;
             padding:50px 20px;
             border-top:1px solid rgba(255,255,255,.1);
             background: #070a12;
+        }
+
+        body.light-mode footer {
+            background: #e8ecef;
+            border-top-color: #d0d5dd;
         }
 
         footer h2{
@@ -469,6 +776,10 @@
         footer p {
             color: #a3b1cc;
             font-size: 14px;
+        }
+
+        body.light-mode footer p {
+            color: #4a5568;
         }
 
         /* MODAL */
@@ -544,6 +855,90 @@
 
         .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .btn-whatsapp-modal { background: #25D366; }
+
+        /* NOTIFICATION */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #00B14F;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* EMERGENCY BUTTON */
+        .emergency-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #dc3545;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(220, 53, 69, 0.4);
+            transition: 0.3s;
+            border: none;
+        }
+
+        .emergency-btn:hover {
+            transform: scale(1.1);
+            background: #c82333;
+        }
+
+        /* SHARE TRIP MODAL */
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+        }
+
+        .share-modal.active {
+            display: flex;
+        }
+
+        .share-content {
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .share-link {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            word-break: break-all;
+        }
 
         .pac-container {
             background-color: #0f172a !important;
@@ -622,6 +1017,21 @@
             .menu .mobile-wa-link {
                 display: block !important;
             }
+
+            .status-steps {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .status-steps::before {
+                display: none;
+            }
+            .nav-controls {
+                gap: 5px;
+            }
+            .lang-toggle, .theme-toggle {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
         }
 
         @media(max-width: 576px) {
@@ -641,6 +1051,12 @@
             .gosend-grid {
                 grid-template-columns: 1fr !important;
                 gap: 15px;
+            }
+            .emergency-btn {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
             }
         }
     </style>
@@ -663,18 +1079,24 @@
             <a href="#form-pemesanan">Pesan</a>
             <a href="#fitur-pembayaran">Fitur Pembayaran</a>
             <a href="#cara-pesan">Cara Pesan</a>
+            <a href="#history">Riwayat</a>
+            <a href="#promo">Promo</a>
             <a onclick="openContactModal()">Kontak</a>
             <a href="https://wa.me/6281260636666" class="mobile-wa-link" style="display:none; background:#00B14F; padding: 10px 25px; border-radius: 50px; text-align: center; font-weight: 600; width: 100%;">WhatsApp</a>
         </div>
         
-        <a href="https://wa.me/6281260636666" class="whatsapp-btn">WhatsApp</a>
+        <div class="nav-controls">
+            <button class="lang-toggle" onclick="toggleLanguage()" id="langToggleBtn">🇮🇩 ID</button>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓 Mode</button>
+            <a href="https://wa.me/6281260636666" class="whatsapp-btn">WhatsApp</a>
+        </div>
     </nav>
 
     <section class="hero">
         <div class="hero-left">
-            <div class="badge">🚖 JASA BOOKING ONLINE TERPERCAYA</div>
-            <h1><span>GRAB BOOKING ALIONG</span><br>Melayani Pemesanan Online</h1>
-            <p>Solusi cepat dan aman untuk berbagai kebutuhan perjalanan, jastip, belanja, dan logistik Anda. Melayani pemesanan armada roda empat, pengiriman paket kilat, hingga penitipan barang belanjaan secara praktis.</p>
+            <div class="badge" id="heroBadge">🚖 JASA BOOKING ONLINE TERPERCAYA</div>
+            <h1 id="heroTitle"><span>JASA ALIONG</span><br>Melayani Pemesanan Online</h1>
+            <p id="heroDesc">Solusi cepat dan aman untuk berbagai kebutuhan perjalanan, jastip, belanja, dan logistik Anda. Melayani pemesanan armada roda empat, pengiriman paket kilat, hingga penitipan barang belanjaan secara praktis.</p>
             <div class="features">
                 <div class="feature">⚡ Respon Cepat</div>
                 <div class="feature">🚗 Driver Terpercaya</div>
@@ -682,8 +1104,8 @@
                 <div class="feature">💰 Harga Transparan</div>
             </div>
             <div class="buttons">
-                <a href="#form-pemesanan" class="btn-primary">Pesan via Formulir</a>
-                <a href="#layanan" class="btn-secondary">Lihat Layanan</a>
+                <a href="#form-pemesanan" class="btn-primary" id="btnBookNow">📝 Pesan via Formulir</a>
+                <a href="#layanan" class="btn-secondary" id="btnViewServices">👁️ Lihat Layanan</a>
             </div>
         </div>
         <div class="hero-right">
@@ -692,42 +1114,72 @@
     </section>
 </div>
 
+<!-- STATUS TRACKING SECTION -->
+<section id="status-tracking" class="services" style="padding-top: 0;">
+    <div class="container">
+        <h2 class="section-title"><span id="trackingTitle">Live</span> <span id="trackingTitleHighlight">Tracking</span></h2>
+        <div class="status-tracking">
+            <div id="orderIdDisplay" style="text-align: center; margin-bottom: 20px; font-size: 14px; color: #00B14F;"></div>
+            <div class="status-steps" id="statusSteps">
+                <div class="status-step" data-step="0">
+                    <div class="status-icon"><i class="fa-regular fa-clock"></i></div>
+                    <div class="status-label" id="step1Label">Menunggu Konfirmasi</div>
+                </div>
+                <div class="status-step" data-step="1">
+                    <div class="status-icon"><i class="fa-solid fa-car"></i></div>
+                    <div class="status-label" id="step2Label">Driver Menuju Lokasi</div>
+                </div>
+                <div class="status-step" data-step="2">
+                    <div class="status-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="status-label" id="step3Label">Menjemput Penumpang</div>
+                </div>
+                <div class="status-step" data-step="3">
+                    <div class="status-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+                    <div class="status-label" id="step4Label">Perjalanan Selesai</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-secondary" onclick="shareTrip()" id="shareTripBtn">🔗 Bagikan Perjalanan</button>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- MENU LAYANAN -->
 <section id="layanan" class="services">
     <div class="container">
-        <h2 class="section-title">Layanan <span>Kami</span></h2>
+        <h2 class="section-title"><span id="servicesTitle">Layanan</span> <span id="servicesTitleHighlight">Kami</span></h2>
         <div class="cards">
             <div class="card">
                 <div>
                     <h3>🚗 GrabCar</h3>
-                    <p>Perjalanan nyaman untuk individu dan keluarga dengan armada mobil terbaik.</p>
+                    <p id="service1Desc">Perjalanan nyaman untuk individu dan keluarga dengan armada mobil terbaik.</p>
                 </div>
-                <a href="#form-pemesanan" onclick="setJenisLayanan('GrabCar')" class="card-btn">Pesan Sekarang</a>
+                <a href="#form-pemesanan" onclick="setJenisLayanan('GrabCar')" class="card-btn" id="service1Btn">Pesan Sekarang</a>
             </div>
             
             <div class="card">
                 <div>
                     <h3>📦 GoSend</h3>
-                    <p>Pengiriman paket dan dokumen kilat, aman, dan tepercaya langsung sampai ke alamat tujuan dalam hitungan jam.</p>
+                    <p id="service2Desc">Pengiriman paket dan dokumen kilat, aman, dan tepercaya langsung sampai ke alamat tujuan dalam hitungan jam.</p>
                 </div>
-                <a href="#form-pemesanan" onclick="setJenisLayanan('GoSend')" class="card-btn">Kirim Barang</a>
+                <a href="#form-pemesanan" onclick="setJenisLayanan('GoSend')" class="card-btn" id="service2Btn">Kirim Barang</a>
             </div>
             
             <div class="card">
                 <div>
                     <h3>🍔 GoFood</h3>
-                    <p>Jasa titip beli makanan dan minuman favorit Anda dari resto andalan. Praktis, cepat, dan siap antar.</p>
+                    <p id="service3Desc">Jasa titip beli makanan dan minuman favorit Anda dari resto andalan. Praktis, cepat, dan siap antar.</p>
                 </div>
-                <a href="#form-pemesanan" onclick="setJenisLayanan('GoFood')" class="card-btn">Titip Makan</a>
+                <a href="#form-pemesanan" onclick="setJenisLayanan('GoFood')" class="card-btn" id="service3Btn">Titip Makan</a>
             </div>
 
-            <!-- LAYANAN JASTIP BARU -->
             <div class="card">
                 <div>
                     <h3>🛍️ Jastip</h3>
-                    <p>Jasa titip beli barang, belanjaan bulanan, atau oleh-oleh dari toko khusus pilihan Anda tanpa ribet keluar rumah, UNTUK JASTIP DI KENAKAN BIAYA PER 1 ITEM 10,000.</p>
+                    <p id="service4Desc">Jasa titip beli barang, belanjaan bulanan, atau oleh-oleh dari toko khusus pilihan Anda tanpa ribet keluar rumah, UNTUK JASTIP DI KENAKAN BIAYA PER 1 ITEM 10,000.</p>
                 </div>
-                <a href="#form-pemesanan" onclick="setJenisLayanan('Jastip')" class="card-btn">Titip Belanja</a>
+                <a href="#form-pemesanan" onclick="setJenisLayanan('Jastip')" class="card-btn" id="service4Btn">Titip Belanja</a>
             </div>
         </div>
     </div>
@@ -736,18 +1188,27 @@
 <!-- FORMULIR PEMESANAN -->
 <section id="form-pemesanan" class="booking-section">
     <div class="container">
-        <h2 class="section-title">Formulir <span>Pemesanan</span></h2>
+        <h2 class="section-title"><span id="formTitle">Formulir</span> <span id="formTitleHighlight">Pemesanan</span></h2>
         
         <div style="max-width: 600px; margin: 0 auto; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid rgba(0, 177, 79, 0.3); display: flex; flex-direction: column; gap: 25px;">
+            
+            <!-- FAVORITE ADDRESSES -->
+            <div>
+                <h4 style="margin-bottom: 10px; font-size: 14px;"><i class="fa-regular fa-heart"></i> <span id="favAddressTitle">Alamat Favorit</span></h4>
+                <div class="favorite-addresses" id="favoriteAddresses">
+                    <!-- Dynamic favorite addresses -->
+                </div>
+            </div>
+
             <form id="bookingForm" style="display: flex; flex-direction: column; gap: 20px;">
                 
                 <div class="form-group">
-                    <label>Nama Pelanggan / Penumpang</label>
+                    <label id="labelNama">Nama Pelanggan / Penumpang</label>
                     <input type="text" id="nama" required placeholder="Masukkan nama lengkap">
                 </div>
 
                 <div class="form-group">
-                    <label>Pilih Jenis Layanan</label>
+                    <label id="labelJenisLayanan">Pilih Jenis Layanan</label>
                     <select id="jenisLayanan" required>
                         <option value="" disabled selected>-- Pilih Layanan --</option>
                         <option value="GrabCar">🚗 GrabCar (Mobil Standar)</option>
@@ -757,7 +1218,6 @@
                     </select>
                 </div>
 
-                <!-- KOLOM FORM INPUT DATA BARANG GOSEND & JASTIP -->
                 <div id="gosendFields" class="gosend-extra-box">
                     <div class="form-group">
                         <label id="labelNamaBarang" style="color:#00B14F; font-weight:600;"><i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?</label>
@@ -787,11 +1247,11 @@
                     <div id="liveTracker" class="live-tracker-box">
                         <div class="tracker-flex">
                             <div class="tracker-item">
-                                <div class="tracker-label">📍 Jarak Rute</div>
+                                <div class="tracker-label" id="trackerJarakLabel">📍 Jarak Rute</div>
                                 <div id="liveJarakText" class="tracker-value">0 KM</div>
                             </div>
                             <div class="tracker-item">
-                                <div class="tracker-label">💰 Estimasi Tarif</div>
+                                <div class="tracker-label" id="trackerTarifLabel">💰 Estimasi Tarif</div>
                                 <div id="liveTarifText" class="tracker-value price">Rp 0</div>
                             </div>
                         </div>
@@ -800,40 +1260,62 @@
 
                 <div class="dateTime-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="form-group">
-                        <label>Tanggal Pelaksanaan</label>
+                        <label id="labelTanggal">Tanggal Pelaksanaan</label>
                         <input type="date" id="tanggalJemput" required style="color-scheme: dark;">
                     </div>
                     <div class="form-group">
-                        <label>Jam Pelaksanaan</label>
+                        <label id="labelJam">Jam Pelaksanaan</label>
                         <input type="time" id="jamJemput" required style="color-scheme: dark;">
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary" style="padding: 14px; font-weight: 600; width:100%;">Kirim Pesanan via WhatsApp</button>
+                <!-- RATING & REVIEW SECTION -->
+                <div class="form-group">
+                    <label id="labelRating">Rating untuk Driver Sebelumnya (Opsional)</label>
+                    <div class="rating" id="ratingStars">
+                        <i class="fa-regular fa-star" data-rating="1"></i>
+                        <i class="fa-regular fa-star" data-rating="2"></i>
+                        <i class="fa-regular fa-star" data-rating="3"></i>
+                        <i class="fa-regular fa-star" data-rating="4"></i>
+                        <i class="fa-regular fa-star" data-rating="5"></i>
+                    </div>
+                    <textarea id="reviewText" class="review-input" rows="3" placeholder="Tulis review Anda..."></textarea>
+                </div>
+
+                <!-- PROMO CODE -->
+                <div class="form-group">
+                    <label id="labelPromoCode">Kode Promo (Jika Ada)</label>
+                    <div class="promo-input-group">
+                        <input type="text" id="promoCode" placeholder="Masukkan kode promo">
+                        <button type="button" class="btn-secondary" onclick="applyPromo()" style="padding: 12px 20px;">Pakai</button>
+                    </div>
+                    <div id="promoMessage" style="font-size: 12px; margin-top: 5px;"></div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn" style="padding: 14px; font-weight: 600; width:100%;">📤 Kirim Pesanan via WhatsApp</button>
             </form>
 
             <hr style="border: 0; border-top: 1px dashed rgba(255, 255, 255, 0.15);">
 
-            <!-- KALKULATOR TARIF MANUAL -->
             <div id="calculator-box" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;">
                 <h4 style="margin-bottom: 15px; font-size: 15px; color: #FFD700; display: flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-calculator"></i> Kalkulator Tarif (Manual)
+                    <i class="fa-solid fa-calculator"></i> <span id="calculatorTitle">Kalkulator Tarif (Manual)</span>
                 </h4>
                 <div class="form-group" style="margin-bottom: 15px;">
-                    <label style="font-size: 12px;">Perkiraan Jarak Perjalanan (Kilometer)</label>
+                    <label id="labelJarakManual" style="font-size: 12px;">Perkiraan Jarak Perjalanan (Kilometer)</label>
                     <div style="position: relative; display: flex; align-items: center;">
                         <input type="number" id="inputJarak" min="1" step="0.1" placeholder="Contoh: 12" style="width: 100%; padding-right: 50px;">
                         <span style="position: absolute; right: 15px; color: #a3b1cc; font-size: 14px; font-weight: 600;">KM</span>
                     </div>
                 </div>
-                <button type="button" onclick="hitungTarifManual()" class="btn-secondary" style="width: 100%; padding: 12px; font-size: 14px; font-weight: 600;">
+                <button type="button" onclick="hitungTarifManual()" class="btn-secondary" id="calcBtn" style="width: 100%; padding: 12px; font-size: 14px; font-weight: 600;">
                     <i class="fa-solid fa-tags"></i> Hitung Tarif Argo
                 </button>
 
                 <div id="hasilTarifBox" style="margin-top: 20px; padding: 15px; background: rgba(0, 177, 79, 0.1); border: 1px solid #00B14F; border-radius: 10px; text-align: center; display: none;">
-                    <p style="font-size: 13px; color: #c9d2e3; margin-bottom: 5px;">Estimasi Total Tarif Perjalanan:</p>
+                    <p id="estimasiText" style="font-size: 13px; color: #c9d2e3; margin-bottom: 5px;">Estimasi Total Tarif Perjalanan:</p>
                     <h3 id="textTotalTarif" style="font-size: 24px; color: #00B14F; font-weight: 800;">Rp 0</h3>
-                    <p style="font-size: 11px; color: #a3b1cc; margin-top: 5px;">*Tarif dasar Rp 3.300 / km</p>
+                    <p id="tarifNote" style="font-size: 11px; color: #a3b1cc; margin-top: 5px;">*Tarif dasar Rp 3.300 / km</p>
                 </div>
             </div>
         </div>
@@ -842,22 +1324,26 @@
 
 <section id="fitur-pembayaran" class="payments">
     <div class="container">
-        <h2 class="section-title">Fitur <span>Pembayaran</span></h2>
-        <div class="cards">
+        <h2 class="section-title"><span id="paymentTitle">Fitur</span> <span id="paymentTitleHighlight">Pembayaran</span></h2>
+        <div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            
             <div class="card">
                 <div>
-                    <h3><i class="fa-solid fa-money-bill-wave"></i> Tunai (Cash)</h3>
-                    <p>Bayar langsung dengan uang tunai kepada driver/kurir setelah Anda sampai di lokasi tujuan atau barang diterima.</p>
+                    <h3><i class="fa-solid fa-money-bill-wave"></i> <span id="cashTitle">Tunai (Cash)</span></h3>
+                    <p id="cashDesc">Bayar langsung dengan uang tunai kepada driver/kurir setelah Anda sampai di lokasi tujuan atau barang diterima.</p>
                 </div>
-                <a href="https://wa.me/6281260636666?text=Halo%20Admin" class="card-btn">Info Lebih Lanjut</a>
+                <a href="https://wa.me/6281260636666?text=Halo%20Admin" class="card-btn" id="cashBtn">Info Lebih Lanjut</a>
             </div>
+
             <div class="card">
                 <div>
-                    <h3><i class="fa-solid fa-credit-card"></i> Transfer Bank </h3>
-                    <p>Mendukung pembayaran non-tunai yang praktis via Transfer Bank .</p>
-                    <div class="bank-info-container">
+                    <h3><i class="fa-solid fa-university"></i> <span id="bankTitle">Transfer Bank</span></h3>
+                    <p id="bankDesc">Mendukung pembayaran non-tunai yang praktis via Transfer Bank.</p>
+                    <div class="bank-info-container" style="border-left: 4px solid #0056a3; background: rgba(0, 86, 163, 0.05);">
                         <div class="bank-item">
-                            <i class="fa-solid fa-university"></i>
+                            <div class="bca-logo-badge" style="background: #fff; color: #0056a3; padding: 4px 8px; border-radius: 6px; font-weight: 900; font-style: italic; font-size: 14px; letter-spacing: -1px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                                bca
+                            </div>
                             <div class="bank-details">
                                 <div class="bank-name">BANK BCA</div>
                                 <div class="bank-account">699 517 4255</div>
@@ -866,28 +1352,92 @@
                         </div>
                     </div>
                 </div>
-                <a href="https://wa.me/6281260636666" class="card-btn">Konfirmasi Transfer</a>
+                <a href="https://wa.me/6281260636666?text=Halo%20Admin,%20saya%20ingin%20konfirmasi%20pembayaran%20via%20BCA" class="card-btn" id="confirmBankBtn">Konfirmasi Transfer</a>
             </div>
+
+            <div class="card">
+                <div>
+                    <h3><i class="fa-solid fa-wallet"></i> <span id="ewalletTitle">E-Wallet</span></h3>
+                    <p id="ewalletDesc">Konfirmasi pembayaran instan dan lebih cepat menggunakan saldo GoPay Anda.</p>
+                    <div class="bank-info-container" style="border-left: 4px solid #00AED6; background: rgba(0, 174, 214, 0.05);">
+                        <div class="bank-item">
+                            <div class="gopay-logo-badge" style="background: #00AED6; color: #fff; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                                <span style="background: #fff; color: #00AED6; width: 12px; height: 12px; border-radius: 50%; display: inline-block; transform: scale(0.8);"></span>gopay
+                            </div>
+                            <div class="bank-details">
+                                <div class="bank-name">GOPAY
+                                <div class="bank-account" style="color: #00AED6;">0812-6063-6666</div>
+                                <div class="bank-holder">a/n NAUFAL RAMADHAN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://wa.me/6281260636666?text=Halo%20Admin,%20saya%20ingin%20konfirmasi%20pembayaran%20via%20GoPay" class="card-btn" id="confirmEwalletBtn">Konfirmasi Transfer</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- PROMO SECTION -->
+<section id="promo" class="promo-section">
+    <div class="container">
+        <h2 class="section-title"><span id="promoTitle">Promo &</span> <span id="promoTitleHighlight">Voucher</span></h2>
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h3>🎉 WELCOME10</h3>
+                    <p id="promo1Desc">Diskon 10% untuk pemesanan pertama Anda! Maksimal potongan Rp 20.000.</p>
+                </div>
+                <button class="card-btn" onclick="copyPromoCode('WELCOME10')" id="copyPromo1Btn">Copy Kode</button>
+            </div>
+            <div class="card">
+                <div>
+                    <h3>🎊 GRAB20</h3>
+                    <p id="promo2Desc">Diskon 20% untuk pemesanan GrabCar minimal 10 KM. Berlaku hari Senin-Jumat.</p>
+                </div>
+                <button class="card-btn" onclick="copyPromoCode('GRAB20')" id="copyPromo2Btn">Copy Kode</button>
+            </div>
+            <div class="card">
+                <div>
+                    <h3>✨ SEND15</h3>
+                    <p id="promo3Desc">Diskon 15% untuk layanan GoSend dengan minimal pembelian Rp 50.000.</p>
+                </div>
+                <button class="card-btn" onclick="copyPromoCode('SEND15')" id="copyPromo3Btn">Copy Kode</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HISTORY SECTION -->
+<section id="history" class="history-section">
+    <div class="container">
+        <h2 class="section-title"><span id="historyTitle">Riwayat</span> <span id="historyTitleHighlight">Pemesanan</span></h2>
+        <div class="history-list" id="historyList">
+            <p style="text-align: center; color: #a3b1cc;" id="emptyHistoryText">Belum ada riwayat pemesanan. Silakan lakukan pemesanan pertama Anda!</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn-secondary" onclick="clearHistory()" id="clearHistoryBtn">🗑️ Hapus Riwayat</button>
         </div>
     </div>
 </section>
 
 <section id="cara-pesan" class="steps">
     <div class="container">
-        <h2 class="section-title">Cara <span>Pemesanan</span></h2>
+        <h2 class="section-title"><span id="stepsTitle">Cara</span> <span id="stepsTitleHighlight">Pemesanan</span></h2>
         <div class="step-grid">
-            <div class="step"><div class="step-number">1</div>Isi Form / Hubungi WA</div>
-            <div class="step"><div class="step-number">2</div>Kirim Info Alamat</div>
-            <div class="step"><div class="step-number">3</div>Pilih Jenis Layanan</div>
-            <div class="step"><div class="step-number">4</div>Konfirmasi Biaya</div>
-            <div class="step"><div class="step-number">5</div>Driver/Kurir Jalan</div>
+            <div class="step"><div class="step-number">1</div><span id="step1Text">Isi Form / Hubungi WA</span></div>
+            <div class="step"><div class="step-number">2</div><span id="step2Text">Kirim Info Alamat</span></div>
+            <div class="step"><div class="step-number">3</div><span id="step3Text">Pilih Jenis Layanan</span></div>
+            <div class="step"><div class="step-number">4</div><span id="step4Text">Konfirmasi Biaya</span></div>
+            <div class="step"><div class="step-number">5</div><span id="step5Text">Driver/Kurir Jalan</span></div>
         </div>
     </div>
 </section>
 
 <footer>
     <h2>GRABBOOKING</h2>
-    <p>Melayani pemesanan online transportasi & logistik 24 Jam.</p>
+    <p id="footerText1">Melayani pemesanan online transportasi & logistik 24 Jam.</p>
     <br>
     <p>WhatsApp: +62 812-6063-6666</p>
     <br>
@@ -897,176 +1447,716 @@
 <div class="contact-modal" id="contactModal">
     <div class="modal-content">
         <button class="close-modal" onclick="closeContactModal()"><i class="fa-solid fa-xmark"></i></button>
-        <h3>Hubungi Kami</h3>
-        <p style="color:#c9d2e3; font-size:14px; margin-bottom:20px;">Silakan pilih platform di bawah ini untuk tersambung dengan admin kami</p>
+        <h3 id="contactTitle">Hubungi Kami</h3>
+        <p id="contactDesc" style="color:#c9d2e3; font-size:14px; margin-bottom:20px;">Silakan pilih platform di bawah ini untuk tersambung dengan admin kami</p>
         <div class="social-links-grid">
             <a href="https://www.instagram.com/nopallrmdd/" target="_blank" class="social-btn btn-instagram"><i class="fa-brands fa-instagram"></i> Instagram</a>
             <a href="https://wa.me/6281260636666" target="_blank" class="social-btn btn-whatsapp-modal"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
-        </div>
+        </div> 
     </div>
 </div>
+
+<!-- SHARE TRIP MODAL -->
+<div class="share-modal" id="shareModal">
+    <div class="share-content">
+        <h3 id="shareTitle">Bagikan Perjalanan</h3>
+        <p id="shareDesc">Bagikan link ini untuk melacak perjalanan Anda:</p>
+        <div class="share-link" id="shareLink">https://cruizemate.com/track/ORDER123</div>
+        <button class="btn-primary" onclick="copyShareLink()" id="copyShareBtn" style="width: 100%;">📋 Copy Link</button>
+        <button class="btn-secondary" onclick="closeShareModal()" id="closeShareBtn" style="width: 100%; margin-top: 10px;">Tutup</button>
+    </div>
+</div>
+
+<!-- EMERGENCY BUTTON -->
+<button class="emergency-btn" onclick="emergencyCall()" id="emergencyBtn">
+    <i class="fa-solid fa-phone"></i>
+</button>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=GANTI_DENGAN_API_KEY_GOOGLE_ANDA&libraries=places&callback=initGoogleMapsServices" async defer></script>
 
 <script>
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navMenu = document.getElementById('navMenu');
-
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenuBtn.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    document.querySelectorAll('.menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenuBtn.classList.remove('active');
-            navMenu.classList.remove('active');
+    // ================ GLOBAL VARIABLES ================
+    let currentLanguage = 'id';
+    let currentTheme = 'dark';
+    let currentOrderStatus = 0;
+    let currentOrderId = null;
+    let appliedPromo = null;
+    let promoDiscount = 0;
+    let currentJarakAkurat = 0;
+    const TARIF_PER_KM = 3300;
+    let autocompleteJemput, autocompleteTujuan, directionsService;
+    
+    // Data storage
+    let bookingHistory = JSON.parse(localStorage.getItem('bookingHistory') || '[]');
+    let favoriteAddresses = JSON.parse(localStorage.getItem('favoriteAddresses') || '[]');
+    
+    // ================ TEXT TRANSLATIONS ================
+    const translations = {
+        id: {
+            heroBadge: "🚖 JASA BOOKING ONLINE TERPERCAYA",
+            heroTitle: "<span>JASA ALIONG</span><br>Melayani Pemesanan Online",
+            heroDesc: "Solusi cepat dan aman untuk berbagai kebutuhan perjalanan, jastip, belanja, dan logistik Anda.",
+            btnBookNow: "📝 Pesan via Formulir",
+            btnViewServices: "👁️ Lihat Layanan",
+            trackingTitle: "Live",
+            trackingTitleHighlight: "Tracking",
+            step1Label: "Menunggu Konfirmasi",
+            step2Label: "Driver Menuju Lokasi",
+            step3Label: "Menjemput Penumpang",
+            step4Label: "Perjalanan Selesai",
+            shareTripBtn: "🔗 Bagikan Perjalanan",
+            servicesTitle: "Layanan",
+            servicesTitleHighlight: "Kami",
+            service1Desc: "Perjalanan nyaman untuk individu dan keluarga dengan armada mobil terbaik.",
+            service1Btn: "Pesan Sekarang",
+            service2Desc: "Pengiriman paket dan dokumen kilat, aman, dan tepercaya langsung sampai ke alamat tujuan dalam hitungan jam.",
+            service2Btn: "Kirim Barang",
+            service3Desc: "Jasa titip beli makanan dan minuman favorit Anda dari resto andalan.",
+            service3Btn: "Titip Makan",
+            service4Desc: "Jasa titip beli barang, belanjaan bulanan, atau oleh-oleh dari toko khusus pilihan Anda tanpa ribet keluar rumah.",
+            service4Btn: "Titip Belanja",
+            formTitle: "Formulir",
+            formTitleHighlight: "Pemesanan",
+            favAddressTitle: "Alamat Favorit",
+            labelNama: "Nama Pelanggan / Penumpang",
+            labelJenisLayanan: "Pilih Jenis Layanan",
+            labelJemput: "Lokasi Penjemputan / Pengambilan",
+            labelTujuan: "Lokasi Tujuan / Pengantaran",
+            trackerJarakLabel: "📍 Jarak Rute",
+            trackerTarifLabel: "💰 Estimasi Tarif",
+            labelTanggal: "Tanggal Pelaksanaan",
+            labelJam: "Jam Pelaksanaan",
+            labelRating: "Rating untuk Driver Sebelumnya (Opsional)",
+            labelPromoCode: "Kode Promo (Jika Ada)",
+            submitBtn: "📤 Kirim Pesanan via WhatsApp",
+            calculatorTitle: "Kalkulator Tarif (Manual)",
+            labelJarakManual: "Perkiraan Jarak Perjalanan (Kilometer)",
+            calcBtn: "Hitung Tarif Argo",
+            estimasiText: "Estimasi Total Tarif Perjalanan:",
+            tarifNote: "*Tarif dasar Rp 3.300 / km",
+            paymentTitle: "Fitur",
+            paymentTitleHighlight: "Pembayaran",
+            cashTitle: "Tunai (Cash)",
+            cashDesc: "Bayar langsung dengan uang tunai kepada driver/kurir setelah Anda sampai di lokasi tujuan atau barang diterima.",
+            cashBtn: "Info Lebih Lanjut",
+            bankTitle: "Transfer Bank",
+            bankDesc: "Mendukung pembayaran non-tunai yang praktis via Transfer Bank.",
+            confirmBankBtn: "Konfirmasi Transfer",
+            ewalletTitle: "E-Wallet",
+            ewalletDesc: "Konfirmasi pembayaran instan dan lebih cepat menggunakan saldo GoPay Anda.",
+            confirmEwalletBtn: "Konfirmasi Transfer",
+            promoTitle: "Promo &",
+            promoTitleHighlight: "Voucher",
+            promo1Desc: "Diskon 10% untuk pemesanan pertama Anda! Maksimal potongan Rp 20.000.",
+            promo2Desc: "Diskon 20% untuk pemesanan GrabCar minimal 10 KM. Berlaku hari Senin-Jumat.",
+            promo3Desc: "Diskon 15% untuk layanan GoSend dengan minimal pembelian Rp 50.000.",
+            copyPromo1Btn: "Copy Kode",
+            copyPromo2Btn: "Copy Kode",
+            copyPromo3Btn: "Copy Kode",
+            historyTitle: "Riwayat",
+            historyTitleHighlight: "Pemesanan",
+            emptyHistoryText: "Belum ada riwayat pemesanan. Silakan lakukan pemesanan pertama Anda!",
+            clearHistoryBtn: "🗑️ Hapus Riwayat",
+            stepsTitle: "Cara",
+            stepsTitleHighlight: "Pemesanan",
+            step1Text: "Isi Form / Hubungi WA",
+            step2Text: "Kirim Info Alamat",
+            step3Text: "Pilih Jenis Layanan",
+            step4Text: "Konfirmasi Biaya",
+            step5Text: "Driver/Kurir Jalan",
+            footerText1: "Melayani pemesanan online transportasi & logistik 24 Jam.",
+            contactTitle: "Hubungi Kami",
+            contactDesc: "Silakan pilih platform di bawah ini untuk tersambung dengan admin kami",
+            shareTitle: "Bagikan Perjalanan",
+            shareDesc: "Bagikan link ini untuk melacak perjalanan Anda:",
+            copyShareBtn: "📋 Copy Link",
+            closeShareBtn: "Tutup",
+            emergencyMsg: "⚠️ DARURAT! Mohon segera hubungi nomor darurat!",
+            promoApplied: "Kode promo berhasil diterapkan!",
+            promoInvalid: "Kode promo tidak valid!",
+            promoExpired: "Kode promo sudah kadaluarsa!",
+            orderSaved: "Pesanan berhasil disimpan ke riwayat!",
+            historyCleared: "Riwayat berhasil dihapus!",
+            addressSaved: "Alamat berhasil disimpan ke favorit!",
+            linkCopied: "Link berhasil disalin!"
+        },
+        en: {
+            heroBadge: "🚖 TRUSTED ONLINE BOOKING SERVICE",
+            heroTitle: "<span>ALIONG SERVICES</span><br>Online Booking Solutions",
+            heroDesc: "Fast and secure solutions for various travel, shopping, and logistics needs.",
+            btnBookNow: "📝 Book Now",
+            btnViewServices: "👁️ View Services",
+            trackingTitle: "Live",
+            trackingTitleHighlight: "Tracking",
+            step1Label: "Awaiting Confirmation",
+            step2Label: "Driver Heading to Location",
+            step3Label: "Picking Up Passenger",
+            step4Label: "Trip Completed",
+            shareTripBtn: "🔗 Share Trip",
+            servicesTitle: "Our",
+            servicesTitleHighlight: "Services",
+            service1Desc: "Comfortable travel for individuals and families with the best car fleet.",
+            service1Btn: "Book Now",
+            service2Desc: "Fast, safe, and trusted package and document delivery within hours.",
+            service2Btn: "Send Package",
+            service3Desc: "Food delivery service from your favorite restaurants.",
+            service3Btn: "Order Food",
+            service4Desc: "Shopping assistant service for monthly groceries or souvenirs without leaving home.",
+            service4Btn: "Shop Assistant",
+            formTitle: "Booking",
+            formTitleHighlight: "Form",
+            favAddressTitle: "Favorite Addresses",
+            labelNama: "Customer Name",
+            labelJenisLayanan: "Select Service Type",
+            labelJemput: "Pickup Location",
+            labelTujuan: "Destination Location",
+            trackerJarakLabel: "📍 Distance",
+            trackerTarifLabel: "💰 Estimated Fare",
+            labelTanggal: "Date",
+            labelJam: "Time",
+            labelRating: "Previous Driver Rating (Optional)",
+            labelPromoCode: "Promo Code (If Any)",
+            submitBtn: "📤 Send Order via WhatsApp",
+            calculatorTitle: "Fare Calculator (Manual)",
+            labelJarakManual: "Estimated Distance (Kilometers)",
+            calcBtn: "Calculate Fare",
+            estimasiText: "Estimated Total Fare:",
+            tarifNote: "*Base fare Rp 3,300 / km",
+            paymentTitle: "Payment",
+            paymentTitleHighlight: "Features",
+            cashTitle: "Cash",
+            cashDesc: "Pay directly with cash to the driver/courier upon arrival or delivery.",
+            cashBtn: "More Info",
+            bankTitle: "Bank Transfer",
+            bankDesc: "Convenient non-cash payment via Bank Transfer.",
+            confirmBankBtn: "Confirm Transfer",
+            ewalletTitle: "E-Wallet",
+            ewalletDesc: "Instant payment confirmation using your GoPay balance.",
+            confirmEwalletBtn: "Confirm Transfer",
+            promoTitle: "Promos &",
+            promoTitleHighlight: "Vouchers",
+            promo1Desc: "10% discount for your first booking! Max discount Rp 20,000.",
+            promo2Desc: "20% discount for GrabCar bookings minimum 10 KM. Valid Monday-Friday.",
+            promo3Desc: "15% discount for GoSend service with minimum purchase Rp 50,000.",
+            copyPromo1Btn: "Copy Code",
+            copyPromo2Btn: "Copy Code",
+            copyPromo3Btn: "Copy Code",
+            historyTitle: "Booking",
+            historyTitleHighlight: "History",
+            emptyHistoryText: "No booking history yet. Make your first booking!",
+            clearHistoryBtn: "🗑️ Clear History",
+            stepsTitle: "How to",
+            stepsTitleHighlight: "Book",
+            step1Text: "Fill Form / Contact WA",
+            step2Text: "Send Address Info",
+            step3Text: "Select Service Type",
+            step4Text: "Confirm Price",
+            step5Text: "Driver/Courier Goes",
+            footerText1: "24/7 online transportation & logistics booking service.",
+            contactTitle: "Contact Us",
+            contactDesc: "Choose platform below to connect with our admin",
+            shareTitle: "Share Trip",
+            shareDesc: "Share this link to track your trip:",
+            copyShareBtn: "📋 Copy Link",
+            closeShareBtn: "Close",
+            emergencyMsg: "⚠️ EMERGENCY! Please contact emergency services immediately!",
+            promoApplied: "Promo code applied successfully!",
+            promoInvalid: "Invalid promo code!",
+            promoExpired: "Promo code has expired!",
+            orderSaved: "Order saved to history!",
+            historyCleared: "History cleared!",
+            addressSaved: "Address saved to favorites!",
+            linkCopied: "Link copied!"
+        }
+    };
+    
+    function updateLanguage() {
+        const t = translations[currentLanguage];
+        document.getElementById('heroBadge').innerHTML = t.heroBadge;
+        document.getElementById('heroTitle').innerHTML = t.heroTitle;
+        document.getElementById('heroDesc').innerHTML = t.heroDesc;
+        document.getElementById('btnBookNow').innerHTML = t.btnBookNow;
+        document.getElementById('btnViewServices').innerHTML = t.btnViewServices;
+        document.getElementById('trackingTitle').innerHTML = t.trackingTitle;
+        document.getElementById('trackingTitleHighlight').innerHTML = t.trackingTitleHighlight;
+        document.getElementById('step1Label').innerHTML = t.step1Label;
+        document.getElementById('step2Label').innerHTML = t.step2Label;
+        document.getElementById('step3Label').innerHTML = t.step3Label;
+        document.getElementById('step4Label').innerHTML = t.step4Label;
+        document.getElementById('shareTripBtn').innerHTML = t.shareTripBtn;
+        document.getElementById('servicesTitle').innerHTML = t.servicesTitle;
+        document.getElementById('servicesTitleHighlight').innerHTML = t.servicesTitleHighlight;
+        document.getElementById('service1Desc').innerHTML = t.service1Desc;
+        document.getElementById('service1Btn').innerHTML = t.service1Btn;
+        document.getElementById('service2Desc').innerHTML = t.service2Desc;
+        document.getElementById('service2Btn').innerHTML = t.service2Btn;
+        document.getElementById('service3Desc').innerHTML = t.service3Desc;
+        document.getElementById('service3Btn').innerHTML = t.service3Btn;
+        document.getElementById('service4Desc').innerHTML = t.service4Desc;
+        document.getElementById('service4Btn').innerHTML = t.service4Btn;
+        document.getElementById('formTitle').innerHTML = t.formTitle;
+        document.getElementById('formTitleHighlight').innerHTML = t.formTitleHighlight;
+        document.getElementById('favAddressTitle').innerHTML = t.favAddressTitle;
+        document.getElementById('labelNama').innerHTML = t.labelNama;
+        document.getElementById('labelJenisLayanan').innerHTML = t.labelJenisLayanan;
+        document.getElementById('labelJemput').innerHTML = t.labelJemput;
+        document.getElementById('labelTujuan').innerHTML = t.labelTujuan;
+        document.getElementById('trackerJarakLabel').innerHTML = t.trackerJarakLabel;
+        document.getElementById('trackerTarifLabel').innerHTML = t.trackerTarifLabel;
+        document.getElementById('labelTanggal').innerHTML = t.labelTanggal;
+        document.getElementById('labelJam').innerHTML = t.labelJam;
+        document.getElementById('labelRating').innerHTML = t.labelRating;
+        document.getElementById('labelPromoCode').innerHTML = t.labelPromoCode;
+        document.getElementById('submitBtn').innerHTML = t.submitBtn;
+        document.getElementById('calculatorTitle').innerHTML = t.calculatorTitle;
+        document.getElementById('labelJarakManual').innerHTML = t.labelJarakManual;
+        document.getElementById('calcBtn').innerHTML = t.calcBtn;
+        document.getElementById('estimasiText').innerHTML = t.estimasiText;
+        document.getElementById('tarifNote').innerHTML = t.tarifNote;
+        document.getElementById('paymentTitle').innerHTML = t.paymentTitle;
+        document.getElementById('paymentTitleHighlight').innerHTML = t.paymentTitleHighlight;
+        document.getElementById('cashTitle').innerHTML = t.cashTitle;
+        document.getElementById('cashDesc').innerHTML = t.cashDesc;
+        document.getElementById('cashBtn').innerHTML = t.cashBtn;
+        document.getElementById('bankTitle').innerHTML = t.bankTitle;
+        document.getElementById('bankDesc').innerHTML = t.bankDesc;
+        document.getElementById('confirmBankBtn').innerHTML = t.confirmBankBtn;
+        document.getElementById('ewalletTitle').innerHTML = t.ewalletTitle;
+        document.getElementById('ewalletDesc').innerHTML = t.ewalletDesc;
+        document.getElementById('confirmEwalletBtn').innerHTML = t.confirmEwalletBtn;
+        document.getElementById('promoTitle').innerHTML = t.promoTitle;
+        document.getElementById('promoTitleHighlight').innerHTML = t.promoTitleHighlight;
+        document.getElementById('promo1Desc').innerHTML = t.promo1Desc;
+        document.getElementById('promo2Desc').innerHTML = t.promo2Desc;
+        document.getElementById('promo3Desc').innerHTML = t.promo3Desc;
+        document.getElementById('copyPromo1Btn').innerHTML = t.copyPromo1Btn;
+        document.getElementById('copyPromo2Btn').innerHTML = t.copyPromo2Btn;
+        document.getElementById('copyPromo3Btn').innerHTML = t.copyPromo3Btn;
+        document.getElementById('historyTitle').innerHTML = t.historyTitle;
+        document.getElementById('historyTitleHighlight').innerHTML = t.historyTitleHighlight;
+        document.getElementById('emptyHistoryText').innerHTML = t.emptyHistoryText;
+        document.getElementById('clearHistoryBtn').innerHTML = t.clearHistoryBtn;
+        document.getElementById('stepsTitle').innerHTML = t.stepsTitle;
+        document.getElementById('stepsTitleHighlight').innerHTML = t.stepsTitleHighlight;
+        document.getElementById('step1Text').innerHTML = t.step1Text;
+        document.getElementById('step2Text').innerHTML = t.step2Text;
+        document.getElementById('step3Text').innerHTML = t.step3Text;
+        document.getElementById('step4Text').innerHTML = t.step4Text;
+        document.getElementById('step5Text').innerHTML = t.step5Text;
+        document.getElementById('footerText1').innerHTML = t.footerText1;
+        document.getElementById('contactTitle').innerHTML = t.contactTitle;
+        document.getElementById('contactDesc').innerHTML = t.contactDesc;
+        document.getElementById('shareTitle').innerHTML = t.shareTitle;
+        document.getElementById('shareDesc').innerHTML = t.shareDesc;
+        document.getElementById('copyShareBtn').innerHTML = t.copyShareBtn;
+        document.getElementById('closeShareBtn').innerHTML = t.closeShareBtn;
+        document.getElementById('emergencyBtn').title = t.emergencyMsg;
+        
+        document.getElementById('langToggleBtn').innerHTML = currentLanguage === 'id' ? '🇬🇧 EN' : '🇮🇩 ID';
+    }
+    
+    function toggleLanguage() {
+        currentLanguage = currentLanguage === 'id' ? 'en' : 'id';
+        updateLanguage();
+        showNotification(translations[currentLanguage].orderSaved, 'success');
+    }
+    
+    function toggleTheme() {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-mode');
+        } else {
+            document.body.classList.remove('light-mode');
+        }
+        localStorage.setItem('theme', currentTheme);
+        showNotification(currentTheme === 'light' ? '☀️ Light mode aktif' : '🌙 Dark mode aktif', 'success');
+    }
+    
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        currentTheme = 'light';
+        document.body.classList.add('light-mode');
+    }
+    
+    // ================ NOTIFICATION SYSTEM ================
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        document.body.appendChild(notification);
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+    
+    // ================ RATING SYSTEM ================
+    let currentRating = 0;
+    document.querySelectorAll('#ratingStars i').forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = parseInt(this.dataset.rating);
+            currentRating = rating;
+            updateStars(rating);
         });
     });
-
-    const modal = document.getElementById('contactModal');
-    const bookingForm = document.getElementById('bookingForm');
-    const labelJemput = document.getElementById('labelJemput');
-    const labelTujuan = document.getElementById('labelTujuan');
-    const labelNamaBarang = document.getElementById('labelNamaBarang');
-    const jenisLayananSelect = document.getElementById('jenisLayanan');
     
-    const gosendFields = document.getElementById('gosendFields');
-    const namaBarang = document.getElementById('namaBarang');
-    const beratBarang = document.getElementById('beratBarang');
-    const jumlahBarang = document.getElementById('jumlahBarang');
-
-    const TARIF_PER_KM = 3300; 
-    let currentJarakAkurat = 0; 
-    let autocompleteJemput, autocompleteTujuan, directionsService;
-
-    function openContactModal() { modal.classList.add('active'); }
-    function closeContactModal() { modal.classList.remove('active'); }
-    window.onclick = function(event) { if (event.target == modal) { closeContactModal(); } }
-
-    function setJenisLayanan(namaLayanan) {
-        jenisLayananSelect.value = namaLayanan;
-        updateFormLabels();
-        document.getElementById('form-pemesanan').scrollIntoView({ behavior: 'smooth' });
+    function updateStars(rating) {
+        document.querySelectorAll('#ratingStars i').forEach(star => {
+            const starRating = parseInt(star.dataset.rating);
+            if (starRating <= rating) {
+                star.className = 'fa-solid fa-star';
+            } else {
+                star.className = 'fa-regular fa-star';
+            }
+        });
     }
-
-    function updateFormLabels() {
-        const val = jenisLayananSelect.value;
+    
+    // ================ FAVORITE ADDRESSES ================
+    function saveFavoriteAddress() {
+        const jemput = document.getElementById('jemput').value;
+        const tujuan = document.getElementById('tujuan').value;
         
-        if(val === "GoSend" || val === "Jastip") {
-            gosendFields.style.display = "flex"; 
-            namaBarang.required = true;
-            beratBarang.required = true;
-            jumlahBarang.required = true;
-
-            if(val === "Jastip") {
-                labelNamaBarang.innerHTML = `<i class="fa-solid fa-bag-shopping"></i> Barang Apa yang Ingin Dititip Beli?`;
-                namaBarang.placeholder = "Contoh: Sepatu Brand X, Baju Uniqlo size L, Oleh-oleh Khas";
-                labelJemput.innerText = "Lokasi Toko / Tempat Pembelian Barang";
-                labelTujuan.innerText = "Alamat Pengantaran / Rumah Anda";
-            } else {
-                labelNamaBarang.innerHTML = `<i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?`;
-                namaBarang.placeholder = "Contoh: Pakaian, Dokumen, Paket Sembako";
-                labelJemput.innerText = "Lokasi Pengambilan Paket / Jemput";
-                labelTujuan.innerText = "Alamat Tujuan Pengantaran Paket";
-            }
+        if (jemput && tujuan) {
+            favoriteAddresses.push({ jemput, tujuan });
+            localStorage.setItem('favoriteAddresses', JSON.stringify(favoriteAddresses));
+            loadFavoriteAddresses();
+            showNotification(translations[currentLanguage].addressSaved, 'success');
         } else {
-            gosendFields.style.display = "none"; 
-            namaBarang.required = false;
-            beratBarang.required = false;
-            jumlahBarang.required = false;
-
-            if(val === "GoFood") {
-                labelJemput.innerText = "Lokasi Resto / Toko Makanan";
-                labelTujuan.innerText = "Alamat Pengiriman Makanan";
-            } else {
-                labelJemput.innerText = "Lokasi Penjemputan Penumpang";
-                labelTujuan.innerText = "Lokasi Tujuan Perjalanan";
-            }
+            showNotification('Lengkapi lokasi terlebih dahulu!', 'error');
         }
     }
-    jenisLayananSelect.addEventListener('change', updateFormLabels);
-
+    
+    function loadFavoriteAddresses() {
+        const container = document.getElementById('favoriteAddresses');
+        container.innerHTML = '';
+        
+        favoriteAddresses.forEach((addr, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'fav-address-btn';
+            btn.innerHTML = `<i class="fa-regular fa-bookmark"></i> ${addr.jemput.substring(0, 20)}...`;
+            btn.onclick = () => {
+                document.getElementById('jemput').value = addr.jemput;
+                document.getElementById('tujuan').value = addr.tujuan;
+                if (typeof hitungRuteGoogleMaps === 'function') hitungRuteGoogleMaps();
+                showNotification('Alamat favorit diterapkan!', 'success');
+            };
+            container.appendChild(btn);
+        });
+        
+        if (favoriteAddresses.length > 0) {
+            const saveNewBtn = document.createElement('button');
+            saveNewBtn.className = 'fav-address-btn';
+            saveNewBtn.innerHTML = '<i class="fa-regular fa-plus"></i> Simpan Alamat Ini';
+            saveNewBtn.onclick = saveFavoriteAddress;
+            container.appendChild(saveNewBtn);
+        } else {
+            container.innerHTML = '<button class="fav-address-btn" onclick="saveFavoriteAddress()"><i class="fa-regular fa-plus"></i> Simpan Alamat Ini sebagai Favorit</button>';
+        }
+    }
+    
+    // ================ PROMO SYSTEM ================
+    const promoCodes = {
+        'WELCOME10': { discount: 0.1, maxDiscount: 20000, valid: true },
+        'GRAB20': { discount: 0.2, maxDiscount: 30000, valid: true, minDistance: 10 },
+        'SEND15': { discount: 0.15, maxDiscount: 25000, valid: true, minPrice: 50000 }
+    };
+    
+    function applyPromo() {
+        const code = document.getElementById('promoCode').value.toUpperCase();
+        const promo = promoCodes[code];
+        const messageDiv = document.getElementById('promoMessage');
+        
+        if (promo && promo.valid) {
+            appliedPromo = code;
+            promoDiscount = promo.discount;
+            messageDiv.innerHTML = `<span style="color: #00B14F;">✅ ${translations[currentLanguage].promoApplied} Potongan ${promo.discount * 100}%</span>`;
+            messageDiv.style.color = '#00B14F';
+            showNotification(translations[currentLanguage].promoApplied, 'success');
+        } else {
+            messageDiv.innerHTML = `<span style="color: #dc3545;">❌ ${translations[currentLanguage].promoInvalid}</span>`;
+            messageDiv.style.color = '#dc3545';
+            appliedPromo = null;
+            promoDiscount = 0;
+        }
+    }
+    
+    function copyPromoCode(code) {
+        navigator.clipboard.writeText(code);
+        showNotification(`Kode ${code} disalin!`, 'success');
+    }
+    
+    // ================ HISTORY SYSTEM ================
+    function saveToHistory(orderData) {
+        const order = {
+            id: Date.now(),
+            ...orderData,
+            timestamp: new Date().toISOString(),
+            status: 'completed'
+        };
+        bookingHistory.unshift(order);
+        localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
+        loadHistory();
+        showNotification(translations[currentLanguage].orderSaved, 'success');
+    }
+    
+    function loadHistory() {
+        const container = document.getElementById('historyList');
+        if (bookingHistory.length === 0) {
+            container.innerHTML = `<p style="text-align: center; color: #a3b1cc;">${translations[currentLanguage].emptyHistoryText}</p>`;
+            return;
+        }
+        
+        container.innerHTML = bookingHistory.map(order => `
+            <div class="history-item" onclick="repeatOrder(${order.id})">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong>${order.layanan}</strong>
+                    <small style="color: #00B14F;">${new Date(order.timestamp).toLocaleDateString()}</small>
+                </div>
+                <div style="font-size: 12px; margin-top: 5px;">📍 ${order.jemput.substring(0, 30)}...</div>
+                <div style="font-size: 12px;">🎯 ${order.tujuan.substring(0, 30)}...</div>
+                <button class="card-btn" style="margin-top: 10px; padding: 8px;" onclick="event.stopPropagation();repeatOrder(${order.id})">🔄 Pesan Lagi</button>
+            </div>
+        `).join('');
+    }
+    
+    function repeatOrder(orderId) {
+        const order = bookingHistory.find(o => o.id === orderId);
+        if (order) {
+            document.getElementById('nama').value = order.nama;
+            document.getElementById('jenisLayanan').value = order.layanan;
+            document.getElementById('jemput').value = order.jemput;
+            document.getElementById('tujuan').value = order.tujuan;
+            document.getElementById('tanggalJemput').value = order.tanggal;
+            document.getElementById('jamJemput').value = order.jam;
+            updateFormLabels();
+            showNotification('Data pesanan telah diisi ulang!', 'success');
+            document.getElementById('form-pemesanan').scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+    
+    function clearHistory() {
+        if (confirm('Apakah Anda yakin ingin menghapus semua riwayat pemesanan?')) {
+            bookingHistory = [];
+            localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
+            loadHistory();
+            showNotification(translations[currentLanguage].historyCleared, 'success');
+        }
+    }
+    
+    // ================ STATUS TRACKING ================
+    function updateOrderStatus(status) {
+        currentOrderStatus = status;
+        document.querySelectorAll('.status-step').forEach((step, index) => {
+            if (index <= status) {
+                step.classList.add('completed');
+                step.classList.remove('active');
+            } else {
+                step.classList.remove('completed', 'active');
+            }
+            if (index === status && status < 3) {
+                step.classList.add('active');
+            }
+        });
+        
+        if (status < 3 && status > 0) {
+            const interval = setInterval(() => {
+                if (currentOrderStatus >= 3) clearInterval(interval);
+                simulateDriverMovement();
+            }, 5000);
+        }
+    }
+    
+    function simulateDriverMovement() {
+        const randomDelay = Math.random() * 20000;
+        setTimeout(() => {
+            if (currentOrderStatus < 3) {
+                currentOrderStatus++;
+                updateOrderStatus(currentOrderStatus);
+                if (currentOrderStatus === 3) {
+                    showNotification('✅ Perjalanan Anda telah selesai! Silakan berikan rating.', 'success');
+                } else {
+                    showNotification(`🚗 Driver sedang ${currentOrderStatus === 1 ? 'menuju lokasi Anda' : 'menjemput Anda'}`, 'info');
+                }
+            }
+        }, randomDelay);
+    }
+    
+    function shareTrip() {
+        if (!currentOrderId) {
+            currentOrderId = 'ORDER' + Date.now();
+            document.getElementById('orderIdDisplay').innerHTML = `Order ID: ${currentOrderId}`;
+        }
+        const shareLink = `https://cruizemate.com/track/${currentOrderId}`;
+        document.getElementById('shareLink').innerHTML = shareLink;
+        document.getElementById('shareModal').classList.add('active');
+    }
+    
+    function closeShareModal() {
+        document.getElementById('shareModal').classList.remove('active');
+    }
+    
+    function copyShareLink() {
+        const link = document.getElementById('shareLink').innerHTML;
+        navigator.clipboard.writeText(link);
+        showNotification(translations[currentLanguage].linkCopied, 'success');
+    }
+    
+    function emergencyCall() {
+        if (confirm(translations[currentLanguage].emergencyMsg)) {
+            window.location.href = 'tel:112';
+        }
+    }
+    
+    // ================ GOOGLE MAPS ================
     function initGoogleMapsServices() {
         directionsService = new google.maps.DirectionsService();
-
+        
         autocompleteJemput = new google.maps.places.Autocomplete(document.getElementById('jemput'), {
             types: ['geocode', 'establishment'],
             componentRestrictions: { country: 'id' }
         });
-
+        
         autocompleteTujuan = new google.maps.places.Autocomplete(document.getElementById('tujuan'), {
             types: ['geocode', 'establishment'],
             componentRestrictions: { country: 'id' }
         });
-
+        
         autocompleteJemput.addListener('place_changed', hitungRuteGoogleMaps);
         autocompleteTujuan.addListener('place_changed', hitungRuteGoogleMaps);
     }
-
+    
     function hitungRuteGoogleMaps() {
         const asalText = document.getElementById('jemput').value;
         const tujuanText = document.getElementById('tujuan').value;
         const trackerBox = document.getElementById('liveTracker');
         const jarakText = document.getElementById('liveJarakText');
         const tarifText = document.getElementById('liveTarifText');
-
+        
         if (asalText.trim() === "" || tujuanText.trim() === "") {
             trackerBox.style.display = "none";
             return;
         }
-
+        
         const request = {
             origin: asalText,
             destination: tujuanText,
             travelMode: google.maps.TravelMode.DRIVING
         };
-
+        
         directionsService.route(request, function (response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
                 const jarakMeter = response.routes[0].legs[0].distance.value;
-                currentJarakAkurat = parseFloat((jarakMeter / 1000).toFixed(1)); 
-
-                const totalTarif = currentJarakAkurat * TARIF_PER_KM;
+                currentJarakAkurat = parseFloat((jarakMeter / 1000).toFixed(1));
+                
+                let totalTarif = currentJarakAkurat * TARIF_PER_KM;
+                if (appliedPromo && promoDiscount > 0) {
+                    let discountAmount = totalTarif * promoDiscount;
+                    const maxDiscount = promoCodes[appliedPromo]?.maxDiscount || 0;
+                    if (maxDiscount > 0 && discountAmount > maxDiscount) discountAmount = maxDiscount;
+                    totalTarif -= discountAmount;
+                }
+                
                 const formatRupiah = new Intl.NumberFormat('id-ID', {
                     style: 'currency',
                     currency: 'IDR',
                     minimumFractionDigits: 0
                 }).format(totalTarif);
-
+                
                 jarakText.innerText = currentJarakAkurat + " KM";
                 tarifText.innerText = formatRupiah;
                 trackerBox.style.display = "block";
             } else {
-                console.log("Gagal melacak rute Google Maps: " + status);
                 trackerBox.style.display = "none";
             }
         });
     }
-
+    
     function hitungTarifManual() {
         const jarakInput = document.getElementById('inputJarak').value;
         const hasilBox = document.getElementById('hasilTarifBox');
         const textTotal = document.getElementById('textTotalTarif');
-
+        
         if(jarakInput === "" || jarakInput <= 0) {
-            alert("Silakan masukkan kilometer dengan benar!");
+            showNotification('Silakan masukkan kilometer dengan benar!', 'error');
             hasilBox.style.display = "none";
             return;
         }
-
-        const totalTarif = jarakInput * TARIF_PER_KM;
+        
+        let totalTarif = jarakInput * TARIF_PER_KM;
+        if (appliedPromo && promoDiscount > 0) {
+            let discountAmount = totalTarif * promoDiscount;
+            const maxDiscount = promoCodes[appliedPromo]?.maxDiscount || 0;
+            if (maxDiscount > 0 && discountAmount > maxDiscount) discountAmount = maxDiscount;
+            totalTarif -= discountAmount;
+        }
+        
         const formatRupiah = new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR',
             minimumFractionDigits: 0
         }).format(totalTarif);
-
+        
         textTotal.innerText = formatRupiah;
         hasilBox.style.display = "block";
     }
-
-    bookingForm.addEventListener('submit', function(e) {
+    
+    // ================ FORM HANDLING ================
+    function updateFormLabels() {
+        const val = document.getElementById('jenisLayanan').value;
+        const gosendFields = document.getElementById('gosendFields');
+        const labelNamaBarang = document.getElementById('labelNamaBarang');
+        const namaBarang = document.getElementById('namaBarang');
+        const beratBarang = document.getElementById('beratBarang');
+        const jumlahBarang = document.getElementById('jumlahBarang');
+        const labelJemput = document.getElementById('labelJemput');
+        const labelTujuan = document.getElementById('labelTujuan');
+        
+        if(val === "GoSend" || val === "Jastip") {
+            gosendFields.style.display = "flex";
+            namaBarang.required = true;
+            beratBarang.required = true;
+            jumlahBarang.required = true;
+            
+            if(val === "Jastip") {
+                labelNamaBarang.innerHTML = `<i class="fa-solid fa-bag-shopping"></i> Barang Apa yang Ingin Dititip Beli?`;
+                namaBarang.placeholder = "Contoh: Sepatu Brand X, Baju Uniqlo size L, Oleh-oleh Khas";
+                labelJemput.innerText = translations[currentLanguage].labelJemput.replace('Penjemputan / Pengambilan', 'Toko / Tempat Pembelian Barang');
+                labelTujuan.innerText = translations[currentLanguage].labelTujuan.replace('Tujuan / Pengantaran', 'Pengantaran / Rumah Anda');
+            } else {
+                labelNamaBarang.innerHTML = `<i class="fa-solid fa-box"></i> Barang Apa yang Ingin Dikirim?`;
+                namaBarang.placeholder = "Contoh: Pakaian, Dokumen, Paket Sembako";
+                labelJemput.innerText = translations[currentLanguage].labelJemput;
+                labelTujuan.innerText = translations[currentLanguage].labelTujuan;
+            }
+        } else {
+            gosendFields.style.display = "none";
+            namaBarang.required = false;
+            beratBarang.required = false;
+            jumlahBarang.required = false;
+            
+            if(val === "GoFood") {
+                labelJemput.innerText = "Lokasi Resto / Toko Makanan";
+                labelTujuan.innerText = "Alamat Pengiriman Makanan";
+            } else {
+                labelJemput.innerText = translations[currentLanguage].labelJemput;
+                labelTujuan.innerText = translations[currentLanguage].labelTujuan;
+            }
+        }
+    }
+    
+    function setJenisLayanan(namaLayanan) {
+        document.getElementById('jenisLayanan').value = namaLayanan;
+        updateFormLabels();
+        document.getElementById('form-pemesanan').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // ================ BOOKING FORM SUBMIT ================
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
         const nama = document.getElementById('nama').value;
@@ -1078,24 +2168,80 @@
         
         let detailGoSendText = "";
         if(layanan === "GoSend" || layanan === "Jastip") {
-            detailGoSendText = `🛍️ Detail Barang: ${namaBarang.value}%0A` +
-                               `⚖️ Est. Berat: ${beratBarang.value} Kg%0A` +
-                               `🔢 Jumlah Barang: ${jumlahBarang.value} Item%0A`;
+            detailGoSendText = `🛍️ Detail Barang: ${document.getElementById('namaBarang').value}%0A` +
+                               `⚖️ Est. Berat: ${document.getElementById('beratBarang').value} Kg%0A` +
+                               `🔢 Jumlah Barang: ${document.getElementById('jumlahBarang').value} Item%0A`;
         }
-
+        
+        let ratingText = "";
+        if (currentRating > 0) {
+            ratingText = `⭐ Rating: ${currentRating}/5%0A📝 Review: ${document.getElementById('reviewText').value}%0A`;
+        }
+        
+        let promoText = "";
+        if (appliedPromo) {
+            promoText = `🎟️ Kode Promo: ${appliedPromo} (Diskon ${promoCodes[appliedPromo].discount * 100}%)%0A`;
+        }
+        
         let infoTarif = currentJarakAkurat > 0 ? `\n📍 Jarak: ${currentJarakAkurat} KM\n💰 Estimasi Tarif: Rp ${new Intl.NumberFormat('id-ID').format(currentJarakAkurat * TARIF_PER_KM)}` : '';
-
+        
         const textWhatsApp = `Halo Admin, saya ingin melakukan pemesanan:%0A%0A` +
                              `👤 Nama: ${nama}%0A` +
                              `🛠️ Layanan: ${layanan}%0A` +
                              detailGoSendText +
+                             ratingText +
+                             promoText +
                              `🛫 Titik Pengambilan/Jemput: ${jemput}%0A` +
                              `🛬 Titik Pengantaran/Tujuan: ${tujuan}%0A` +
                              `📅 Tanggal: ${tanggal}%0A` +
                              `⏰ Jam: ${jam}${infoTarif}`;
         
+        // Save to history
+        saveToHistory({
+            nama, layanan, jemput, tujuan, tanggal, jam,
+            rating: currentRating,
+            review: document.getElementById('reviewText').value,
+            promo: appliedPromo
+        });
+        
+        // Start tracking simulation
+        currentOrderId = 'ORDER' + Date.now();
+        document.getElementById('orderIdDisplay').innerHTML = `Order ID: ${currentOrderId}`;
+        currentOrderStatus = 0;
+        updateOrderStatus(0);
+        simulateDriverMovement();
+        
         window.open(`https://wa.me/6281260636666?text=${textWhatsApp}`, '_blank');
+        showNotification('Pesanan berhasil dikirim! Cek status tracking di atas.', 'success');
     });
+    
+    // Initialize
+    loadFavoriteAddresses();
+    loadHistory();
+    updateLanguage();
+    document.getElementById('jenisLayanan').addEventListener('change', updateFormLabels);
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    document.querySelectorAll('.menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenuBtn.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+    
+    // Modal functions
+    const modal = document.getElementById('contactModal');
+    function openContactModal() { modal.classList.add('active'); }
+    function closeContactModal() { modal.classList.remove('active'); }
+    window.onclick = function(event) { if (event.target == modal) { closeContactModal(); } }
 </script>
 </body>
 </html>
