@@ -45,7 +45,7 @@
             transform: scale(1.1);     
         }
 
-        /* 🛠️ HERO SECTION MODIFIKASI (SLIDER) */
+        /* HERO SECTION SLIDER */
         .hero-container {
             width: 100%;
             height: 550px;
@@ -74,7 +74,7 @@
         }
         .btn-cta:hover { transform: translateY(-2px); background: #20ba5a; }
 
-        /* Kustomisasi Navigasi Swigper Slider */
+        /* Kustomisasi Navigasi Swiper Slider */
         .swiper-button-next, .swiper-button-prev {
             color: #58fc2f !important;
         }
@@ -99,7 +99,6 @@
         }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         
-        /* Pembungkus Gambar */
         .img-container {
             width: 100%;
             height: 220px;
@@ -171,7 +170,7 @@
             .hero-container { height: 450px; }
         }
 
-        /* DESIGN KOTAK PENCARIAN */
+        /* SEARCH */
         .search-container {
             max-width: 500px;
             margin: 20px auto 40px;
@@ -201,7 +200,7 @@
             font-size: 16px;
         }
 
-        /* ---------- TOMBOL KONTAK FLOATING (WA & IG) ---------- */
+        /* FLOATING BUTTON */
         .contact-float {
             position: fixed;
             bottom: 20px;
@@ -235,7 +234,6 @@
             transform: scale(1.1);
             box-shadow: 0 6px 14px rgba(0,0,0,0.4);
         }
-        /* Tooltip kecil (opsional) */
         .float-btn::after {
             content: attr(data-label);
             position: absolute;
@@ -263,9 +261,9 @@
 </head>
 <body>
 
-    <!-- FLOATING BUTTON KONTAK WHATSAPP & INSTAGRAM -->
+    <!-- FLOATING BUTTON KONTAK WHATSAPP & INSTAGRAM (Pesan sudah diperbaiki) -->
     <div class="contact-float">
-        <a href="https://wa.me/628993333726?text=Halo%20DITA%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20bertanya%20atau%20memesan%20produk." 
+        <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20bertanya%20atau%20memesan%20produk." 
            class="float-btn whatsapp" 
            data-label="Chat WhatsApp" 
            target="_blank">
@@ -279,7 +277,7 @@
         </a>
     </div>
 
-    <!-- INTERFACE NAVIGASI -->
+    <!-- NAVIGASI -->
     <header>
         <div class="navbar">
             <div class="logo">DITA <span>TERI MEDAN</span></div>
@@ -292,11 +290,10 @@
         </div>
     </header>
 
-    <!-- 1. BERANDA (HERO SECTION SEBAGAI SLIDER) -->
+    <!-- HERO SLIDER -->
     <div id="beranda" class="hero-container">
         <div class="swiper myHeroSwiper">
             <div class="swiper-wrapper">
-                
                 <!-- Slide 1 -->
                 <div class="swiper-slide" style="background-image: linear-gradient(rgba(0, 41, 61, 0.6), rgba(0, 41, 61, 0.6)), url('https://i.pinimg.com/1200x/27/4f/07/274f074144e0809c96dd7cc4c43918b5.jpg');">
                     <div class="hero-content">
@@ -305,7 +302,6 @@
                         <a href="#katalog" class="btn-cta"><i class="fa-solid fa-basket-shopping"></i> Lihat Katalog Produk</a>
                     </div>
                 </div>
-
                 <!-- Slide 2 -->
                 <div class="swiper-slide" style="background-image: linear-gradient(rgba(0, 41, 61, 0.6), rgba(0, 41, 61, 0.6)), url('https://i.pinimg.com/1200x/3a/dc/e1/3adce1aa49d30b730ed59e7ecc7c34ed.jpg');">
                     <div class="hero-content">
@@ -314,26 +310,22 @@
                         <a href="#katalog" class="btn-cta"><i class="fa-solid fa-basket-shopping"></i> Jelajahi Produk</a>
                     </div>
                 </div>
-
-                <!-- Slide 3 -->
+                <!-- Slide 3 (tombol WA di slide ini juga sudah diperbaiki) -->
                 <div class="swiper-slide" style="background-image: linear-gradient(rgba(0, 41, 61, 0.6), rgba(0, 41, 61, 0.6)), url('https://i.pinimg.com/1200x/74/f6/e5/74f6e59601dfa87e97c4dea400590c6c.jpg');">
                     <div class="hero-content">
                         <h1>Pengiriman Aman Ke Seluruh Indonesia</h1>
                         <p>Dikemas rapi menggunakan standar khusus agar kesegaran teri dan ikan asin tetap terjaga hingga ke alamat tujuan.</p>
-                        <a href="https://wa.me/628993333726?text=Halo%20Admin%2C%20saya%20mau%20order%20ikan%20asinnya" class="btn-cta"><i class="fa-brands fa-whatsapp"></i> Hubungi Admin</a>
+                        <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20bertanya%20atau%20memesan%20produk." class="btn-cta"><i class="fa-brands fa-whatsapp"></i> Hubungi Admin</a>
                     </div>
                 </div>
-
             </div>
-            
-            <!-- Elemen Navigasi Slider -->
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
         </div>
     </div>
 
-    <!-- 2. KATALOG PRODUK -->
+    <!-- KATALOG PRODUK -->
     <section id="katalog">
         <div class="section-title">
             <h2>Katalog Produk Premium</h2>
@@ -344,9 +336,9 @@
             <p>Pilih produk segar kami. Harga jujur dengan kualitas ekspor terbaik.</p>
         </div>
         
-        <div class="product-grid">
+        <div class="product-grid" id="productGrid">
             <!-- Produk 1 -->
-            <div class="product-card">
+            <div class="product-card" data-name="IKAN ASIN GEMBUNG">
                 <div class="img-container">
                     <img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/1.jpg?raw=true" alt="IKAN ASIN GEMBUNG" class="product-img">
                 </div>
@@ -354,14 +346,14 @@
                     <h3 class="product-name">IKAN ASIN GEMBUNG</h3>
                     <p class="product-desc">Ikan Asin Gembung kami dijamin putih bersih, kering sempurna, dan ukurannya halus merata. Rasanya gurih pas, gak bikin darah tinggi karena tidak terlalu asin.</p>
                     <div class="product-price">Rp 85.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%2C%20saya%20ingin%20memesan%20IKAN%20ASIN%20GEMBUNG%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20IKAN%20ASIN%20GEMBUNG%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 2 -->
-            <div class="product-card">
+            <div class="product-card" data-name="TERI BUNTIAU">
                 <div class="img-container">
                     <img src="https://raw.githubusercontent.com/flyingdutchmannn66-arch/npll-gambar/81be024627847b25a09b4f3b0d38c8b41ae06a5a/2.jpg" alt="Cumi Asin Kering" class="product-img">
                 </div>
@@ -369,14 +361,14 @@
                     <h3 class="product-name">TERI BUNTIAU </h3>
                     <p class="product-desc">Ikan Teri Buntiau Super Premium 🐟✨ Nikmati kelezatan asli Teri Buntiau pilihan! Warnanya putih bersih, keringnya sempurna, dengan ukuran halus yang merata.</p>
                     <div class="product-price">Rp 65.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20TERI%20BUNTIAU%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20TERI%20BUNTIAU%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 3 -->
-            <div class="product-card">
+            <div class="product-card" data-name="TERI NASI">
                 <div class="img-container">
                     <img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/4.jpg?raw=true" alt="Teri buntiau" class="product-img">
                 </div>
@@ -384,14 +376,14 @@
                     <h3 class="product-name">TERI NASI</h3>
                     <p class="product-desc">Si Kecil yang Bikin Boros Nasi: Teri Nasi Premium! Putih bersih, ukurannya halus merata, kering sempurna, dan tidak terlalu asin.</p>
                     <div class="product-price">Rp 45.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20TERI%20NASI%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20TERI%20NASI%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 4 -->
-            <div class="product-card">
+            <div class="product-card" data-name="BABY CUMI ASIN">
                 <div class="img-container">
                     <img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/5.jpg?raw=true" alt="TERI NASI" class="product-img">
                 </div>
@@ -399,14 +391,14 @@
                     <h3 class="product-name">BABY CUMI ASIN</h3>
                     <p class="product-desc">Baby Cumi Asin Premium – Empuk & Gurihnya Pas! Pecinta sambal cumi mercon merapat. Kering pas, ukuran kecil merata bumbu meresap.</p>
                     <div class="product-price">Rp 45.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20BABY%20CUMI%20ASIN%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20BABY%20CUMI%20ASIN%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 5 -->
-            <div class="product-card">
+            <div class="product-card" data-name="TERI KEPALA BATU">
                 <div class="img-container">
                     <img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/6.jpg?raw=true" alt="Teri buntiau" class="product-img">
                 </div>
@@ -414,14 +406,14 @@
                     <h3 class="product-name">TERI KEPALA BATU</h3>
                     <p class="product-desc">Lauk Juara Penambah Nafsu Makan: Teri Kepala Batu Super! Bersih, kering sempurna, dan ukurannya merata. Gurih nagih gak terlalu asin.</p>
                     <div class="product-price">Rp 45.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20TERI%20KEPALA%20BATU%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20TERI%20KEPALA%20BATU%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 6 -->
-            <div class="product-card">
+            <div class="product-card" data-name="IKAN NILA ASIN">
                 <div class="img-container">
                     <img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/7.jpg?raw=true" alt="Teri buntiau" class="product-img">
                 </div>
@@ -429,14 +421,14 @@
                     <h3 class="product-name">IKAN NILA ASIN</h3>
                     <p class="product-desc">Ikan Nila Asin Premium – Daging Tebal & Gurihnya Pas! Dipotong belah rapi, warnanya bersih alami, dikeringkan sempurna.</p>
                     <div class="product-price">Rp 45.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20IKAN%20NILA%20ASIN%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20IKAN%20NILA%20ASIN%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 7 -->
-            <div class="product-card">
+            <div class="product-card" data-name="IKAN ASIN SAMGE">
                 <div class="img-container">
                     <img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/8.jpg?raw=true" alt="Teri buntiau" class="product-img">
                 </div>
@@ -444,14 +436,14 @@
                     <h3 class="product-name">IKAN ASIN SAMGE</h3>
                     <p class="product-desc">Siap-Siap Nasi Se-Megicom Habis! Teri Samge Super Kering. Bersih tanpa kepala, ukurannya merata, gak terlalu asin.</p>
                     <div class="product-price">Rp 45.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20IKAN%20ASIN%20SAMGE%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20IKAN%20ASIN%20SAMGE%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 8 -->
-            <div class="product-card">
+            <div class="product-card" data-name="TERI SLIDING">
                 <div class="img-container">
                     <img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/9.jpg?raw=true" alt="Teri buntiau" class="product-img">
                 </div>
@@ -459,14 +451,14 @@
                     <h3 class="product-name">TERI SLIDING</h3>
                     <p class="product-desc">Teri Sliding Premium – Tipis, Garingnya Sampai ke Tulang! Warnanya putih bersih, dikeringkan sempurna, bentuk pipih panjang merata.</p>
                     <div class="product-price">Rp 45.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20TERI%20SLIDING%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20TERI%20SLIDING%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 9 -->
-            <div class="product-card">
+            <div class="product-card" data-name="IKAN TAWAR KASAI ASIN">
                 <div class="img-container">
                     <img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/10.jpg?raw=true" alt="Teri buntiau" class="product-img">
                 </div>
@@ -474,14 +466,14 @@
                     <h3 class="product-name">IKAN TAWAR KASAI ASIN</h3>
                     <p class="product-desc">Ikan Tawar Kasai Asin Premium – Renyah & Gurih Khas Nusantara! Diolah dari ikan air tawar segar pilihan, dikeringkan sempurna.</p>
                     <div class="product-price">Rp 45.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20IKAN%20TAWAR%20KASAI%20ASIN%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20IKAN%20TAWAR%20KASAI%20ASIN%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
             </div>
 
             <!-- Produk 10 -->
-            <div class="product-card">
+            <div class="product-card" data-name="TERI BELAH">
                 <div class="img-container">
                     <img src="https://raw.githubusercontent.com/flyingdutchmannn66-arch/npll-gambar/refs/heads/main/teroi%20bela.jfif" alt="Teri buntiau" class="product-img">
                 </div>
@@ -489,7 +481,7 @@
                     <h3 class="product-name">TERI BELAH</h3>
                     <p class="product-desc">Teri Belah Premium – Bersih, Garing, & Siap Masak! Sudah dibelah rapi, warnanya bersih alami, dan dikeringkan sempurna.</p>
                     <div class="product-price">Rp 45.000 <span style="font-size: 14px; color:#777; font-weight:400;">/ 500g</span></div>
-                    <a href="https://wa.me/628993333726?text=Halo%20Juragan%20Teri%2C%20saya%20ingin%20memesan%20TERI%20BELAH%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20memesan%20TERI%20BELAH%20sebanyak%20%5BJUMLAH%5D." target="_blank" class="btn-wa">
                         <i class="fa-brands fa-whatsapp"></i> Pesan di WhatsApp
                     </a>
                 </div>
@@ -497,7 +489,7 @@
         </div>
     </section>
 
-    <!-- 3. CARA PESAN -->
+    <!-- CARA PESAN -->
     <div id="cara-pesan" class="bg-light">
         <section style="padding: 60px 20px;">
             <div class="section-title">
@@ -529,7 +521,7 @@
         </section>
     </div>
 
-    <!-- 4. KONTAK & FOOTER -->
+    <!-- FOOTER & KONTAK -->
     <footer id="kontak">
         <div class="footer-content">
             <div class="footer-sect">
@@ -547,10 +539,61 @@
                 <p>Ikuti aktivitas kami dan promo menarik lainnya:</p>
                 <div class="social-links">
                     <a href="https://www.instagram.com/aditarahmah_/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://wa.me/628993333726" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-                    
+                    <a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20bertanya%20atau%20memesan%20produk." target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026
+            <p>&copy; 2026 DITA TERI MEDAN - Premium dari Nelayan untuk Indonesia</p>
+        </div>
+    </footer>
+
+    <!-- SWIPER JS & FUNGSI FILTER -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Inisialisasi Swiper Hero
+        document.addEventListener('DOMContentLoaded', function() {
+            new Swiper('.myHeroSwiper', {
+                loop: true,
+                autoplay: { delay: 5000, disableOnInteraction: false },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                speed: 800,
+                grabCursor: true
+            });
+        });
+
+        // Fungsi pencarian produk
+        function searchProduct() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.querySelectorAll('.product-card');
+            let anyVisible = false;
+            cards.forEach(card => {
+                let nameAttr = card.getAttribute('data-name') || '';
+                let text = card.innerText.toLowerCase();
+                if (nameAttr.includes(input) || text.includes(input)) {
+                    card.style.display = '';
+                    anyVisible = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            let grid = document.getElementById('productGrid');
+            let existingMsg = document.querySelector('.no-result-message');
+            if (!anyVisible && !existingMsg) {
+                let msgDiv = document.createElement('div');
+                msgDiv.className = 'no-result-message';
+                msgDiv.style.textAlign = 'center';
+                msgDiv.style.color = '#ffd966';
+                msgDiv.style.padding = '30px';
+                msgDiv.style.fontSize = '18px';
+                msgDiv.style.gridColumn = '1/-1';
+                msgDiv.innerHTML = '<i class="fa-regular fa-face-sad-tear"></i> Produk tidak ditemukan, coba kata kunci lain.';
+                grid.appendChild(msgDiv);
+            } else if (anyVisible && existingMsg) {
+                existingMsg.remove();
+            }
+        }
+    </script>
+</body>
+</html>
