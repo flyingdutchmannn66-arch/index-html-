@@ -22,10 +22,50 @@
             background-color: #fefcf5;
             color: #1e2a32;
             line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* DARK MODE STYLES */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode .product-card,
+        body.dark-mode .step-card,
+        body.dark-mode .advantage-card,
+        body.dark-mode .testi-card,
+        body.dark-mode .counter-section,
+        body.dark-mode .garansi-banner,
+        body.dark-mode .bg-steps,
+        body.dark-mode .tagline-banner {
+            background-color: #1e2a2a;
+            border-color: #3a4a3a;
+            color: #e0e0e0;
+        }
+        body.dark-mode .product-name,
+        body.dark-mode .section-title h2,
+        body.dark-mode .advantage-card h4 {
+            color: #d4b87a;
+        }
+        body.dark-mode .product-desc,
+        body.dark-mode .step-card p {
+            color: #b0b0b0;
+        }
+        body.dark-mode header {
+            background: rgba(18, 18, 18, 0.96);
+            border-bottom-color: #3a4a3a;
+        }
+        body.dark-mode .nav-links a {
+            color: #d4b87a;
+        }
+        body.dark-mode .search-container input {
+            background: #2a2a2a;
+            border-color: #4a5a4a;
+            color: white;
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #e9e7e0; }
         ::-webkit-scrollbar-thumb { background: #c7a45b; border-radius: 10px; }
+        body.dark-mode ::-webkit-scrollbar-track { background: #2a2a2a; }
 
         /* NAVIGATION */
         header {
@@ -38,6 +78,7 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
             z-index: 1000;
             border-bottom: 1px solid rgba(199, 164, 91, 0.2);
+            transition: background 0.3s;
         }
         .navbar {
             display: flex;
@@ -56,7 +97,7 @@
             color: transparent;
         }
         .logo span { color: #c7a45b; background: none; }
-        .nav-links { display: flex; gap: 32px; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
         .nav-links a {
             font-weight: 600;
             color: #2c3e2f;
@@ -75,6 +116,30 @@
         }
         .nav-links a:hover:after { width: 100%; }
         .nav-links a:hover { color: #c7a45b; }
+
+        /* DARK MODE TOGGLE BUTTON DI NAVBAR */
+        .darkmode-nav-btn {
+            background: #2c5f2d;
+            color: white;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .darkmode-nav-btn:hover {
+            transform: scale(1.05);
+            background: #c7a45b;
+        }
+        body.dark-mode .darkmode-nav-btn {
+            background: #c7a45b;
+            color: #1e2a1f;
+        }
 
         /* HERO SLIDER */
         .hero-container { width: 100%; height: 650px; padding-top: 85px; }
@@ -116,7 +181,6 @@
         }
         .btn-cta:hover { transform: translateY(-4px); background: linear-gradient(105deg, #b58f48 0%, #d4b071 100%); }
 
-        /* SECTION UMUM */
         section { padding: 80px 24px; max-width: 1300px; margin: 0 auto; }
         .section-title { text-align: center; margin-bottom: 55px; }
         .section-title h2 {
@@ -139,7 +203,6 @@
         }
         .section-title p { font-size: 18px; color: #5a6e5b; margin-top: 20px; }
 
-        /* TAGLINE BRAND - PREMIUM BANNER */
         .tagline-banner {
             background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1a 100%);
             color: #f9e7c2;
@@ -147,12 +210,10 @@
             padding: 28px 20px;
             margin: 20px 20px 0 20px;
             border-radius: 60px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
-        .tagline-banner h3 { font-size: 28px; font-weight: 800; letter-spacing: -0.3px; }
-        .tagline-banner p { font-size: 16px; margin-top: 8px; opacity: 0.9; }
+        .tagline-banner h3 { font-size: 28px; font-weight: 800; }
 
-        /* COUNTER STATISTIK */
+        /* COUNTER */
         .counter-section {
             display: flex;
             justify-content: center;
@@ -166,31 +227,26 @@
             border: 1px solid #efe1c6;
         }
         .counter-item { text-align: center; min-width: 160px; }
-        .counter-number { font-size: 44px; font-weight: 800; color: #c7a45b; line-height: 1.2; }
-        .counter-label { font-size: 16px; color: #4a5b49; font-weight: 600; margin-top: 8px; }
+        .counter-number { font-size: 44px; font-weight: 800; color: #c7a45b; }
 
-        /* KEUNGGULAN PRODUK (GRID) */
+        /* KEUNGGULAN */
         .advantages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
             gap: 30px;
-            margin-top: 20px;
         }
         .advantage-card {
             background: white;
             border-radius: 28px;
             padding: 30px 20px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
             border: 1px solid #f0e7d6;
             transition: 0.2s;
         }
         .advantage-card:hover { transform: translateY(-5px); border-color: #c7a45b; }
         .advantage-icon { font-size: 48px; color: #c7a45b; margin-bottom: 20px; }
-        .advantage-card h4 { font-size: 20px; font-weight: 800; color: #2c5f2d; margin-bottom: 10px; }
-        .advantage-card p { font-size: 14px; color: #6b7c6c; }
 
-        /* GARANSI BANNER */
+        /* GARANSI */
         .garansi-banner {
             background: #fef5e6;
             border-radius: 40px;
@@ -199,9 +255,6 @@
             margin: 40px 20px;
             border: 2px dashed #c7a45b;
         }
-        .garansi-banner i { font-size: 48px; color: #2c5f2d; margin-bottom: 15px; }
-        .garansi-banner h3 { font-size: 28px; font-weight: 800; color: #2c5f2d; }
-        .garansi-banner p { font-size: 16px; margin-top: 8px; color: #5a5f45; }
 
         /* PRODUK GRID */
         .product-grid {
@@ -218,7 +271,7 @@
             border: 1px solid #f6efdf;
             position: relative;
         }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 32px 48px -16px rgba(0, 0, 0, 0.2); }
+        .product-card:hover { transform: translateY(-10px); }
         .img-container { width: 100%; height: 260px; overflow: hidden; background: #faf5e9; }
         .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
         .product-card:hover .product-img { transform: scale(1.07); }
@@ -226,6 +279,8 @@
         .product-name { font-size: 20px; font-weight: 800; color: #2c5f2d; margin-bottom: 8px; }
         .product-desc { font-size: 14px; color: #6b7c6c; margin-bottom: 18px; }
         .product-price { font-size: 26px; font-weight: 800; color: #b47c2e; margin-bottom: 20px; }
+        .product-rating { margin: 10px 0; font-size: 14px; }
+        .product-rating i.fa-star, .product-rating i.fa-star-half-alt { color: #FFD700; }
         .btn-wa {
             background: #2c5f2d;
             color: white;
@@ -240,7 +295,7 @@
         }
         .btn-wa:hover { background: #1f4520; gap: 18px; }
 
-        /* TESTIMONI SLIDER (PREMIUM) */
+        /* TESTIMONI */
         .testimoni-wrapper {
             background: #fefaf0;
             border-radius: 48px;
@@ -251,62 +306,44 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            max-width: 1300px;
-            margin: 0 auto;
         }
         .testi-card {
             background: white;
             border-radius: 28px;
             padding: 28px;
-            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.08);
-            transition: 0.2s;
             border: 1px solid #ede3cf;
         }
-        .testi-card:hover { transform: translateY(-4px); }
-        .testi-stars { color: #ffb347; margin-bottom: 16px; letter-spacing: 2px; }
-        .testi-text { font-style: italic; color: #2c3a2b; line-height: 1.6; margin-bottom: 20px; }
+        .testi-stars { color: #ffb347; margin-bottom: 16px; }
         .testi-name { font-weight: 800; color: #c7a45b; }
-        .testi-city { font-size: 12px; color: #8b9a82; }
 
-        /* CALL TO ACTION BESAR */
-        .cta-large {
-            background: linear-gradient(115deg, #2c5f2d 0%, #3e7a3a 100%);
-            border-radius: 56px;
-            padding: 55px 30px;
-            text-align: center;
-            margin: 40px 20px;
-            color: white;
+        /* REKOMENDASI PRODUK */
+        .reco-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
         }
-        .cta-large h2 { font-size: 38px; font-weight: 800; margin-bottom: 15px; }
-        .cta-large p { font-size: 18px; margin-bottom: 30px; opacity: 0.9; }
-        .btn-cta-large {
-            background: #ffd966;
-            color: #2c5f2d;
-            padding: 16px 42px;
-            border-radius: 60px;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 18px;
+        .reco-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #f0e7d6;
             transition: 0.2s;
         }
-        .btn-cta-large:hover { background: #ffcd4a; transform: scale(1.02); }
+        .reco-card:hover { transform: translateY(-5px); }
+        .reco-img { width: 100%; height: 180px; object-fit: cover; }
 
         /* STEPS */
         .steps-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 35px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
         .step-card {
             background: white;
             padding: 32px 20px;
             text-align: center;
             border-radius: 36px;
-            box-shadow: 0 12px 18px -10px rgba(0,0,0,0.05);
             border: 1px solid #efe1c6;
         }
         .step-icon {
@@ -322,34 +359,81 @@
             margin: 0 auto 20px;
         }
 
-        /* FOOTER */
-        footer {
-            background: #1f2c1d;
-            color: #e7decb;
-            padding: 60px 20px 30px;
-            margin-top: 40px;
+        /* GOOGLE MAPS - Klik Langsung ke Lokasi */
+        .map-container {
+            margin: 40px 20px;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .footer-content {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 50px;
+        .map-container:hover {
+            transform: scale(1.01);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
-        .footer-sect h3 { font-size: 20px; font-weight: 700; margin-bottom: 18px; color: #e2c48b; }
-        .social-links a {
-            background: #312e22;
-            color: #e2c48b;
-            transition: 0.2s;
-            width: 40px;
-            height: 40px;
-            display: inline-flex;
+        .map-container iframe {
+            width: 100%;
+            height: 300px;
+            border: 0;
+            display: block;
+            pointer-events: none; /* Agar klik pada iframe tetap masuk ke link */
+        }
+        .map-link {
+            display: block;
+            position: relative;
+            text-decoration: none;
+        }
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 10;
+            display: flex;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
             border-radius: 40px;
-            margin-right: 10px;
         }
-        .social-links a:hover { background: #c7a45b; color: #1e2a1f; }
+        .map-container:hover .map-overlay {
+            opacity: 1;
+        }
+        .map-overlay span {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+        /* Tanpa overlay, cukup gunakan link langsung */
+        .map-clickable {
+            position: relative;
+            display: block;
+        }
+        .map-clickable iframe {
+            pointer-events: none;
+        }
+        .map-clickable:after {
+            content: '📍 Klik untuk buka peta';
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 500;
+            z-index: 15;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+        }
 
         /* FLOATING BUTTON */
         .contact-float {
@@ -375,12 +459,7 @@
         .float-btn.whatsapp { background: #25D366; color: white; }
         .float-btn.instagram { background: radial-gradient(circle at 30% 110%, #fdf497, #fd5949, #d6249f, #285AEB); color: white; }
         .float-btn:hover { transform: scale(1.07); }
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero-content h1 { font-size: 32px; }
-            .hero-container { height: 500px; }
-            .section-title h2 { font-size: 28px; }
-        }
+
         .search-container { max-width: 540px; margin: 30px auto 20px; position: relative; }
         #searchInput {
             width: 100%;
@@ -390,7 +469,12 @@
             background: white;
         }
         .search-icon { position: absolute; left: 28px; top: 50%; transform: translateY(-50%); color: #c7a45b; }
-        .no-result-message { text-align: center; padding: 48px; background: #fcf9f2; border-radius: 48px; color: #b6812e; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 32px; }
+            .hero-container { height: 500px; }
+        }
     </style>
 </head>
 <body>
@@ -408,6 +492,7 @@
             <a href="#katalog">Katalog</a>
             <a href="#cara-pesan">Panduan</a>
             <a href="#kontak">Kontak</a>
+            <button onclick="toggleDarkMode()" class="darkmode-nav-btn" id="darkModeBtn"><i class="fas fa-moon"></i></button>
         </nav>
     </div>
 </header>
@@ -420,20 +505,17 @@
                 <div class="hero-content"><h1>Rempah Nusantara & Lautan Berkah</h1><p>Ikan Asin Premium, Teri Super Bersih & Telur Segar Organik langsung dari mitra petani.</p><a href="#katalog" class="btn-cta"><i class="fa-solid fa-fish"></i> Pesan Sekarang</a></div>
             </div>
             <div class="swiper-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://i.pinimg.com/1200x/3a/dc/e1/3adce1aa49d30b730ed59e7ecc7c34ed.jpg');">
-                <div class="hero-content"><h1>Grade Ekspor, Harapan Keluarga</h1><p>Teri Medan kering sempurna, baby cumi empuk, telur segar higienis. Packing vakum.</p><a href="#katalog" class="btn-cta"><i class="fa-solid fa-crown"></i> Koleksi Terlaris</a></div>
-            </div>
-            <div class="swiper-slide" style="background-image: linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url('https://i.pinimg.com/1200x/74/f6/e5/74f6e59601dfa87e97c4dea400590c6c.jpg');">
-                <div class="hero-content"><h1>Kirim Ke Seluruh Indonesia</h1><p>Packing premium, jaminan utuh & fresh sampai tujuan. Promo bundling menarik!</p><a href="https://wa.me/628993333726?text=Halo%20DITA%20TERI%20MEDAN%2C%20saya%20ingin%20bertanya" class="btn-cta"><i class="fa-brands fa-whatsapp"></i> Chat Admin</a></div>
+                <div class="hero-content"><h1>Grade Ekspor, Harapan Keluarga</h1><p>Teri Medan kering sempurna, baby cumi empuk, telur segar higienis.</p><a href="#katalog" class="btn-cta"><i class="fa-solid fa-crown"></i> Koleksi Terlaris</a></div>
             </div>
         </div>
         <div class="swiper-button-next"></div><div class="swiper-button-prev"></div><div class="swiper-pagination"></div>
     </div>
 </div>
 
-<!-- TAGLINE BRAND -->
+<!-- TAGLINE BANNER -->
 <div class="tagline-banner" data-aos="fade-up">
     <h3>🌊 Dari Laut ke Meja Makan Anda — Tanpa Pengawet 🌿</h3>
-    <p>Langganan teri & telur segar langsung dari nelayan dan petani terpercaya • Higienis, Premium, dan Bernutrisi</p>
+    <p>Langganan teri & telur segar langsung dari nelayan dan petani terpercaya</p>
 </div>
 
 <!-- COUNTER STATISTIK -->
@@ -444,60 +526,66 @@
     <div class="counter-item"><div class="counter-number">4.9 ★</div><div class="counter-label">Rating Pelanggan</div></div>
 </div>
 
-<!-- KEUNGGULAN PRODUK -->
-<section>
-    <div class="section-title" data-aos="fade-up"><h2>✅ Mengapa Harus DITA?</h2><p>Kualitas premium yang membedakan kami dari yang lain</p></div>
-    <div class="advantages-grid">
-        <div class="advantage-card" data-aos="zoom-in"><div class="advantage-icon"><i class="fa-regular fa-snowflake"></i></div><h4>Higienis & Ber-SNI</h4><p>Proses produksi terjaga kebersihan, tanpa bahan kimia berbahaya.</p></div>
-        <div class="advantage-card" data-aos="zoom-in" data-aos-delay="100"><div class="advantage-icon"><i class="fa-solid fa-box-sealed"></i></div><h4>Packing Vakum</h4><p>Kedap udara, menjaga kesegaran produk lebih lama hingga tujuan.</p></div>
-        <div class="advantage-card" data-aos="zoom-in" data-aos-delay="200"><div class="advantage-icon"><i class="fa-regular fa-clock"></i></div><h4>Langsung dari Nelayan</h4><p>Tanpa perantara, harga lebih bersahabat & kualitas premium.</p></div>
-        <div class="advantage-card" data-aos="zoom-in" data-aos-delay="300"><div class="advantage-icon"><i class="fa-solid fa-truck-fast"></i></div><h4>Kirim ke Seluruh Indonesia</h4><p>Jangkauan luas, packing aman, ekspedisi terpercaya.</p></div>
+<!-- KATALOG PRODUK DENGAN RATING BINTANG -->
+<section id="katalog">
+    <div class="section-title" data-aos="fade-up"><h2>Koleksi Favorit Nusantara</h2><div class="search-container"><i class="fa-solid fa-magnifying-glass search-icon"></i><input type="text" id="searchInput" placeholder="Cari: Teri, Telur, Cumi Asin ..." onkeyup="searchProduct()"></div></div>
+    <div class="product-grid" id="productGrid">
+        <div class="product-card" data-name="IKAN ASIN GEMBUNG"><div class="img-container"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/1.jpg?raw=true" class="product-img"></div><div class="product-info"><h3 class="product-name">IKAN ASIN GEMBUNG</h3><div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span style="font-size:12px;">(89 ulasan)</span></div><p class="product-desc">⭐ Premium Grade: putih bersih, kering sempurna.</p><div class="product-price">Rp85.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20IKAN%20ASIN%20GEMBUNG" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
+        <div class="product-card" data-name="TERI BUNTIAU"><div class="img-container"><img src="https://raw.githubusercontent.com/flyingdutchmannn66-arch/npll-gambar/81be024627847b25a09b4f3b0d38c8b41ae06a5a/2.jpg" class="product-img"></div><div class="product-info"><h3 class="product-name">TERI BUNTIAU PREMIUM</h3><div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span style="font-size:12px;">(147 ulasan)</span></div><p class="product-desc">Super putih & kriuk! Ukuran merata, tidak terlalu asin.</p><div class="product-price">Rp65.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TERI%20BUNTIAU" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
+        <div class="product-card" data-name="TERI NASI"><div class="img-container"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/4.jpg?raw=true" class="product-img"></div><div class="product-info"><h3 class="product-name">TERI NASI PREMIUM</h3><div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span style="font-size:12px;">(210 ulasan)</span></div><p class="product-desc">🍚 Renyah gurih, tanpa pasir, bikin boros nasi.</p><div class="product-price">Rp45.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TERI%20NASI" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
+        <div class="product-card" data-name="BABY CUMI ASIN"><div class="img-container"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/5.jpg?raw=true" class="product-img"></div><div class="product-info"><h3 class="product-name">BABY CUMI ASIN</h3><div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span style="font-size:12px;">(98 ulasan)</span></div><p class="product-desc">🦑 Empuk & gurih, cocok untuk sambal mercon.</p><div class="product-price">Rp45.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20BABY%20CUMI" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
+        <div class="product-card" data-name="TELUR AYAM"><div class="img-container"><img src="https://i.pinimg.com/736x/88/6b/90/886b9072ed55a674c350358b995b63cc.jpg" class="product-img"></div><div class="product-info"><h3 class="product-name">TELUR AYAM PREMIUM</h3><div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span style="font-size:12px;">(312 ulasan)</span></div><p class="product-desc">🥚 Kulit tebal, kuning montok, omega tinggi.</p><div class="product-price">Rp45.000 <span>/10 pcs</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TELUR%20AYAM" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
     </div>
 </section>
+
+<!-- PRODUK REKOMENDASI "ANDA JUGA MUNGKIN SUKA" -->
+<section>
+    <div class="section-title"><h2>✨ Anda Juga Mungkin Suka</h2><p>Rekomendasi berdasarkan favorit pelanggan</p></div>
+    <div class="reco-grid">
+        <div class="reco-card"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/6.jpg?raw=true" class="reco-img"><div class="product-info"><h4>TERI KEPALA BATU</h4><div class="product-price">Rp45.000</div><a href="https://wa.me/628993333726?text=Order%20TERI%20KEPALA%20BATU" class="btn-wa" style="padding:10px;">Pesan</a></div></div>
+        <div class="reco-card"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/7.jpg?raw=true" class="reco-img"><div class="product-info"><h4>IKAN NILA ASIN</h4><div class="product-price">Rp45.000</div><a href="https://wa.me/628993333726?text=Order%20IKAN%20NILA%20ASIN" class="btn-wa" style="padding:10px;">Pesan</a></div></div>
+        <div class="reco-card"><img src="https://i.pinimg.com/736x/51/07/5f/51075f26a70c0334bec376b9a075e126.jpg" class="reco-img"><div class="product-info"><h4>TELUR BEBEK</h4><div class="product-price">Rp54.000</div><a href="https://wa.me/628993333726?text=Order%20TELUR%20BEBEK" class="btn-wa" style="padding:10px;">Pesan</a></div></div>
+        <div class="reco-card"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/8.jpg?raw=true" class="reco-img"><div class="product-info"><h4>IKAN ASIN SAMGE</h4><div class="product-price">Rp45.000</div><a href="https://wa.me/628993333726?text=Order%20IKAN%20ASIN%20SAMGE" class="btn-wa" style="padding:10px;">Pesan</a></div></div>
+    </div>
+</section>
+
+<!-- GOOGLE MAPS LOKASI TOKO - LANGSUNG DIARAHKAN KE LOKASI TUJUAN SAAT DIKLIK -->
+<div class="map-container">
+    <a href="https://www.google.com/maps/dir/?api=1&destination=Jl.+Luku+I+No.54,+Kwala+Bekala,+Kec.+Medan+Johor,+Kota+Medan,+Sumatera+Utara+20146&destination_place_id=ChIJ77i7l1UlMQEe5ZjV/S2o-j0" target="_blank" class="map-clickable" style="display: block; position: relative;">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.482625746711!2d98.6540173!3d3.539512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312555977bb8ef%3A0x3daaf82dd598be5e!2sJl.%20Luku%20I%20No.54%2C%20Kwala%20Bekala%2C%20Kec.%20Medan%20Johor%2C%20Kota%20Medan%2C%20Sumatera%20Utara%2020146!5e0!3m2!1sid!2sid!4v1700000000000" 
+            width="100%" 
+            height="300" 
+            style="border:0; border-radius: 28px;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.65); color: white; padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: 500; backdrop-filter: blur(4px); pointer-events: none; z-index: 10;">
+            <i class="fas fa-map-marker-alt"></i> Klik untuk petunjuk arah
+        </div>
+    </a>
+</div>
+
+<!-- TESTIMONI -->
+<div class="testimoni-wrapper">
+    <div class="section-title"><h2>💬 Kata Mereka yang Sudah Merasakan</h2></div>
+    <div class="testimoni-grid">
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p>"Terinya renyah dan gak bau amis. Packing rapi banget!"</p><div class="testi-name">— Ibu Rina, Jakarta</div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p>"Telur ayam kampungnya segar, kuningnya pekat. Anak suka MPASI."</p><div class="testi-name">— Bunda Sari, Bandung</div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★☆</div><p>"Baby cumi asinnya empuk, gurihnya pas. Rekomendasi!"</p><div class="testi-name">— Pak Hendra, Medan</div></div>
+    </div>
+</div>
 
 <!-- GARANSI -->
 <div class="garansi-banner" data-aos="flip-up">
     <i class="fa-regular fa-hand-peace"></i>
     <h3>100% Jaminan Fresh atau Uang Kembali</h3>
-    <p>Produk tidak sesuai ekspektasi? Kami siap refund atau ganti barang. Kepuasan Anda prioritas utama.</p>
-</div>
-
-<!-- KATALOG PRODUK -->
-<section id="katalog">
-    <div class="section-title" data-aos="fade-up"><h2>Koleksi Favorit Nusantara</h2><div class="search-container"><i class="fa-solid fa-magnifying-glass search-icon"></i><input type="text" id="searchInput" placeholder="Cari: Teri, Telur, Cumi Asin ..." onkeyup="searchProduct()"></div><p>Kualitas ekspor, rasa autentik</p></div>
-    <div class="product-grid" id="productGrid">
-        <div class="product-card" data-name="IKAN ASIN GEMBUNG"><div class="img-container"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/1.jpg?raw=true" class="product-img"></div><div class="product-info"><h3 class="product-name">IKAN ASIN GEMBUNG</h3><p class="product-desc">⭐ Premium Grade: putih bersih, kering sempurna, gurih alami.</p><div class="product-price">Rp85.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20saya%20pesan%20IKAN%20ASIN%20GEMBUNG" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-        <div class="product-card" data-name="TERI BUNTIAU"><div class="img-container"><img src="https://raw.githubusercontent.com/flyingdutchmannn66-arch/npll-gambar/81be024627847b25a09b4f3b0d38c8b41ae06a5a/2.jpg" class="product-img"></div><div class="product-info"><h3 class="product-name">TERI BUNTIAU PREMIUM</h3><p class="product-desc">Super putih & kriuk! Ukuran merata, tidak terlalu asin.</p><div class="product-price">Rp65.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TERI%20BUNTIAU" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-        <div class="product-card" data-name="TERI NASI"><div class="img-container"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/4.jpg?raw=true" class="product-img"></div><div class="product-info"><h3 class="product-name">TERI NASI PREMIUM</h3><p class="product-desc">🍚 Renyah gurih, tanpa pasir, bikin boros nasi.</p><div class="product-price">Rp45.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TERI%20NASI" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-        <div class="product-card" data-name="BABY CUMI ASIN"><div class="img-container"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/5.jpg?raw=true" class="product-img"></div><div class="product-info"><h3 class="product-name">BABY CUMI ASIN</h3><p class="product-desc">🦑 Empuk & gurih, cocok untuk sambal mercon.</p><div class="product-price">Rp45.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20BABY%20CUMI" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-        <div class="product-card" data-name="TERI KEPALA BATU"><div class="img-container"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/6.jpg?raw=true" class="product-img"></div><div class="product-info"><h3 class="product-name">TERI KEPALA BATU</h3><p class="product-desc">🔥 Lauk andalan, crunchy, gurih melimpah.</p><div class="product-price">Rp45.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TERI%20KEPALA%20BATU" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-        <div class="product-card" data-name="IKAN NILA ASIN"><div class="img-container"><img src="https://github.com/flyingdutchmannn66-arch/npll-gambar/blob/main/7.jpg?raw=true" class="product-img"></div><div class="product-info"><h3 class="product-name">IKAN NILA ASIN</h3><p class="product-desc">🐟 Daging tebal, asin pas, tanpa bau anyir.</p><div class="product-price">Rp45.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20IKAN%20NILA%20ASIN" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-        <div class="product-card" data-name="TELUR AYAM"><div class="img-container"><img src="https://i.pinimg.com/736x/88/6b/90/886b9072ed55a674c350358b995b63cc.jpg" class="product-img"></div><div class="product-info"><h3 class="product-name">TELUR AYAM PREMIUM</h3><p class="product-desc">🥚 Kulit tebal, kuning montok, omega tinggi.</p><div class="product-price">Rp45.000 <span>/10 pcs</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TELUR%20AYAM" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-        <div class="product-card" data-name="TELUR BEBEK"><div class="img-container"><img src="https://i.pinimg.com/736x/51/07/5f/51075f26a70c0334bec376b9a075e126.jpg" class="product-img"></div><div class="product-info"><h3 class="product-name">TELUR BEBEK ALAMI</h3><p class="product-desc">🦆 Kuning oranye pekat, gurih, cocok untuk martabak.</p><div class="product-price">Rp54.000 <span>/500g</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TELUR%20BEBEK" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-        <div class="product-card" data-name="TELUR AYAM KAMPUNG"><div class="img-container"><img src="https://i.pinimg.com/736x/39/46/87/39468795d1939eb24761504f5275af25.jpg" class="product-img"></div><div class="product-info"><h3 class="product-name">TELUR AYAM KAMPUNG</h3><p class="product-desc">🌾 Nutrisi alami, MPASI favorit, fresh harian.</p><div class="product-price">Rp72.000 <span>/10 pcs</span></div><a href="https://wa.me/628993333726?text=Halo%20pesan%20TELUR%20KAMPUNG" class="btn-wa"><i class="fa-brands fa-whatsapp"></i> Pesan</a></div></div>
-    </div>
-</section>
-
-<!-- TESTIMONI PELANGGAN -->
-<div class="testimoni-wrapper" data-aos="fade-up">
-    <div class="section-title"><h2>💬 Kata Mereka yang Sudah Merasakan</h2><p>Keaslian rasa & pelayanan terbaik</p></div>
-    <div class="testimoni-grid">
-        <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Terinya renyah dan gak bau amis. Packing rapi banget, sampai tujuan masih kering. Langganan terus!"</p><div class="testi-name">— Ibu Rina</div><div class="testi-city">Jakarta</div></div>
-        <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Telur ayam kampungnya segar, kuningnya pekat. Anak suka banget buat MPASI. Fast respon juga."</p><div class="testi-name">— Bunda Sari</div><div class="testi-city">Bandung</div></div>
-        <div class="testi-card"><div class="testi-stars">★★★★☆</div><p class="testi-text">"Baby cumi asinnya empuk, gurihnya pas. Rekomendasi untuk sambal cumi mantap!"</p><div class="testi-name">— Pak Hendra</div><div class="testi-city">Medan</div></div>
-        <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Pengiriman cepat sampai ke Papua pun masih fresh. Teri nasi jadi favorit keluarga."</p><div class="testi-name">— Keluarga Wijaya</div><div class="testi-city">Jayapura</div></div>
-    </div>
-</div>
-
-<!-- CALL TO ACTION BESAR -->
-<div class="cta-large" data-aos="zoom-in">
-    <h2>⚠️ Stok Terbatas! Pesan Sekarang Sebelum Kehabisan</h2>
-    <p>Dapatkan harga spesial + gratis kemasan vakum untuk pembelian pertama</p>
-    <a href="https://wa.me/628993333726?text=Halo%20DITA%2C%20saya%20mau%20order%20sekarang" class="btn-cta-large"><i class="fa-brands fa-whatsapp"></i> Pesan Sekarang via WhatsApp</a>
+    <p>Produk tidak sesuai ekspektasi? Kami siap refund atau ganti barang.</p>
 </div>
 
 <!-- CARA PESAN -->
-<div id="cara-pesan" class="bg-steps" style="background: linear-gradient(115deg, #fdfaf2 0%, #fff7e8 100%); border-radius: 48px; margin: 20px;">
+<div id="cara-pesan" style="background: linear-gradient(115deg, #fdfaf2 0%, #fff7e8 100%); border-radius: 48px; margin: 20px;">
     <section style="padding: 60px 24px;">
         <div class="section-title"><h2>📦 Mudah & Cepat</h2><p>Belanja hanya 2 menit, pesanan langsung diproses</p></div>
         <div class="steps-container">
@@ -510,12 +598,12 @@
 </div>
 
 <footer id="kontak">
-    <div class="footer-content">
+    <div class="footer-content" style="max-width:1300px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:50px; padding:0 20px;">
         <div class="footer-sect"><h3>DITA TERI MEDAN</h3><p>#RasaLautBerkah — Menghadirkan kekayaan laut dan telur segar langsung dari tangan pertama.</p></div>
         <div class="footer-sect"><h3>Hubungi Kami</h3><p><i class="fa-brands fa-whatsapp"></i> +62 899-3333-726</p><p><i class="fa-brands fa-instagram"></i> @aditarahmah_</p><p><i class="fa-regular fa-clock"></i> Fast Response 08.00 - 21.00</p></div>
         <div class="footer-sect"><h3>Follow & Order</h3><div class="social-links"><a href="https://www.instagram.com/aditarahmah_/" target="_blank"><i class="fa-brands fa-instagram"></i></a><a href="https://wa.me/628993333726?text=Halo%20saya%20ingin%20order" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></div><p style="margin-top:15px;">Kirim ke seluruh Indonesia ✈️</p></div>
     </div>
-    <div class="footer-bottom"><p>© 2025 DITA TERI MEDAN — Premium & Higienis. Jaminan kualitas terbaik.</p></div>
+    <div class="footer-bottom" style="text-align:center; padding-top:30px;"><p>© 2025 DITA TERI MEDAN — Premium & Higienis. Jaminan kualitas terbaik.</p></div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -523,6 +611,19 @@
 <script>
     AOS.init({ duration: 800, once: true, offset: 100 });
     new Swiper('.myHeroSwiper', { loop: true, autoplay: { delay: 4800, disableOnInteraction: false }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, pagination: { el: '.swiper-pagination', clickable: true } });
+
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        let btn = document.getElementById('darkModeBtn');
+        if(document.body.classList.contains('dark-mode')) {
+            btn.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            btn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    }
+
+    // Search Product
     function searchProduct() {
         let input = document.getElementById('searchInput').value.toLowerCase();
         let cards = document.querySelectorAll('.product-card');
@@ -538,6 +639,7 @@
         if (!anyVisible && !existingMsg) {
             let msgDiv = document.createElement('div');
             msgDiv.className = 'no-result-message';
+            msgDiv.style.textAlign = 'center'; msgDiv.style.padding = '48px';
             msgDiv.innerHTML = '<i class="fa-regular fa-face-frown"></i> Produk tidak ditemukan, coba "teri" atau "telur"';
             grid.appendChild(msgDiv);
         } else if (anyVisible && existingMsg) existingMsg.remove();
